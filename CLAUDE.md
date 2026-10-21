@@ -41,7 +41,7 @@ App cá nhân học tiếng Trung và luyện thi HSK 3.0 cho một người dù
 
 ## Môi trường
 
-- Phiên ngày 21/10/2026: môi trường cloud chặn các trang .cn và nhiều trang web khác; npm vẫn tải được. Khi cần tài liệu từ trang bị chặn, nhờ người dùng gửi tệp.
+- Phiên ngày 21/10/2026: môi trường cloud chặn các trang .cn và nhiều trang web khác; npm và raw.githubusercontent.com vẫn tải được. Khi cần tài liệu từ trang bị chặn, nhờ người dùng gửi tệp.
 
 ## Lệnh
 

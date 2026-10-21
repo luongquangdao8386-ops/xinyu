@@ -22,6 +22,17 @@ import { TEN_BUOC, xayNoiDung } from './lib/xay-dung.mjs';
 
 const GOC = join(dirname(fileURLToPath(import.meta.url)), '..');
 
+// fetch của Node không tự đi qua HTTPS_PROXY (môi trường cloud cần proxy để tới docs.google.com):
+// chạy lại chính script với NODE_USE_ENV_PROXY=1 (Node ≥ 22.21).
+if ((process.env.HTTPS_PROXY || process.env.https_proxy) && !process.env.NODE_USE_ENV_PROXY) {
+  const { spawnSync } = await import('node:child_process');
+  const r = spawnSync(process.execPath, ['--disable-warning=UNDICI-EHPA', ...process.execArgv, ...process.argv.slice(1)], {
+    stdio: 'inherit',
+    env: { ...process.env, NODE_USE_ENV_PROXY: '1' },
+  });
+  process.exit(r.status ?? 1);
+}
+
 const thamSo = process.argv.slice(2);
 const lay = (ten) => {
   const i = thamSo.indexOf(ten);

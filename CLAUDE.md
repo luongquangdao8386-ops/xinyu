@@ -42,10 +42,12 @@ App cá nhân học tiếng Trung và luyện thi HSK 3.0 cho một người dù
 ## Môi trường
 
 - Phiên ngày 21/10/2026: môi trường cloud chặn các trang .cn và nhiều trang web khác; npm và raw.githubusercontent.com vẫn tải được. Khi cần tài liệu từ trang bị chặn, nhờ người dùng gửi tệp.
+- Người dùng đã cho phép docs.google.com và *.googleusercontent.com để đọc Google Sheet công bố.
 
 ## Lệnh
 
 - Trích danh sách đề cương: `node tools/trich-de-cuong.mjs <tệp-pdf> [cấp]` (cần `pdftotext`), ghi ra `content/de-cuong/hsk<cấp>.json`. Hiện mới khai báo số trang của cấp 1; cấp khác thêm vào bảng `TRANG` trong script.
+- Google Sheet nội dung (công bố dạng .xlsx, tự cập nhật sau vài phút): `https://docs.google.com/spreadsheets/d/e/2PACX-1vQnaG34ixtjKtqfgf6IFNRp9s5t9XEfqOOb_-QCQLWn_qNbdlHNDW1gX2j3fCgC9GtPsnpnsso-MaqD/pub?output=xlsx`. Khi người dùng nói “xây nội dung”, chạy công cụ với đường dẫn này.
 - Xây nội dung từ Google Sheet: `node tools/xay-noi-dung.mjs <tệp .xlsx | thư mục CSV | đường dẫn .xlsx>`, ghi JSON vào `content/` và in báo cáo kiểm tra; mã thoát 1 khi dòng “đã kiểm tra” có lỗi. Lần đầu tự tải CC-CEDICT qua npm vào `tools/.cache/`.
 - Sinh lại mẫu Sheet và `docs/mau-sheet.md` sau khi sửa `tools/lib/cau-truc.mjs`: `node tools/tao-mau-sheet.mjs`.
 - Kiểm thử công cụ: `node --test 'tools/kiem-thu/*.test.mjs'`.

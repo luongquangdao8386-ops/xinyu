@@ -1,0 +1,10 @@
+# Khóa và cấu hình riêng — không đưa lên repo công khai
+.env
+.env.*
+
+# Node
+node_modules/
+
+# Hệ điều hành
+.DS_Store
+Thumbs.db

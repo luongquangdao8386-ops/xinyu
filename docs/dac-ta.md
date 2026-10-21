@@ -1,6 +1,6 @@
 ---
 title: "Xinyu — Đặc tả ứng dụng học tiếng Trung và luyện thi HSK"
-version: "1.4"
+version: "1.5"
 brand_chinese: "新语"
 brand_pinyin: "Xīnyǔ"
 date: "2026-10-21"
@@ -81,10 +81,19 @@ Các màu xanh ngọc, xanh dương, tím và tranh nhuộm đỏ thuộc nhữn
 ### 3.1. Thứ tự ưu tiên
 
 1. **Đề cương thi HSK (HSK 3.0):** 中文水平考试HSK考试大纲, do 中外语言交流合作中心 phát hành 11/2025, thực hiện từ 7/2026. Đây là nguồn chính cho danh sách từ, chữ Hán (chữ cần nhận biết và chữ cần viết tay), điểm ngữ pháp, chủ đề và cấu trúc thi.
-2. **Chuẩn trình độ** 《国际中文教育中文水平等级标准》(GF 0025—2021): khung năng lực nền. Không lấy số liệu từng cấp từ văn bản này. Ví dụ: Chuẩn 2021 ghi cấp 1 có 500 từ, 300 chữ và 48 điểm ngữ pháp, trong khi theo các bài tổng hợp, đề cương thi đặt HSK 1 khoảng 300 từ.
+2. **Chuẩn trình độ** 《国际中文教育中文水平等级标准》(GF 0025—2021): khung năng lực nền. Không lấy số liệu từng cấp từ văn bản này. Ví dụ: Chuẩn 2021 ghi cấp 1 có 500 từ, 300 chữ và 48 điểm ngữ pháp, trong khi đề cương thi đặt HSK 1 là 300 từ (bảng dưới).
 3. **Giáo trình:** tham khảo cách tổ chức kiến thức, chủ điểm và tiến trình bài học.
 4. **Nội dung riêng của Xinyu:** giải thích tiếng Việt, hội thoại, ví dụ, bài tập, truyện đọc và tình huống tự biên soạn.
 5. **Tài liệu bổ trợ:** củng cố kỹ năng hoặc phát triển chuyên sâu theo nhu cầu.
+
+**Số liệu HSK 1 theo đề cương thi** (trích ngày 21/10/2026; danh sách ở `content/de-cuong/hsk1.json`, cách trích ở mục 11.1):
+
+| Phần | Số lượng | Ghi chú |
+|---|---|---|
+| Từ | 300 | Số thứ tự 1–300 (HSK 2: 301–500). 15 từ có thêm cách dùng học ở cấp sau, đề cương ghi dạng 1（4）, ví dụ 半 làm số từ ở cấp 1, làm phó từ ở cấp 4 |
+| Chữ nhận biết | 246 | 店 (饭店, 商店, 书店) và 饺 (饺子) có trong từ HSK 1 nhưng đề cương xếp vào chữ nhận biết cấp 2 và cấp 3 |
+| Chữ viết tay | 100, chung cho HSK 1–2 | Đề cương không tách riêng cấp 1. 95 chữ thuộc chữ nhận biết HSK 1, Xinyu dạy viết trong HSK 1; 5 chữ 比, 地, 过, 为, 长 dạy viết trong HSK 2 |
+| Điểm ngữ pháp | 70 | Mỗi ô nội dung của bảng ngữ pháp là một điểm; gộp theo mục (细目) còn 49. Đề cương không đánh mã ngữ pháp |
 
 **Mốc thời gian:** kỳ thi HSK 3.0 chính thức đầu tiên là ngày 13/12/2026; từ mốc này HSK 3.0 thay HSK 2.0. Bản đầu của Xinyu gần như chắc chắn ra sau mốc này nên chỉ theo HSK 3.0. Khi có thông báo mới, đối chiếu lại trên chinesetest.cn.
 
@@ -93,7 +102,7 @@ Các màu xanh ngọc, xanh dương, tím và tranh nhuộm đỏ thuộc nhữn
 | Tài liệu | Vai trò |
 |---|---|
 | Đề cương thi và đề mẫu HSK 3.0 | Chuẩn đối chiếu chương trình và nhánh luyện thi |
-| 贯通中文综合教程 | Giáo trình tham khảo chính. Viết theo HSK 3.0, nhóm tác giả 姜丽萍, Nhà xuất bản Đại học Ngôn ngữ Bắc Kinh. Quyển 1 (2026) có 15 bài, mục tiêu 300 từ, khớp với số từ HSK 1 theo các bài tổng hợp |
+| 贯通中文综合教程 | Giáo trình tham khảo chính. Viết theo HSK 3.0, nhóm tác giả 姜丽萍, Nhà xuất bản Đại học Ngôn ngữ Bắc Kinh. Quyển 1 (2026) có 15 bài, mục tiêu 300 từ, khớp với số từ HSK 1 của đề cương thi |
 | Giáo trình chuẩn HSK — HSK标准教程 | Tài liệu phụ. Viết cho HSK 2.0 (HSK 1 chỉ có 150 từ); chỉ tham khảo cách dạy, không dùng làm danh sách từ |
 | Giáo trình Hán ngữ — 汉语教程（第3版） | Bổ trợ nền phát âm, mẫu câu và kiến thức cơ bản |
 | Phát triển Hán ngữ — 发展汉语 | Bổ trợ nghe, nói, đọc, viết ở trung cấp; không cần cho bản đầu. Bản đã xác minh là 第二版 (2011–2013); link nhà xuất bản ghi 第三版, cần kiểm tra khi dùng |
@@ -689,8 +698,9 @@ Người học có thể quay lại xem mẫu hoặc luyện riêng nét chưa v
 
 ### 11.1. Danh sách gốc
 
-- Từ, chữ và điểm ngữ pháp lấy từ Đề cương thi HSK (11/2025) và giữ mã của đề cương.
-- Trước khi biên soạn, xác nhận với bản gốc số từ, số chữ (nhận biết và viết tay) và số điểm ngữ pháp của HSK 1.
+- Từ, chữ và điểm ngữ pháp lấy từ Đề cương thi HSK (11/2025) và giữ mã của đề cương: từ và chữ dùng số thứ tự trong đề cương. Đề cương không đánh mã điểm ngữ pháp nên Xinyu đặt mã `NP<cấp>-<số>` theo thứ tự dòng trong bảng (NP1-01 đến NP1-70).
+- Danh sách từng cấp lưu ở `content/de-cuong/hsk<cấp>.json`. Từ và chữ trích bằng `tools/trich-de-cuong.mjs` từ tệp PDF (không đưa PDF vào repo); bảng ngữ pháp có ô gộp nên chép tay, script giữ nguyên phần này khi chạy lại. Quy ước từng trường ghi trong mục `quyUoc` của tệp JSON.
+- Số liệu HSK 1 đã xác nhận với đề cương (mục 3.1).
 
 ### 11.2. Pinyin
 
@@ -930,6 +940,12 @@ Các nguồn được tra cứu ngày 17/10/2026 và 21/10/2026. Khi xây nội 
 - Mã màn 31–33 giữ trong danh mục ở trạng thái “Bỏ” để đối chiếu bảng ảnh; không dùng lại các mã này cho màn mới.
 
 ## Phụ lục A — Lịch sử thay đổi
+
+### Bản 1.5 (21/10/2026)
+
+- Ghi số liệu HSK 1 trích từ đề cương thi (mục 3.1): 300 từ, 246 chữ nhận biết, 100 chữ viết tay chung cho HSK 1–2, 70 điểm ngữ pháp.
+- Chữ viết tay cấp 1–2: dạy viết trong HSK 1 các chữ thuộc chữ nhận biết HSK 1, các chữ còn lại trong HSK 2.
+- Mã điểm ngữ pháp do Xinyu đặt vì đề cương không đánh mã; nơi lưu danh sách đề cương và script trích (mục 11.1).
 
 ### Bản 1.4 (21/10/2026)
 

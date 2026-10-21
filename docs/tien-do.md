@@ -1,6 +1,6 @@
 # Tiến độ Xinyu
 
-**Cập nhật:** 21/10/2026. **Việc tiếp theo:** A1 (đã có nguồn PDF, xem A1).
+**Cập nhật:** 21/10/2026. **Việc tiếp theo:** A2.
 
 **Thứ tự khuyến nghị:** A1 → A2 → A3 → A4 → A5 → B1.1 → B1.2 → B1.3, sau đó soạn các cụm A7 xen kẽ với B1.4–B1.8. Như vậy Nền phát âm chạy được trong app sớm, không phải đợi soạn xong toàn bộ HSK 1.
 
@@ -12,11 +12,9 @@ Mỗi việc dưới đây làm trong một phiên. “Cần” là thứ ngư�
 
 ## Giai đoạn A — Chuẩn bị nội dung và thiết kế
 
-- [ ] **A1. Danh sách HSK 1:** trích từ, chữ (nhận biết và viết tay), điểm ngữ pháp và mã từ đề cương thi 11/2025 vào `content/de-cuong/hsk1.json`, rồi cập nhật số liệu ở mục 3.1 của đặc tả.
-  - Nguồn: [bản sao trên GitHub](https://raw.githubusercontent.com/becky82/mteh/main/sources/HSK3.1/%E6%96%B0%E7%89%88HSK%E8%80%83%E8%AF%95%E5%A4%A7%E7%BA%B2%EF%BC%88%E8%AF%8D%E6%B1%87%E3%80%81%E6%B1%89%E5%AD%97%E3%80%81%E8%AF%AD%E6%B3%95%EF%BC%89.pdf), tải được trong môi trường cloud. Bìa ghi 2025-11 发布, 2026-07 实施, 中外语言交流合作中心 发布; 317 trang. Không đưa tệp PDF vào repo.
-  - Đã kiểm tra ngày 21/10/2026: HSK 1 có 300 từ (số thứ tự 1–300), HSK 2 có 200 từ (301–500).
-  - Đọc bằng `pdftotext -layout`; bảng từ có cột 序号, 等级, 词语, 拼音, 词性. Cần tìm hiểu cách ghi cấp dạng `1（4）`.
-  - Nếu người dùng có bản tải từ trang chính thức thì ưu tiên bản đó.
+- [x] **A1. Danh sách HSK 1:** `content/de-cuong/hsk1.json` có 300 từ, 246 chữ nhận biết, 100 chữ viết tay (chung cấp 1–2) và 70 điểm ngữ pháp; số liệu ghi ở mục 3.1 của đặc tả (bản 1.5).
+  - Nguồn: [bản sao trên GitHub](https://raw.githubusercontent.com/becky82/mteh/main/sources/HSK3.1/%E6%96%B0%E7%89%88HSK%E8%80%83%E8%AF%95%E5%A4%A7%E7%BA%B2%EF%BC%88%E8%AF%8D%E6%B1%87%E3%80%81%E6%B1%89%E5%AD%97%E3%80%81%E8%AF%AD%E6%B3%95%EF%BC%89.pdf), 317 trang; mã SHA-256 ghi trong tệp JSON. Không đưa tệp PDF vào repo.
+  - Trích lại: `node tools/trich-de-cuong.mjs <tệp-pdf> 1`. Nếu người dùng có bản tải từ trang chính thức thì chạy lại với bản đó và so sánh thay đổi bằng `git diff`.
 - [ ] **A2. Công cụ biên soạn** (mục 12.8): mẫu Google Sheet (tab và cột), script `tools/xay-noi-dung` đọc CSV/XLSX, xuất JSON vào `content/`, chạy kiểm tra 11.6 bước 1–4 và in báo cáo. Cần: tạo Google Sheet theo mẫu sau phiên.
 - [ ] **A3. Bảng đối chiếu** Nền phát âm và HSK 1 với 贯通中文 quyển 1 → `docs/doi-chieu-hsk1.md`: danh sách bài Xinyu, mỗi bài 4–8 từ, nhóm theo cụm chủ đề. Cần: mục lục và từ mới từng bài của giáo trình (ảnh chụp hoặc gõ).
 - [ ] **A4. Nội dung Nền phát âm:** âm đầu, vần, thanh điệu, 20 cặp thanh, thanh nhẹ, biến điệu, lời chào.
@@ -64,3 +62,4 @@ Mỗi việc dưới đây làm trong một phiên. “Cần” là thứ ngư�
 |---|---|---|
 | 21/10/2026 | Đặc tả 1.4, README, quy ước bảng ảnh, `CLAUDE.md`, tệp tiến độ | Bắt đầu A1 |
 | 21/10/2026 | Tìm và kiểm tra bản sao đề cương thi trên GitHub | A1 tải PDF trực tiếp, không cần người dùng gửi |
+| 21/10/2026 | A1: script `tools/trich-de-cuong.mjs`, `content/de-cuong/hsk1.json`, đặc tả 1.5 | Pinyin trong đề cương là dạng hiển thị (ghi biến điệu 一, 不: bú kèqi, yíxià), A2 cần sinh thêm Pinyin gốc. Mã ngữ pháp NP1-01…NP1-70 do Xinyu đặt. 店, 饺 có trong từ HSK 1 nhưng không thuộc chữ nhận biết HSK 1 (trường `doiChieu`). Đã đối chiếu Pinyin với gói `pinyin-pro`: chỉ khác ở thanh nhẹ, âm 儿 và chữ viết hoa |

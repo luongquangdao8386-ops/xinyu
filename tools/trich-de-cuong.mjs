@@ -13,13 +13,15 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { vietJson } from './lib/json.mjs';
+
 // Trang PDF của từng phần (trang PDF = số trang in + 2).
 const TRANG = {
   1: { tu: [4, 11], chuNhanBiet: [267, 268], chuVietTay: [288, 288], nguPhap: [297, 299] },
 };
 
 // Cấp của danh sách chữ viết tay: đề cương gộp cấp 1 và 2 trong một danh sách.
-const CAP_VIET_TAY = { 1: '1–2' };
+const CAP_VIET_TAY = { 1: [1, 2] };
 
 const NGUON = {
   ten: '中文水平考试 HSK考试大纲（词汇、汉字、语法）',
@@ -211,6 +213,7 @@ const duLieu = {
     ngayTrich: new Date().toISOString().slice(0, 10),
   },
   cap,
+  capChuVietTay: CAP_VIET_TAY[cap],
   soLuong: {
     tu: tu.length,
     chuNhanBiet: chuNhanBiet.length,
@@ -225,7 +228,7 @@ const duLieu = {
     tuLoai: 'Chép nguyên văn ký hiệu từ loại tiếng Trung của đề cương. Cụm cố định không ghi từ loại (不客气, 你好…) có "tuLoai" rỗng.',
     dongHinh: 'Số đánh sau chữ để phân biệt từ đồng hình khác nghĩa, ví dụ 会1 (động từ, cấp 1) và 会2 (danh từ, cấp 3).',
     pinyin: 'Chép nguyên văn đề cương. Đề cương ghi thanh biến của 一 và 不 (不客气 bú kèqi, 一下 yíxià), tức dạng "Pinyin hiển thị" ở mục 11.2 của đặc tả; Pinyin gốc thêm khi soạn nội dung.',
-    chuVietTay: `Đề cương gộp chữ viết tay cấp 1 và 2 thành một danh sách (cấp ${CAP_VIET_TAY[cap]}). "nhanBietCap" là ${cap} nếu chữ có trong danh sách nhận biết cấp ${cap}, null nếu chữ thuộc cấp sau.`,
+    chuVietTay: `Đề cương gộp chữ viết tay cấp 1 và 2 thành một danh sách; "capChuVietTay" ghi khoảng cấp của danh sách (${CAP_VIET_TAY[cap].join("–")}). "nhanBietCap" là ${cap} nếu chữ có trong danh sách nhận biết cấp ${cap}, null nếu chữ thuộc cấp sau.`,
     nguPhap: 'Đề cương không đánh mã điểm ngữ pháp; mã NP<cấp>-<số> do Xinyu đặt theo thứ tự các dòng trong bảng. Bốn cột 类别, 类别名称, 细目, 语法内容 ứng với "loai", "tieuLoai", "muc", "noiDung". Mỗi ô của cột 语法内容 là một điểm; ô để trống thì điểm là chính "muc". Các điểm cùng "loai", "tieuLoai", "muc" là một nhóm ("nhomNguPhap" trong "soLuong"). Chỉ số trên như 了¹, 了² chép theo đề cương. "ghiChu" ghi chỗ nghi đề cương in sai.',
   },
   doiChieu: {
@@ -238,20 +241,7 @@ const duLieu = {
   nguPhap,
 };
 
-// Mỗi phần tử của mảng đối tượng nằm trên một dòng cho dễ đọc và dễ so sánh thay đổi.
-function vietJson(v, lui = '') {
-  if (Array.isArray(v)) {
-    if (!v.length) return '[]';
-    if (v.every((x) => x === null || typeof x !== 'object')) return JSON.stringify(v);
-    return `[\n${v.map((x) => `${lui}  ${JSON.stringify(x)}`).join(',\n')}\n${lui}]`;
-  }
-  if (v && typeof v === 'object') {
-    return `{\n${Object.entries(v).map(([k, x]) => `${lui}  ${JSON.stringify(k)}: ${vietJson(x, lui + '  ')}`).join(',\n')}\n${lui}}`;
-  }
-  return JSON.stringify(v);
-}
-
-console.log(`Từ: ${tu.length}; chữ nhận biết: ${chuNhanBiet.length}; chữ viết tay (cấp ${CAP_VIET_TAY[cap]}): ${chuVietTay.length}, trong đó ${duLieu.soLuong.chuVietTayCoTrongNhanBiet} có trong chữ nhận biết cấp ${cap}`);
+console.log(`Từ: ${tu.length}; chữ nhận biết: ${chuNhanBiet.length}; chữ viết tay (cấp ${CAP_VIET_TAY[cap].join('–')}): ${chuVietTay.length}, trong đó ${duLieu.soLuong.chuVietTayCoTrongNhanBiet} có trong chữ nhận biết cấp ${cap}`);
 console.log(`Ngữ pháp (giữ từ tệp cũ): ${nguPhap.length} điểm, ${duLieu.soLuong.nhomNguPhap} nhóm`);
 console.log(`Chữ viết tay ngoài chữ nhận biết cấp ${cap}: ${chuVietTay.filter((d) => !d.nhanBietCap).map((d) => d.chu).join(' ') || 'không có'}`);
 console.log(`Chữ có trong từ nhưng không có trong chữ nhận biết: ${thieu.join(' ') || 'không có'}`);

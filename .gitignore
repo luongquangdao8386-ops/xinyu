@@ -8,3 +8,6 @@ node_modules/
 # Hệ điều hành
 .DS_Store
 Thumbs.db
+
+# Dữ liệu tải về khi chạy công cụ (CC-CEDICT…)
+tools/.cache/

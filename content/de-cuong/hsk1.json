@@ -16,6 +16,7 @@
     "ngayTrich": "2026-10-21"
   },
   "cap": 1,
+  "capChuVietTay": [1,2],
   "soLuong": {
     "tu": 300,
     "chuNhanBiet": 246,
@@ -30,7 +31,7 @@
     "tuLoai": "Chép nguyên văn ký hiệu từ loại tiếng Trung của đề cương. Cụm cố định không ghi từ loại (不客气, 你好…) có \"tuLoai\" rỗng.",
     "dongHinh": "Số đánh sau chữ để phân biệt từ đồng hình khác nghĩa, ví dụ 会1 (động từ, cấp 1) và 会2 (danh từ, cấp 3).",
     "pinyin": "Chép nguyên văn đề cương. Đề cương ghi thanh biến của 一 và 不 (不客气 bú kèqi, 一下 yíxià), tức dạng \"Pinyin hiển thị\" ở mục 11.2 của đặc tả; Pinyin gốc thêm khi soạn nội dung.",
-    "chuVietTay": "Đề cương gộp chữ viết tay cấp 1 và 2 thành một danh sách (cấp 1–2). \"nhanBietCap\" là 1 nếu chữ có trong danh sách nhận biết cấp 1, null nếu chữ thuộc cấp sau.",
+    "chuVietTay": "Đề cương gộp chữ viết tay cấp 1 và 2 thành một danh sách; \"capChuVietTay\" ghi khoảng cấp của danh sách (1–2). \"nhanBietCap\" là 1 nếu chữ có trong danh sách nhận biết cấp 1, null nếu chữ thuộc cấp sau.",
     "nguPhap": "Đề cương không đánh mã điểm ngữ pháp; mã NP<cấp>-<số> do Xinyu đặt theo thứ tự các dòng trong bảng. Bốn cột 类别, 类别名称, 细目, 语法内容 ứng với \"loai\", \"tieuLoai\", \"muc\", \"noiDung\". Mỗi ô của cột 语法内容 là một điểm; ô để trống thì điểm là chính \"muc\". Các điểm cùng \"loai\", \"tieuLoai\", \"muc\" là một nhóm (\"nhomNguPhap\" trong \"soLuong\"). Chỉ số trên như 了¹, 了² chép theo đề cương. \"ghiChu\" ghi chỗ nghi đề cương in sai."
   },
   "doiChieu": {

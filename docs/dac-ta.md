@@ -1,6 +1,6 @@
 ---
 title: "Xinyu — Đặc tả ứng dụng học tiếng Trung và luyện thi HSK"
-version: "1.5"
+version: "1.6"
 brand_chinese: "新语"
 brand_pinyin: "Xīnyǔ"
 date: "2026-10-21"
@@ -757,7 +757,7 @@ Thay cho bước rà soát chuyên môn, mỗi phần nội dung đi qua các b�
 
 1. Đối chiếu với danh sách đề cương: từ, chữ và ngữ pháp nằm đúng cấp.
 2. Đối chiếu Pinyin từng từ với CC-CEDICT; từ nào lệch thì xem lại.
-3. Kiểm tra câu ví dụ, bài đọc và truyện chỉ dùng từ đã học và từ của bài (truyện thêm tối đa 3 từ mới).
+3. Kiểm tra câu ví dụ, bài đọc và truyện chỉ dùng từ đã học và từ của bài (truyện thêm tối đa 3 từ mới). Từ đã học là từ của các bài có thứ tự nhỏ hơn hoặc bằng bài chứa câu; tên riêng khai trong bài không tính là từ mới.
 4. Kiểm tra cách ghi 一 và 不 trong Pinyin hiển thị; trường hợp ngoại lệ xem lại bằng tay.
 5. Kiểm tra từ Hán Việt, nhất là các từ ghi “bẫy nghĩa”.
 6. Nghe lại toàn bộ âm thanh.
@@ -839,8 +839,10 @@ Thay cho bước rà soát chuyên môn, mỗi phần nội dung đi qua các b�
 
 ### 12.8. Công cụ biên soạn (giai đoạn A)
 
-- Nội dung soạn trên một Google Sheet, mỗi loại một tab: Bai, Tu, Chu, NguPhap, Cau, CauHoi, CapThanh, CapDeNham, Truyen. Cột theo mô hình dữ liệu ở mục 11.5; mỗi dòng có mã và trạng thái (nháp hoặc đã kiểm tra).
-- Script `tools/xay-noi-dung` đọc dữ liệu từ đường dẫn CSV công bố của từng tab, hoặc từ tệp .xlsx tải về khi không truy cập được mạng. Script chuyển dữ liệu thành JSON trong `content/`, chạy các bước kiểm tra 1–4 ở mục 11.6 và in báo cáo. Dòng chưa ở trạng thái “đã kiểm tra” không được xuất.
+- Nội dung soạn trên một Google Sheet, mỗi loại một tab: Bai, Tu, Chu, NguPhap, Cau, CauHoi, CapThanh, CapDeNham, Truyen, thêm tab CanSua và tab hướng dẫn HuongDan. Cột theo mô hình dữ liệu ở mục 11.5; mỗi dòng có mã và trạng thái (nháp hoặc đã kiểm tra). Cấu trúc chi tiết ở `docs/mau-sheet.md`; mẫu `tools/mau/xinyu-noi-dung.xlsx` điền sẵn từ, chữ và điểm ngữ pháp HSK 1 của đề cương.
+- Script `tools/xay-noi-dung.mjs` đọc tệp .xlsx tải từ Google Sheet, đường dẫn “Công bố lên web” dạng .xlsx của cả bảng tính, hoặc thư mục CSV (mỗi tab một tệp). Script chuyển dữ liệu thành JSON trong `content/` (mỗi tab một tệp), chạy các bước kiểm tra 1–4 ở mục 11.6 và in báo cáo. Chỉ dòng “đã kiểm tra” và không có lỗi được xuất; dòng cần đến một dòng chưa xuất được (ví dụ bài có từ còn nháp) cũng không được xuất.
+- Bước 2 đối chiếu với CC-CEDICT lấy từ gói npm `cedict-json` (phiên bản cố định, có kiểm tra mã băm), lưu tạm trong `tools/.cache/`, không đưa vào repo.
+- Môi trường cloud chặn docs.google.com: gửi tệp .xlsx tải về cho Claude, hoặc thêm docs.google.com vào danh sách tên miền được phép trong cài đặt mạng của môi trường.
 - Script `tools/tao-am-thanh` tạo MP3 cho từ, câu và truyện mới hoặc đã sửa, đồng thời tính sẵn đường cao độ của âm thanh mẫu. Khóa dịch vụ giọng máy đặt trong biến môi trường (tệp `.env`, không đưa lên repo).
 - Danh sách nội dung cần sửa xuất từ app (màn 29) được dán vào tab CanSua để xử lý.
 
@@ -940,6 +942,11 @@ Các nguồn được tra cứu ngày 17/10/2026 và 21/10/2026. Khi xây nội 
 - Mã màn 31–33 giữ trong danh mục ở trạng thái “Bỏ” để đối chiếu bảng ảnh; không dùng lại các mã này cho màn mới.
 
 ## Phụ lục A — Lịch sử thay đổi
+
+### Bản 1.6 (21/10/2026)
+
+- Công cụ biên soạn (mục 12.8): đọc một tệp hoặc một đường dẫn .xlsx cho cả bảng tính thay cho đường dẫn CSV của từng tab; thêm tab HuongDan; dòng cần đến dòng chưa xuất được cũng không được xuất; nguồn CC-CEDICT.
+- Định nghĩa “từ đã học” khi kiểm tra câu và tên riêng không tính là từ mới (mục 11.6 bước 3).
 
 ### Bản 1.5 (21/10/2026)
 

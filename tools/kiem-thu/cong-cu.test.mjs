@@ -165,7 +165,7 @@ test('Mẫu Sheet trong repo khớp cấu trúc và không có lỗi', () => {
   assert.deepEqual(baoCao.filter((m) => m.muc === 'loi' || m.muc === 'canhBao'), []);
   assert.deepEqual(
     thongKe.filter((t) => t.tong).map((t) => [t.tab, t.tong, t.xuat]),
-    [['Tu', 300, 0], ['Chu', 246, 0], ['NguPhap', 70, 0]],
+    [['Bai', 56, 0], ['Tu', 300, 0], ['Chu', 246, 0], ['NguPhap', 70, 0]],
   );
 });
 

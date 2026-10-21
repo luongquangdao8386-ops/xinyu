@@ -14,7 +14,7 @@ Theo mục 11.5 và 12.8 của [đặc tả](dac-ta.md). Công cụ xây nội d
 
 1. Mỗi tab là một loại nội dung. Dòng đầu là tên cột: không đổi tên, không xóa cột; có thể thêm cột riêng ở bên phải.
 2. Cột Trạng thái: để “nháp” khi đang soạn, đổi sang “đã kiểm tra” sau khi tự xem lại. Công cụ chỉ xuất dòng “đã kiểm tra” và không có lỗi.
-3. Tab Tu, Chu, NguPhap đã điền sẵn danh sách HSK 1 của đề cương thi 11/2025 (300 từ, 246 chữ nhận biết, 70 điểm ngữ pháp). Không đổi Mã, Mã đề cương, Từ, Cấp của các dòng này.
+3. Tab Tu, Chu, NguPhap đã điền sẵn danh sách HSK 1 của đề cương thi 11/2025 (300 từ, 246 chữ nhận biết, 70 điểm ngữ pháp); tab Bai điền sẵn 56 bài theo docs/lo-trinh-hsk1.md. Không đổi Mã, Mã đề cương, Từ, Cấp của các dòng này.
 4. Danh sách trong một ô (từ của bài, mã câu…) cách nhau bằng dấu phẩy, dấu 、 hoặc xuống dòng.
 5. Gọi một từ bằng chữ Hán như ở tab Tu (từ đồng hình thêm số, ví dụ 会1), một chữ bằng chính chữ đó; gọi bài, câu, câu hỏi, ngữ pháp bằng mã.
 6. Câu của bài hoặc truyện nằm ở tab Cau, cột Bài ghi mã bài hoặc mã truyện; thứ tự dòng là thứ tự câu. Câu chỉ được dùng từ đã học tính đến bài đó, tên riêng khai ở cột Tên riêng của tab Bai.

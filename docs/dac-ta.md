@@ -1,6 +1,6 @@
 ---
 title: "Xinyu — Đặc tả ứng dụng học tiếng Trung và luyện thi HSK"
-version: "1.6"
+version: "1.7"
 brand_chinese: "新语"
 brand_pinyin: "Xīnyǔ"
 date: "2026-10-21"
@@ -61,7 +61,7 @@ Trong app chỉ chỉnh được: thời lượng và giờ học mỗi ngày, c
 | Chương trình | HSK là trục chính, theo HSK 3.0 |
 | Văn bản gốc | Đề cương thi HSK (11/2025) cho danh sách từ, chữ và ngữ pháp |
 | Phiên bản thi | Chỉ HSK 3.0; không làm chế độ HSK 2.0 |
-| Giáo trình tham khảo | Chính: 贯通中文综合教程; phụ: HSK标准教程, 汉语教程 |
+| Giáo trình tham khảo | Không bắt buộc; lộ trình dựng từ đề cương thi. Tham khảo khi có: 贯通中文综合教程, HSK标准教程, 汉语教程 |
 | Cách tổ chức | Hai chế độ liên thông: Học theo cấp HSK và Luyện thi HSK |
 | Theo dõi | Tách tiến độ học khỏi kết quả luyện thi |
 | Tận dụng tiếng Việt | Từ Hán Việt kèm cảnh báo bẫy nghĩa, so sánh ngữ pháp, bộ thủ theo tên Hán Việt (mục 5.5) |
@@ -102,7 +102,7 @@ Các màu xanh ngọc, xanh dương, tím và tranh nhuộm đỏ thuộc nhữn
 | Tài liệu | Vai trò |
 |---|---|
 | Đề cương thi và đề mẫu HSK 3.0 | Chuẩn đối chiếu chương trình và nhánh luyện thi |
-| 贯通中文综合教程 | Giáo trình tham khảo chính. Viết theo HSK 3.0, nhóm tác giả 姜丽萍, Nhà xuất bản Đại học Ngôn ngữ Bắc Kinh. Quyển 1 (2026) có 15 bài, mục tiêu 300 từ, khớp với số từ HSK 1 của đề cương thi |
+| 贯通中文综合教程 | Giáo trình tham khảo (không bắt buộc, người dùng không có sách). Viết theo HSK 3.0, nhóm tác giả 姜丽萍, Nhà xuất bản Đại học Ngôn ngữ Bắc Kinh. Quyển 1 (2026) có 15 bài, mục tiêu 300 từ, khớp với số từ HSK 1 của đề cương thi |
 | Giáo trình chuẩn HSK — HSK标准教程 | Tài liệu phụ. Viết cho HSK 2.0 (HSK 1 chỉ có 150 từ); chỉ tham khảo cách dạy, không dùng làm danh sách từ |
 | Giáo trình Hán ngữ — 汉语教程（第3版） | Bổ trợ nền phát âm, mẫu câu và kiến thức cơ bản |
 | Phát triển Hán ngữ — 发展汉语 | Bổ trợ nghe, nói, đọc, viết ở trung cấp; không cần cho bản đầu. Bản đã xác minh là 第二版 (2011–2013); link nhà xuất bản ghi 第三版, cần kiểm tra khi dùng |
@@ -110,7 +110,7 @@ Các màu xanh ngọc, xanh dương, tím và tranh nhuộm đỏ thuộc nhữn
 
 HSK标准教程 gồm sáu cấp với chín quyển giáo trình. Các quyển sau của 贯通中文 cần được kiểm tra trước khi chốt tài liệu cho HSK 2 trở lên.
 
-Mỗi bài trong 贯通中文 quyển 1 có khoảng 20 từ, còn một bài Xinyu có 4–8 từ (mục 5.2). Vì vậy một bài giáo trình tương ứng khoảng 3–5 bài Xinyu.
+Lộ trình bài Nền phát âm và HSK 1 dựng thẳng từ danh sách đề cương thi, không đối chiếu với giáo trình: `docs/lo-trinh-hsk1.md` (56 bài: 8 bài Nền phát âm, 48 bài HSK 1 chia 5 cụm, mỗi bài 4–8 từ). Cột tham chiếu giáo trình của bài để trống, bổ sung khi có tài liệu.
 
 ### 3.3. Bảng đối chiếu nội dung cần lập khi biên soạn
 
@@ -169,7 +169,7 @@ Bản đầu không có bài kiểm tra đầu vào: người dùng tự biết 
 | 9–10 | HSK 1 | Địa điểm và di chuyển | Hỏi và hiểu chỉ dẫn đơn giản |
 | 11–12 | HSK 1 | Hẹn gặp, kết hợp chủ đề và ôn tập | Thực hiện hội thoại tổng hợp và kiểm tra kiến thức |
 
-Nền phát âm kết thúc sau tuần 2; phần tự giới thiệu thuộc HSK 1. Thứ tự chi tiết theo bảng đối chiếu với 贯通中文 quyển 1. Lịch 12 tuần không phải cam kết hoàn thành một cấp hoặc đạt một chứng chỉ.
+Nền phát âm kết thúc sau tuần 2; phần tự giới thiệu thuộc HSK 1. Thứ tự chi tiết ở `docs/lo-trinh-hsk1.md`. Lịch 12 tuần không phải cam kết hoàn thành một cấp hoặc đạt một chứng chỉ.
 
 ## 5. Cách học trong app
 
@@ -858,7 +858,7 @@ Thay cho bước rà soát chuyên môn, mỗi phần nội dung đi qua các b�
 - Tải bản gốc Đề cương thi HSK (11/2025); xác nhận và nhập danh sách từ, chữ, ngữ pháp HSK 1.
 - Tìm đề mẫu HSK 3.0 cấp 1 để chốt cấu trúc thi thử.
 - Dựng công cụ biên soạn (mục 12.8) trước khi soạn hàng loạt.
-- Lập bảng đối chiếu Nền phát âm và HSK 1 với 贯通中文 quyển 1.
+- Lập lộ trình bài Nền phát âm và HSK 1 từ danh sách đề cương thi.
 - Biên soạn và kiểm tra nội dung theo mục 11.6, gồm từ Hán Việt, so sánh ngữ pháp, bộ thủ, cặp thanh và cặp dễ nhầm của HSK 1; tạo âm thanh.
 - Phác bố cục 13A–13D và 47.
 - Lưu bảng ảnh theo quy ước ở mục 9.3.
@@ -942,6 +942,10 @@ Các nguồn được tra cứu ngày 17/10/2026 và 21/10/2026. Khi xây nội 
 - Mã màn 31–33 giữ trong danh mục ở trạng thái “Bỏ” để đối chiếu bảng ảnh; không dùng lại các mã này cho màn mới.
 
 ## Phụ lục A — Lịch sử thay đổi
+
+### Bản 1.7 (21/10/2026)
+
+- Bỏ việc đối chiếu với 贯通中文 vì người dùng không có sách: lộ trình bài Nền phát âm và HSK 1 dựng từ đề cương thi (`docs/lo-trinh-hsk1.md`); giáo trình thành tài liệu tham khảo không bắt buộc (mục 2, 3.2, 4.3, 13).
 
 ### Bản 1.6 (21/10/2026)
 

@@ -1,0 +1,98 @@
+// Lộ trình bài Nền phát âm và HSK 1 (việc A3), dựng từ danh sách đề cương thi, không theo giáo trình nào.
+// Mỗi bài: mã, chủ đề, mục tiêu, từ (chữ Hán như đề cương; đồng hình thêm số), mã ngữ pháp (bỏ tiền tố NP1-).
+// Kiểm tra và sinh tài liệu: node tools/tao-lo-trinh.mjs
+
+export const CUM = [
+  {
+    ten: 'Nền phát âm',
+    viec: 'A4',
+    bai: [
+      { ma: 'PA01', chuDe: 'Bốn thanh điệu', mucTieu: 'Nghe và đọc đúng bốn thanh trên âm tiết đơn', tu: [], nguPhap: [] },
+      { ma: 'PA02', chuDe: 'Âm đầu (1): b p m f d t n l g k h', mucTieu: 'Phân biệt âm bật hơi và không bật hơi', tu: [], nguPhap: [] },
+      { ma: 'PA03', chuDe: 'Âm đầu (2): j q x zh ch sh r z c s', mucTieu: 'Phân biệt ba nhóm âm dễ nhầm với tiếng Việt', tu: [], nguPhap: [] },
+      { ma: 'PA04', chuDe: 'Vần đơn và vần ghép', mucTieu: 'Đọc đúng vần, gồm ü và e', tu: [], nguPhap: [] },
+      { ma: 'PA05', chuDe: 'Vần mũi', mucTieu: 'Phân biệt -n và -ng', tu: [], nguPhap: [] },
+      { ma: 'PA06', chuDe: '20 cặp thanh', mucTieu: 'Đọc liền hai âm tiết với 20 tổ hợp thanh', tu: [], nguPhap: [] },
+      { ma: 'PA07', chuDe: 'Thanh nhẹ và biến điệu', mucTieu: 'Đọc thanh nhẹ, biến điệu thanh 3, 一 và 不', tu: [], nguPhap: [] },
+      { ma: 'PA08', chuDe: 'Lời chào', mucTieu: 'Chào, cảm ơn, xin lỗi, tạm biệt', tu: ['你好', '谢谢', '不客气', '再见', '对不起', '没关系'], nguPhap: ['45'] },
+    ],
+  },
+  {
+    ten: 'Tên, thông tin cá nhân, câu hỏi cơ bản',
+    viec: 'A7.1',
+    bai: [
+      { ma: 'H1-01', chuDe: 'Tôi là ai', mucTieu: 'Nói mình là ai bằng câu 是', tu: ['我', '你', '他', '她', '是', '人'], nguPhap: ['09', '52', '35', '38', '42', '46'] },
+      { ma: 'H1-02', chuDe: 'Hỏi tên', mucTieu: 'Hỏi và nói tên', tu: ['叫', '什么', '名字', '您', '请问'], nguPhap: ['48', '30'] },
+      { ma: 'H1-03', chuDe: 'Phải không?', mucTieu: 'Hỏi có/không, phủ định và hỏi lại', tu: ['吗', '不', '呢', '也', '们', '我们', '你们'], nguPhap: ['47', '20', '19', '02'] },
+      { ma: 'H1-04', chuDe: 'Quốc tịch', mucTieu: 'Hỏi và nói người nước nào', tu: ['中国', '国', '哪', '他们', '她们', '都'], nguPhap: ['16', '29'] },
+      { ma: 'H1-05', chuDe: 'Học tiếng Trung', mucTieu: 'Nói mình học và biết nói tiếng gì', tu: ['学', '学习', '汉语', '中文', '说', '会1'], nguPhap: ['04'] },
+      { ma: 'H1-06', chuDe: 'Thầy và trò', mucTieu: 'Giới thiệu thầy cô, bạn học', tu: ['老师', '学生', '同学', '大学', '大学生', '的'], nguPhap: ['24', '39'] },
+      { ma: 'H1-07', chuDe: 'Làm quen', mucTieu: 'Nói vui được làm quen', tu: ['朋友', '认识', '很', '好', '高兴', '男朋友', '女朋友'], nguPhap: ['43', '15'] },
+      { ma: 'H1-08', chuDe: 'Đây là ai?', mucTieu: 'Hỏi người này, người kia là ai', tu: ['谁', '这', '那', '这个', '那个', '先生', '女士'], nguPhap: ['10', '08'] },
+      { ma: 'H1-09', chuDe: 'Nghề nghiệp', mucTieu: 'Nói làm nghề gì, làm ở đâu', tu: ['工作', '医生', '公司', '做', '在', '男', '女'], nguPhap: ['21', '31', '33'] },
+      { ma: 'H1-10', chuDe: 'Biết chữ Hán', mucTieu: 'Nói biết, có thể làm gì', tu: ['知道', '汉字', '字', '写', '能', '可以'], nguPhap: ['06', '49'] },
+    ],
+  },
+  {
+    ten: 'Gia đình, số đếm, ngày giờ',
+    viec: 'A7.2',
+    bai: [
+      { ma: 'H1-11', chuDe: 'Đếm từ 1 đến 8', mucTieu: 'Đếm và đọc số nhỏ', tu: ['一', '二', '三', '四', '五', '六', '七', '八'], nguPhap: [] },
+      { ma: 'H1-12', chuDe: 'Số lớn', mucTieu: 'Đọc số đến hàng nghìn, dùng 二 và 两', tu: ['九', '十', '百', '千', '零', '两1'], nguPhap: ['11'] },
+      { ma: 'H1-13', chuDe: 'Gia đình tôi', mucTieu: 'Nói nhà có mấy người', tu: ['家', '家人', '爸爸', '妈妈', '口', '有'], nguPhap: ['53', '12'] },
+      { ma: 'H1-14', chuDe: 'Anh chị em', mucTieu: 'Nói có hay không có anh chị em', tu: ['哥哥', '姐姐', '弟弟', '妹妹', '和1', '没（有）'], nguPhap: ['22', '23', '28'] },
+      { ma: 'H1-15', chuDe: 'Tuổi', mucTieu: 'Hỏi và nói tuổi', tu: ['岁', '几', '多', '大', '孩子', '儿子', '女儿'], nguPhap: ['36'] },
+      { ma: 'H1-16', chuDe: 'Con vật nuôi', mucTieu: 'Đếm vật bằng lượng từ', tu: ['狗', '猫', '只', '个', '它', '它们'], nguPhap: ['32'] },
+      { ma: 'H1-17', chuDe: 'Ngày tháng', mucTieu: 'Hỏi và nói hôm nay ngày mấy', tu: ['年', '月', '日', '号', '今天', '明天', '昨天'], nguPhap: ['14', '44', '69'] },
+      { ma: 'H1-18', chuDe: 'Thứ và năm', mucTieu: 'Nói thứ trong tuần và năm', tu: ['星期', '星期日', '星期天', '今年', '明年', '去年'], nguPhap: [] },
+      { ma: 'H1-19', chuDe: 'Mấy giờ rồi', mucTieu: 'Hỏi và nói giờ', tu: ['现在', '点1', '分', '半', '时候', '第'], nguPhap: ['70', '68', '01'] },
+      { ma: 'H1-20', chuDe: 'Các buổi trong ngày', mucTieu: 'Nói làm gì vào buổi nào', tu: ['早上', '上午', '中午', '下午', '晚上', '白天'], nguPhap: ['40'] },
+    ],
+  },
+  {
+    ten: 'Ăn uống, mua sắm',
+    viec: 'A7.3',
+    bai: [
+      { ma: 'H1-21', chuDe: 'Ăn gì?', mucTieu: 'Nói muốn ăn gì', tu: ['吃', '饭', '米饭', '菜', '想', '要'], nguPhap: ['05'] },
+      { ma: 'H1-22', chuDe: 'Uống gì?', mucTieu: 'Gọi đồ uống', tu: ['喝', '茶', '水', '牛奶', '杯子', '一点儿'], nguPhap: ['13'] },
+      { ma: 'H1-23', chuDe: 'Món Trung Hoa', mucTieu: 'Nói món nào ngon', tu: ['包子', '饺子', '面条儿', '面包', '鸡蛋', '好吃'], nguPhap: [] },
+      { ma: 'H1-24', chuDe: 'Ba bữa ăn', mucTieu: 'Rủ ăn cơm, nấu cơm', tu: ['早饭', '午饭', '晚饭', '做饭', '饭店', '吧'], nguPhap: ['26', '50'] },
+      { ma: 'H1-25', chuDe: 'Hoa quả', mucTieu: 'Nói thích gì', tu: ['水果', '苹果', '喜欢', '爱', '些', '一些'], nguPhap: [] },
+      { ma: 'H1-26', chuDe: 'Bao nhiêu tiền?', mucTieu: 'Hỏi giá và trả tiền', tu: ['买', '卖', '钱', '多少', '块', '元'], nguPhap: ['67'] },
+      { ma: 'H1-27', chuDe: 'Đắt quá!', mucTieu: 'Khen chê giá cả', tu: ['贵', '便宜', '太', '非常', '少', '了'], nguPhap: ['63', '51'] },
+      { ma: 'H1-28', chuDe: 'Quần áo', mucTieu: 'Chọn quần áo theo cỡ', tu: ['衣服', '件', '穿', '漂亮', '小'], nguPhap: ['37'] },
+      { ma: 'H1-29', chuDe: 'Đi siêu thị', mucTieu: 'Nói đã mua những gì', tu: ['超市', '商店', '东西', '还', '本1', '书'], nguPhap: ['61', '62', '25'] },
+      { ma: 'H1-30', chuDe: 'Cửa hàng mới', mucTieu: 'Tả cửa hàng', tu: ['店', '书店', '新', '真', '有的', '有些'], nguPhap: [] },
+    ],
+  },
+  {
+    ten: 'Địa điểm, di chuyển',
+    viec: 'A7.4',
+    bai: [
+      { ma: 'H1-31', chuDe: 'Ở đâu?', mucTieu: 'Hỏi và chỉ chỗ', tu: ['哪儿', '这儿', '那儿', '哪里', '这里', '那里'], nguPhap: [] },
+      { ma: 'H1-32', chuDe: 'Trên dưới trong ngoài', mucTieu: 'Nói đồ vật ở vị trí nào', tu: ['上', '下', '里', '外', '前', '后'], nguPhap: ['03', '34', '54'] },
+      { ma: 'H1-33', chuDe: 'Bên này, bên kia', mucTieu: 'Tả trong phòng có gì', tu: ['边', '这边', '那边', '外边', '桌子', '椅子'], nguPhap: ['55'] },
+      { ma: 'H1-34', chuDe: 'Nhà ở', mucTieu: 'Nói mình ở đâu, phòng có gì', tu: ['住', '房间', '电脑', '电视', '这些', '那些'], nguPhap: [] },
+      { ma: 'H1-35', chuDe: 'Trường học', mucTieu: 'Nói học ở trường nào', tu: ['学校', '小学', '中学', '小学生', '中学生', '小朋友'], nguPhap: [] },
+      { ma: 'H1-36', chuDe: 'Đi và về', mucTieu: 'Nói đi đâu để làm gì', tu: ['去', '来', '到', '回', '哪个', '哪些'], nguPhap: ['56'] },
+      { ma: 'H1-37', chuDe: 'Phương tiện', mucTieu: 'Nói đi bằng gì', tu: ['车', '出租车', '火车', '飞机', '坐', '怎么'], nguPhap: ['57'] },
+      { ma: 'H1-38', chuDe: 'Đi làm, đi học', mucTieu: 'Nói giờ đi làm, đi học', tu: ['开', '开车', '上学', '上班', '下班', '对'], nguPhap: ['07'] },
+      { ma: 'H1-39', chuDe: 'Đi khám bệnh', mucTieu: 'Nói mình bị ốm', tu: ['医院', '病', '生病', '看病', '有（一）点儿', '再'], nguPhap: ['18'] },
+      { ma: 'H1-40', chuDe: 'Đi xem phim', mucTieu: 'Rủ đi xem phim', tu: ['电影', '电影院', '看', '看见', '好看', '给'], nguPhap: ['58'] },
+    ],
+  },
+  {
+    ten: 'Hẹn gặp, sinh hoạt, ôn tập tổng hợp',
+    viec: 'A7.5',
+    bai: [
+      { ma: 'H1-41', chuDe: 'Gọi điện thoại', mucTieu: 'Gọi điện hỏi có việc gì', tu: ['打电话', '电话', '手机', '喂1', '事', '没事'], nguPhap: ['27'] },
+      { ma: 'H1-42', chuDe: 'Hẹn gặp', mucTieu: 'Hẹn giờ và chỗ gặp', tu: ['时间', '见', '忙', '怎么样', '一下', '找'], nguPhap: ['41'] },
+      { ma: 'H1-43', chuDe: 'Một ngày của tôi', mucTieu: 'Kể giờ dậy, giờ ngủ', tu: ['起床', '睡觉', '睡', '休息', '早', '晚'], nguPhap: [] },
+      { ma: 'H1-44', chuDe: 'Đang làm gì?', mucTieu: 'Nói đang làm gì và làm bao lâu', tu: ['正在', '读', '读书', '小时', '分钟', '天'], nguPhap: ['17', '64', '65', '66'] },
+      { ma: 'H1-45', chuDe: 'Thời tiết', mucTieu: 'Nói thời tiết hôm nay', tu: ['天气', '冷', '热', '下雨', '雨', '雪'], nguPhap: [] },
+      { ma: 'H1-46', chuDe: 'Sở thích', mucTieu: 'Nói thích làm gì lúc rảnh', tu: ['听', '歌', '唱', '好听', '玩', '好玩儿'], nguPhap: ['59', '60'] },
+      { ma: 'H1-47', chuDe: 'Trong lớp học', mucTieu: 'Hỏi thầy cô khi chưa hiểu', tu: ['课', '上课', '下课', '说话', '问', '问题', '听见'], nguPhap: [] },
+      { ma: 'H1-48', chuDe: 'Mời và khuyên', mucTieu: 'Mời mọi người, khuyên đừng làm gì, nói ý kiến', tu: ['请', '大家', '不要', '觉得', '一半'], nguPhap: [] },
+    ],
+  },
+];

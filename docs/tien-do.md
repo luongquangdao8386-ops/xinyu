@@ -1,6 +1,6 @@
 # Tiến độ Xinyu
 
-**Cập nhật:** 21/10/2026. **Việc tiếp theo:** A3 (cần mục lục và từ mới của 贯通中文 quyển 1).
+**Cập nhật:** 21/10/2026. **Việc tiếp theo:** A4.
 
 **Thứ tự khuyến nghị:** A1 → A2 → A3 → A4 → A5 → B1.1 → B1.2 → B1.3, sau đó soạn các cụm A7 xen kẽ với B1.4–B1.8. Như vậy Nền phát âm chạy được trong app sớm, không phải đợi soạn xong toàn bộ HSK 1.
 
@@ -17,11 +17,11 @@ Mỗi việc dưới đây làm trong một phiên. “Cần” là thứ ngư�
   - Trích lại: `node tools/trich-de-cuong.mjs <tệp-pdf> 1`. Nếu người dùng có bản tải từ trang chính thức thì chạy lại với bản đó và so sánh thay đổi bằng `git diff`.
 - [x] **A2. Công cụ biên soạn** (mục 12.8): mẫu `tools/mau/xinyu-noi-dung.xlsx` (điền sẵn 300 từ, 246 chữ, 70 điểm ngữ pháp HSK 1), cấu trúc ở `docs/mau-sheet.md`, script `tools/xay-noi-dung.mjs` chạy kiểm tra 11.6 bước 1–4 và xuất JSON vào `content/`; 13 kiểm thử.
   - Người dùng cần làm: tải mẫu lên Google Drive, mở bằng Google Trang tính, Tệp > Lưu dưới dạng Google Trang tính. Khi muốn xây nội dung: Tệp > Tải xuống > .xlsx rồi gửi tệp vào phiên.
-- [ ] **A3. Bảng đối chiếu** Nền phát âm và HSK 1 với 贯通中文 quyển 1 → `docs/doi-chieu-hsk1.md`: danh sách bài Xinyu, mỗi bài 4–8 từ, nhóm theo cụm chủ đề. Cần: mục lục và từ mới từng bài của giáo trình (ảnh chụp hoặc gõ).
+- [x] **A3. Lộ trình bài** Nền phát âm và HSK 1 dựng từ đề cương (không có giáo trình): `docs/lo-trinh-hsk1.md`, 56 bài (PA01–PA08, H1-01–H1-48), đủ 300 từ và 70 điểm ngữ pháp; nguồn `tools/lo-trinh/hsk1.mjs`, tab Bai nhập từ `tools/mau/bai-hsk1.csv`.
 - [ ] **A4. Nội dung Nền phát âm:** âm đầu, vần, thanh điệu, 20 cặp thanh, thanh nhẹ, biến điệu, lời chào.
 - [ ] **A5. Âm thanh:** script `tools/tao-am-thanh` và âm thanh cho Nền phát âm. Cần: chọn dịch vụ giọng máy; khóa đặt trong biến môi trường của môi trường cloud, không đưa vào repo.
 - [ ] **A6. Phác bố cục** 13A–13D và 47 bằng HTML tĩnh trong `design/`.
-- [ ] **A7. Nội dung HSK 1**, mỗi phiên một cụm, kèm từ Hán Việt, so sánh ngữ pháp, bộ thủ, cặp dễ nhầm và âm thanh của cụm. Cụm có thể đổi theo bảng A3.
+- [ ] **A7. Nội dung HSK 1**, mỗi phiên một cụm, kèm từ Hán Việt, so sánh ngữ pháp, bộ thủ, cặp dễ nhầm và âm thanh của cụm. Bài của từng cụm theo `docs/lo-trinh-hsk1.md`.
   - [ ] A7.1 Tên, thông tin cá nhân, câu hỏi cơ bản
   - [ ] A7.2 Gia đình, số đếm, ngày giờ
   - [ ] A7.3 Ăn uống, mua sắm
@@ -66,3 +66,4 @@ Mỗi việc dưới đây làm trong một phiên. “Cần” là thứ ngư�
 | 21/10/2026 | A1: script `tools/trich-de-cuong.mjs`, `content/de-cuong/hsk1.json`, đặc tả 1.5 | Pinyin trong đề cương là dạng hiển thị (ghi biến điệu 一, 不: bú kèqi, yíxià), A2 cần sinh thêm Pinyin gốc. Mã ngữ pháp NP1-01…NP1-70 do Xinyu đặt. 店, 饺 có trong từ HSK 1 nhưng không thuộc chữ nhận biết HSK 1 (trường `doiChieu`). Đã đối chiếu Pinyin với gói `pinyin-pro`: chỉ khác ở thanh nhẹ, âm 儿 và chữ viết hoa |
 | 21/10/2026 | A2: công cụ biên soạn, mẫu Sheet, kiểm thử, đặc tả 1.6 | Không dùng thư viện npm: đọc/ghi XLSX tự viết trong `tools/lib/bang-tinh.mjs`. Bảng âm tiết Pinyin sinh bằng mã (âm đầu × vần); viết nguyên bảng ra từng bị bộ lọc nội dung của API chặn. Môi trường cloud chặn docs.google.com và mdbg.net; CC-CEDICT lấy qua npm. Chưa chạy trên Sheet thật vì người dùng chưa tạo Sheet |
 | 21/10/2026 | Người dùng tạo Google Sheet từ mẫu, công bố dạng .xlsx, mở mạng tới docs.google.com | Đường dẫn ghi trong `CLAUDE.md`; công cụ đọc được (300 từ, 246 chữ, 70 ngữ pháp, chưa dòng nào “đã kiểm tra”). `xay-noi-dung.mjs` tự chạy lại với NODE_USE_ENV_PROXY=1 vì fetch của Node không tự đi qua proxy |
+| 21/10/2026 | A3 không cần sách: lộ trình 56 bài từ đề cương, đặc tả 1.7 | Người dùng không có 贯通中文 nên bỏ đối chiếu giáo trình. Người dùng cần nhập `tools/mau/bai-hsk1.csv` vào tab Bai của Google Sheet (ô A1, “Thay thế dữ liệu tại ô đã chọn”). Điểm ngữ pháp nhiều từ gán vào bài giới thiệu lần đầu (danh sách ở cuối `docs/lo-trinh-hsk1.md`) |

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Sinh mẫu Google Sheet biên soạn nội dung (tools/mau/xinyu-noi-dung.xlsx) và tài liệu docs/mau-sheet.md
-// từ tools/lib/cau-truc.mjs. Tab Tu, Chu, NguPhap điền sẵn danh sách HSK 1 của đề cương thi.
+// từ tools/lib/cau-truc.mjs. Tab Tu, Chu, NguPhap điền sẵn danh sách HSK 1 của đề cương thi; tab Bai điền sẵn
+// lộ trình ở tools/lo-trinh/hsk1.mjs.
 //
 // Cách dùng: node tools/tao-mau-sheet.mjs
 
@@ -10,6 +11,7 @@ import { fileURLToPath } from 'node:url';
 
 import { ghiXlsx } from './lib/bang-tinh.mjs';
 import { TAB } from './lib/cau-truc.mjs';
+import { CUM } from './lo-trinh/hsk1.mjs';
 
 const GOC = join(dirname(fileURLToPath(import.meta.url)), '..');
 const hsk1 = JSON.parse(readFileSync(join(GOC, 'content', 'de-cuong', 'hsk1.json'), 'utf8'));
@@ -17,7 +19,7 @@ const hsk1 = JSON.parse(readFileSync(join(GOC, 'content', 'de-cuong', 'hsk1.json
 const HUONG_DAN = [
   'Mỗi tab là một loại nội dung. Dòng đầu là tên cột: không đổi tên, không xóa cột; có thể thêm cột riêng ở bên phải.',
   'Cột Trạng thái: để “nháp” khi đang soạn, đổi sang “đã kiểm tra” sau khi tự xem lại. Công cụ chỉ xuất dòng “đã kiểm tra” và không có lỗi.',
-  'Tab Tu, Chu, NguPhap đã điền sẵn danh sách HSK 1 của đề cương thi 11/2025 (300 từ, 246 chữ nhận biết, 70 điểm ngữ pháp). Không đổi Mã, Mã đề cương, Từ, Cấp của các dòng này.',
+  'Tab Tu, Chu, NguPhap đã điền sẵn danh sách HSK 1 của đề cương thi 11/2025 (300 từ, 246 chữ nhận biết, 70 điểm ngữ pháp); tab Bai điền sẵn 56 bài theo docs/lo-trinh-hsk1.md. Không đổi Mã, Mã đề cương, Từ, Cấp của các dòng này.',
   'Danh sách trong một ô (từ của bài, mã câu…) cách nhau bằng dấu phẩy, dấu 、 hoặc xuống dòng.',
   'Gọi một từ bằng chữ Hán như ở tab Tu (từ đồng hình thêm số, ví dụ 会1), một chữ bằng chính chữ đó; gọi bài, câu, câu hỏi, ngữ pháp bằng mã.',
   'Câu của bài hoặc truyện nằm ở tab Cau, cột Bài ghi mã bài hoặc mã truyện; thứ tự dòng là thứ tự câu. Câu chỉ được dùng từ đã học tính đến bài đó, tên riêng khai ở cột Tên riêng của tab Bai.',
@@ -30,6 +32,16 @@ const tuLoai = (t) => [...t.tuLoai, ...(t.tuLoaiCapSau || []).map((s) => `（${s
 const vietTay = new Map(hsk1.chuVietTay.map((c) => [c.chu, c]));
 
 const dienSan = {
+  Bai: CUM.flatMap((c) => c.bai).map((b, i) => ({
+    ma: b.ma,
+    trangThai: 'nháp',
+    thuTu: i + 1,
+    chang: b.ma.startsWith('PA') ? 'Nền phát âm' : 'HSK 1',
+    chuDe: b.chuDe,
+    mucTieu: b.mucTieu,
+    tu: b.tu.join('、'),
+    nguPhap: b.nguPhap.map((m) => `NP1-${m}`).join('、'),
+  })),
   Tu: hsk1.tu.map((t) => ({ ma: `T${t.stt}`, trangThai: 'nháp', maDeCuong: t.stt, tu: t.tu, dongHinh: t.dongHinh, pinyin: t.pinyin, tuLoai: tuLoai(t), cap: t.cap })),
   Chu: hsk1.chuNhanBiet.map((c) => ({ chu: c.chu, trangThai: 'nháp', capNhanBiet: hsk1.cap, capVietTay: vietTay.has(c.chu) ? hsk1.cap : undefined })),
   NguPhap: hsk1.nguPhap.map((n) => ({

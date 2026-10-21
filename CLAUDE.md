@@ -6,7 +6,7 @@ App cá nhân học tiếng Trung và luyện thi HSK 3.0 cho một người dù
 
 1. Đọc `docs/tien-do.md` trước tiên.
 2. Làm việc người dùng giao. Nếu người dùng chỉ nói “làm tiếp”, làm việc chưa xong đầu tiên theo thứ tự khuyến nghị trong `docs/tien-do.md`.
-3. Đặc tả `docs/dac-ta.md` (bản 1.6) dài gần 1.000 dòng: không đọc hết. Tìm vị trí các mục bằng `grep -n '^##' docs/dac-ta.md`, rồi chỉ đọc những mục ghi trong bảng dưới.
+3. Đặc tả `docs/dac-ta.md` (bản 1.7) dài gần 1.000 dòng: không đọc hết. Tìm vị trí các mục bằng `grep -n '^##' docs/dac-ta.md`, rồi chỉ đọc những mục ghi trong bảng dưới.
 4. Mỗi phiên làm một việc. Chạy thử hoặc kiểm tra trước khi commit.
 5. Cuối phiên: đánh dấu việc đã xong, ghi một dòng vào Nhật ký trong `docs/tien-do.md` (đã làm gì, phiên sau cần biết gì), commit, rồi đẩy lên `main`. Chủ repo đã đồng ý đẩy thẳng lên `main`.
 
@@ -14,7 +14,7 @@ App cá nhân học tiếng Trung và luyện thi HSK 3.0 cho một người dù
 
 | Việc | Mục |
 |---|---|
-| Đề cương, danh sách HSK 1 | 3.1, 11.1 |
+| Đề cương, danh sách HSK 1, lộ trình bài | 3.1, 3.2, 11.1; `docs/lo-trinh-hsk1.md` |
 | Công cụ biên soạn | 11, 12.8 |
 | Soạn nội dung bài | 3.3, 5.2–5.5, 5.7–5.9, 11 |
 | Âm thanh | 12.3, 12.4 |
@@ -50,4 +50,5 @@ App cá nhân học tiếng Trung và luyện thi HSK 3.0 cho một người dù
 - Google Sheet nội dung (công bố dạng .xlsx, tự cập nhật sau vài phút): `https://docs.google.com/spreadsheets/d/e/2PACX-1vQnaG34ixtjKtqfgf6IFNRp9s5t9XEfqOOb_-QCQLWn_qNbdlHNDW1gX2j3fCgC9GtPsnpnsso-MaqD/pub?output=xlsx`. Khi người dùng nói “xây nội dung”, chạy công cụ với đường dẫn này.
 - Xây nội dung từ Google Sheet: `node tools/xay-noi-dung.mjs <tệp .xlsx | thư mục CSV | đường dẫn .xlsx>`, ghi JSON vào `content/` và in báo cáo kiểm tra; mã thoát 1 khi dòng “đã kiểm tra” có lỗi. Lần đầu tự tải CC-CEDICT qua npm vào `tools/.cache/`.
 - Sinh lại mẫu Sheet và `docs/mau-sheet.md` sau khi sửa `tools/lib/cau-truc.mjs`: `node tools/tao-mau-sheet.mjs`.
+- Lộ trình bài HSK 1: sửa `tools/lo-trinh/hsk1.mjs`, rồi chạy `node tools/tao-lo-trinh.mjs` (kiểm tra đủ 300 từ, 70 điểm ngữ pháp; sinh `docs/lo-trinh-hsk1.md` và `tools/mau/bai-hsk1.csv`) và `node tools/tao-mau-sheet.mjs`.
 - Kiểm thử công cụ: `node --test 'tools/kiem-thu/*.test.mjs'`.

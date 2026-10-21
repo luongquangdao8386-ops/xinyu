@@ -1,0 +1,10 @@
+[
+  {"ma":"CPA08-01","bai":"PA08","chuHan":"你好！","pinyin":"Nǐ hǎo!","nghia":"Xin chào!","vai":"A","tu":["T147"]},
+  {"ma":"CPA08-02","bai":"PA08","chuHan":"你好！","pinyin":"Nǐ hǎo!","nghia":"Xin chào!","vai":"B","tu":["T147"]},
+  {"ma":"CPA08-03","bai":"PA08","chuHan":"谢谢！","pinyin":"Xièxie!","nghia":"Cảm ơn!","vai":"A","tu":["T240"]},
+  {"ma":"CPA08-04","bai":"PA08","chuHan":"不客气。","pinyin":"Bú kèqi.","nghia":"Không có gì.","vai":"B","tu":["T14"]},
+  {"ma":"CPA08-05","bai":"PA08","chuHan":"对不起！","pinyin":"Duìbuqǐ!","nghia":"Xin lỗi!","vai":"A","tu":["T44"]},
+  {"ma":"CPA08-06","bai":"PA08","chuHan":"没关系。","pinyin":"Méi guānxi.","nghia":"Không sao đâu.","vai":"B","tu":["T120"]},
+  {"ma":"CPA08-07","bai":"PA08","chuHan":"再见！","pinyin":"Zàijiàn!","nghia":"Tạm biệt!","vai":"A","tu":["T272"]},
+  {"ma":"CPA08-08","bai":"PA08","chuHan":"再见！","pinyin":"Zàijiàn!","nghia":"Tạm biệt!","vai":"B","tu":["T272"]}
+]

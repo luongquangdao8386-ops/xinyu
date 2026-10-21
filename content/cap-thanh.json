@@ -1,0 +1,22 @@
+[
+  {"ma":"CT11","toHop":"1-1","cachDoc":"Hai âm tiết cùng cao và phẳng; âm sau không hạ xuống.","viDu":["T94","T243"]},
+  {"ma":"CT12","toHop":"1-2","cachDoc":"Giữ cao phẳng rồi âm sau đi lên từ mức trung.","viDu":["T289","T290"]},
+  {"ma":"CT13","toHop":"1-3","cachDoc":"Giữ cao phẳng; âm sau đứng cuối nên đọc đủ thanh 3.","viDu":["T291"]},
+  {"ma":"CT14","toHop":"1-4","cachDoc":"Giữ cao phẳng rồi âm sau rơi mạnh từ mức cao.","viDu":["T57","T63"]},
+  {"ma":"CT10","toHop":"1-0","cachDoc":"Âm sau ngắn, nhẹ, thấp hơn âm đầu một chút.","viDu":["T117","T60"]},
+  {"ma":"CT21","toHop":"2-1","cachDoc":"Đi lên rồi giữ cao phẳng.","viDu":["T129","T188"]},
+  {"ma":"CT22","toHop":"2-2","cachDoc":"Đi lên hai lần; âm đầu lên ngắn hơn.","viDu":["T211","T250"]},
+  {"ma":"CT23","toHop":"2-3","cachDoc":"Đi lên, rồi âm sau xuống thấp và lên lại.","viDu":["T159","T151"]},
+  {"ma":"CT24","toHop":"2-4","cachDoc":"Đi lên tới cao rồi rơi mạnh.","viDu":["T251","T122"]},
+  {"ma":"CT20","toHop":"2-0","cachDoc":"Âm sau ngắn, nhẹ, ở mức vừa.","viDu":["T156","T130"]},
+  {"ma":"CT31","toHop":"3-1","cachDoc":"Âm đầu đọc nửa thanh 3 (xuống thấp, không lên), âm sau cao phẳng.","viDu":["T107","T189"]},
+  {"ma":"CT32","toHop":"3-2","cachDoc":"Nửa thanh 3 rồi đi lên.","viDu":["T164","T234"]},
+  {"ma":"CT33","toHop":"3-3","cachDoc":"Đọc thành 2-3: âm đầu đổi thành thanh 2, Pinyin vẫn ghi thanh 3.","viDu":["T147","T194"]},
+  {"ma":"CT34","toHop":"3-4","cachDoc":"Nửa thanh 3 rồi rơi từ cao xuống.","viDu":["T127","T74"]},
+  {"ma":"CT30","toHop":"3-0","cachDoc":"Nửa thanh 3; âm sau nhẹ nhưng cao hơn âm đầu.","viDu":["T92","T241"]},
+  {"ma":"CT41","toHop":"4-1","cachDoc":"Rơi xuống rồi âm sau bật lên cao phẳng.","viDu":["T125","T175"]},
+  {"ma":"CT42","toHop":"4-2","cachDoc":"Rơi xuống rồi đi lên.","viDu":["T28","T220"]},
+  {"ma":"CT43","toHop":"4-3","cachDoc":"Rơi xuống rồi âm sau xuống thấp, lên lại.","viDu":["T69","T37"]},
+  {"ma":"CT44","toHop":"4-4","cachDoc":"Âm đầu rơi nửa chừng, không xuống hết; âm sau rơi đủ.","viDu":["T272","T34"]},
+  {"ma":"CT40","toHop":"4-0","cachDoc":"Âm sau ngắn, nhẹ, thấp nhất.","viDu":["T4","T240"]}
+]

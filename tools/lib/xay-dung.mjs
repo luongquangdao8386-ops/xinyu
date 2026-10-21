@@ -150,7 +150,7 @@ export function xayNoiDung({ bang, deCuong = [], cedict = null }) {
       banGhi[tab.ten].push(ban);
     }
   }
-  const { Bai, Tu, Chu, NguPhap, Cau, CauHoi, CapThanh, CapDeNham, Truyen, CanSua } = banGhi;
+  const { Bai, Tu, Chu, NguPhap, Cau, CauHoi, PhatAm, CapThanh, CapDeNham, Truyen, CanSua } = banGhi;
 
   // ---------- Danh sách đề cương ----------
   const dcTu = new Map();
@@ -191,6 +191,8 @@ export function xayNoiDung({ bang, deCuong = [], cedict = null }) {
   };
   const cauCua = new Map();
   for (const c of Cau) if (c.gt.bai) (cauCua.get(c.gt.bai) || cauCua.set(c.gt.bai, []).get(c.gt.bai)).push(c);
+  const phatAmCua = new Map();
+  for (const p of PhatAm) if (p.gt.bai) (phatAmCua.get(p.gt.bai) || phatAmCua.set(p.gt.bai, []).get(p.gt.bai)).push(p);
 
   // ---------- Bài học: tham chiếu, cấp, từ đã học ----------
   const capBai = (b) => (b.gt.chang === 'Nền phát âm' ? 1 : b.gt.chang === 'HSK 7–9' ? 9 : +String(b.gt.chang || '').replace('HSK ', '') || undefined);
@@ -223,7 +225,7 @@ export function xayNoiDung({ bang, deCuong = [], cedict = null }) {
       them(b, n);
       if (cap && n && capSo(n.gt.cap) > cap) ghi('loi', 1, b, `ngữ pháp ${m} thuộc cấp ${n.gt.cap}, bài ở chặng ${b.gt.chang}`);
     }
-    them(b, ...(cauCua.get(b.khoa) || []));
+    them(b, ...(cauCua.get(b.khoa) || []), ...(phatAmCua.get(b.khoa) || []));
   }
   const baiTheoThuTu = Bai.filter((b) => b.gt.thuTu !== undefined).sort((a, b) => a.gt.thuTu - b.gt.thuTu);
   const daHoc = new Map(); // mã bài → Set dạng viết của từ và tên riêng đã học tính đến bài đó
@@ -371,12 +373,59 @@ export function xayNoiDung({ bang, deCuong = [], cedict = null }) {
     if (thua.length && tr.daKiemTra) ghi('canhBao', 3, tr, `từ mới không xuất hiện trong câu nào: ${thua.join(', ')}`);
   }
 
+  // ---------- Phát âm ----------
+  const amTietPhatAm = new Map(); // âm tiết (chữ thường, NFC) → mục phát âm đầu tiên có âm tiết đó
+  const chuanAm = (a) => a.normalize('NFC').toLowerCase();
+  for (const p of PhatAm) {
+    if (p.gt.bai) {
+      const b = traMa(p, 'Bai', p.gt.bai, 'cột Bài');
+      if (b && b.gt.chang !== 'Nền phát âm') ghi('canhBao', 0, p, `bài ${p.gt.bai} không thuộc chặng Nền phát âm`);
+    }
+    const amTiet = p.gt.amTiet || [];
+    for (const a of amTiet) {
+      const t = tachAmTiet(a);
+      if (t.loi.length || t.ds.length !== 1 || t.ds[0].dau !== 0 || t.ds[0].cuoi !== a.normalize('NFC').length) ghi('loi', 2, p, `“${a}” không phải một âm tiết Pinyin`);
+      else if (!amTietPhatAm.has(chuanAm(a))) amTietPhatAm.set(chuanAm(a), p);
+    }
+    const chuDoc = p.gt.chuDoc || [];
+    if (chuDoc.length) {
+      if (chuDoc.length !== amTiet.length) ghi('loi', 0, p, `Chữ đọc mẫu có ${chuDoc.length} chữ, Âm tiết ví dụ có ${amTiet.length} âm tiết`);
+      chuDoc.forEach((c, i) => {
+        if ([...c].length !== 1 || !laChuHan(c)) return ghi('loi', 0, p, `chữ đọc mẫu “${c}” phải là đúng một chữ Hán`);
+        const a = amTiet[i];
+        if (!cedict || !a || !cedict.has(c)) return;
+        const so = soHoa(tachAmTiet(a).ds).toLowerCase();
+        if (!cedict.get(c).includes(so)) ghi('canhBao', 2, p, `chữ ${c} không đọc ${a} theo CC-CEDICT (${[...new Set(cedict.get(c))].join(' ; ')})`);
+      });
+    }
+    p.tuDaTra = [];
+    for (const ref of p.gt.viDu || []) {
+      const t = traTu(p, ref, 'cột Từ ví dụ');
+      if (!t) continue;
+      p.tuDaTra.push(t);
+      them(p, t);
+    }
+  }
+
   // ---------- Câu hỏi, cặp thanh, cặp dễ nhầm ----------
   for (const q of CauHoi) {
     if (q.gt.bai && !theoKhoa.Bai.has(q.gt.bai) && !theoKhoa.Truyen.has(q.gt.bai)) ghi('loi', 0, q, `cột Bài: “${q.gt.bai}” không có ở tab Bai hay Truyen`);
     for (const d of q.gt.diemKienThuc || []) {
-      if (!timTu(d).length && !theoKhoa.Chu.has(d) && !theoKhoa.NguPhap.has(d)) ghi('loi', 0, q, `điểm kiến thức “${d}” không có ở tab Tu, Chu hay NguPhap`);
+      const coMa = ['Chu', 'NguPhap', 'PhatAm', 'CapThanh'].some((tab) => theoKhoa[tab].has(d));
+      if (!timTu(d).length && !coMa) ghi('loi', 0, q, `điểm kiến thức “${d}” không có ở tab Tu, Chu, NguPhap, PhatAm hay CapThanh`);
     }
+    const am = q.gt.amThanh;
+    if (am) {
+      const tu = timTu(am);
+      if (theoKhoa.Cau.has(am)) q.amThanh = { cau: theoKhoa.Cau.get(am) };
+      else if (tu.length === 1) q.amThanh = { tu: tu[0] };
+      else if (tu.length > 1) ghi('loi', 0, q, `cột Âm thanh: “${am}” ứng với nhiều dòng ở tab Tu (${tu.map((t) => t.khoa).join(', ')}); thêm số đồng hình`);
+      else if (amTietPhatAm.has(chuanAm(am))) q.amThanh = { amTiet: am.normalize('NFC'), phatAm: amTietPhatAm.get(chuanAm(am)) };
+      else ghi('loi', 0, q, `cột Âm thanh: “${am}” không phải từ ở tab Tu, mã câu ở tab Cau hay âm tiết ví dụ ở tab PhatAm`);
+      const dua = q.amThanh && (q.amThanh.cau || q.amThanh.tu || q.amThanh.phatAm);
+      if (dua) them(q, dua);
+    }
+    if (q.gt.kyNang === 'nghe' && !am && q.daKiemTra) ghi('canhBao', 0, q, 'câu hỏi nghe chưa ghi cột Âm thanh');
     for (const i of [1, 2, 3]) if (q.gt[`nhamVoi${i}`] && !q.gt[`dapAnSai${i}`]) ghi('canhBao', 0, q, `có “Nhầm với ${i}” nhưng thiếu “Đáp án sai ${i}”`);
   }
   for (const p of CapThanh) {
@@ -438,10 +487,15 @@ export function xayNoiDung({ bang, deCuong = [], cedict = null }) {
   for (const [b, o] of oBai) {
     const cap = b.gt.chang === 'Nền phát âm' ? undefined : b.gt.chang === 'HSK 7–9' ? '7-9' : capBai(b);
     Object.assign(o, cap ? { cap } : {}, { tu: ma(b.tuDaTra) }, { cau: ma(cauCua.get(b.khoa) || []) });
+    if (phatAmCua.has(b.khoa)) o.phatAm = ma(phatAmCua.get(b.khoa));
   }
+  for (const [p, o] of theoMa('PhatAm')) if (o.viDu) o.viDu = ma(p.tuDaTra);
   for (const [t, o] of theoMa('Tu')) o.pinyinGoc = t.pinyinGoc;
   for (const [c, o] of theoMa('Cau')) if (c.tuTrongCau?.length) o.tu = c.tuTrongCau.map((t) => t.khoa);
-  for (const [, o] of theoMa('CauHoi')) {
+  for (const [q, o] of theoMa('CauHoi')) {
+    if (q.amThanh?.tu) o.amThanh = { tu: q.amThanh.tu.khoa };
+    else if (q.amThanh?.cau) o.amThanh = { cau: q.amThanh.cau.khoa };
+    else if (q.amThanh?.phatAm) o.amThanh = { amTiet: q.amThanh.amTiet, phatAm: q.amThanh.phatAm.khoa };
     const sai = [1, 2, 3].filter((i) => o[`dapAnSai${i}`]).map((i) => (o[`nhamVoi${i}`] ? { dapAn: o[`dapAnSai${i}`], nhamVoi: o[`nhamVoi${i}`] } : { dapAn: o[`dapAnSai${i}`] }));
     for (const i of [1, 2, 3]) delete o[`dapAnSai${i}`], delete o[`nhamVoi${i}`];
     if (sai.length) o.dapAnSai = sai;

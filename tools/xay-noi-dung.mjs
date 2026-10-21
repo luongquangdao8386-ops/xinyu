@@ -10,28 +10,19 @@
 //   --khong-cedict  bỏ qua phần đối chiếu CC-CEDICT
 // Mã thoát 1 khi có lỗi ở dòng “đã kiểm tra”.
 
-import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { docCsv, docXlsx } from './lib/bang-tinh.mjs';
 import { TAB } from './lib/cau-truc.mjs';
 import { napCedict } from './lib/cedict.mjs';
 import { vietJson } from './lib/json.mjs';
+import { docNguon, quaProxy } from './lib/nguon.mjs';
 import { TEN_BUOC, xayNoiDung } from './lib/xay-dung.mjs';
 
 const GOC = join(dirname(fileURLToPath(import.meta.url)), '..');
 
-// fetch của Node không tự đi qua HTTPS_PROXY (môi trường cloud cần proxy để tới docs.google.com):
-// chạy lại chính script với NODE_USE_ENV_PROXY=1 (Node ≥ 22.21).
-if ((process.env.HTTPS_PROXY || process.env.https_proxy) && !process.env.NODE_USE_ENV_PROXY) {
-  const { spawnSync } = await import('node:child_process');
-  const r = spawnSync(process.execPath, ['--disable-warning=UNDICI-EHPA', ...process.execArgv, ...process.argv.slice(1)], {
-    stdio: 'inherit',
-    env: { ...process.env, NODE_USE_ENV_PROXY: '1' },
-  });
-  process.exit(r.status ?? 1);
-}
+await quaProxy();
 
 const thamSo = process.argv.slice(2);
 const lay = (ten) => {
@@ -45,26 +36,6 @@ const [nguon] = thamSo;
 if (!nguon) {
   console.error('Cách dùng: node tools/xay-noi-dung.mjs <tệp .xlsx | thư mục CSV | đường dẫn .xlsx> [--ra <thư mục>] [--cedict <tệp>] [--khong-cedict]');
   process.exit(2);
-}
-
-async function docNguon(nguon) {
-  if (/^https?:\/\//.test(nguon)) {
-    const tl = await fetch(nguon);
-    if (!tl.ok) throw new Error(`tải ${nguon} lỗi ${tl.status}`);
-    const buf = Buffer.from(await tl.arrayBuffer());
-    if (buf.subarray(0, 2).toString() !== 'PK') throw new Error('đường dẫn không trả về tệp .xlsx; khi công bố lên web hãy chọn cả tài liệu và định dạng .xlsx');
-    return docXlsx(buf);
-  }
-  if (statSync(nguon).isDirectory()) {
-    const tep = readdirSync(nguon).filter((t) => t.toLowerCase().endsWith('.csv'));
-    const bang = new Map();
-    for (const tab of TAB) {
-      const t = tep.find((x) => x.toLowerCase() === `${tab.ten.toLowerCase()}.csv` || x.toLowerCase().endsWith(` - ${tab.ten.toLowerCase()}.csv`));
-      if (t) bang.set(tab.ten, docCsv(readFileSync(join(nguon, t), 'utf8')));
-    }
-    return bang;
-  }
-  return docXlsx(readFileSync(nguon));
 }
 
 let bang;

@@ -34,6 +34,16 @@ Mức độ: **LỖI** chặn dòng khỏi bản xuất (và các dòng phụ th
 
 Mỗi tab xuất ra một tệp trong `content/`. Các trường trống không được ghi.
 
+## Điền nội dung Claude soạn vào Sheet
+
+Nội dung Claude soạn nằm ở `tools/noi-dung/` (mỗi việc một tệp). Lệnh `node tools/dien-noi-dung.mjs <nguồn>` đọc Sheet hiện tại, điền nội dung đó vào và ghi tệp `tools/ra/xinyu-noi-dung.xlsx`:
+
+- Chỉ điền ô đang trống và thêm dòng chưa có; ô đã có chữ giữ nguyên, chỗ khác nhau được liệt kê trong báo cáo để xem.
+- Dòng mới có trạng thái “nháp”; cột Trạng thái của dòng đã có không bị đổi.
+- Cột riêng thêm bên phải được giữ; tab thiếu cột mới (khi cấu trúc đổi) được thêm cột.
+
+Nhập vào Google Sheet ngay sau khi tạo tệp (sửa Sheet sau thời điểm đó sẽ bị ghi đè): Tệp > Nhập > Tải lên, chọn tệp, chọn “Thay thế bảng tính”. Cần quay lại thì dùng Tệp > Nhật ký phiên bản.
+
 ## Tab Bai — Bài học → `content/bai.json`
 
 | Cột | Trường JSON | Kiểu | Bắt buộc | Mô tả |
@@ -130,8 +140,9 @@ Mỗi tab xuất ra một tệp trong `content/`. Các trường trống không 
 | Bài | `bai` | chữ |  | Mã bài hoặc mã truyện, nếu câu hỏi thuộc một bài. |
 | Dạng bài | `dangBai` | chữ | có |  |
 | Kỹ năng | `kyNang` | chọn | có | Chọn: nghe, nói, đọc, viết. |
-| Điểm kiến thức | `diemKienThuc` | danh sách |  | Từ, chữ hoặc mã ngữ pháp mà câu hỏi kiểm tra. |
+| Điểm kiến thức | `diemKienThuc` | danh sách |  | Từ, chữ, mã ngữ pháp, mã phát âm (tab PhatAm) hoặc mã cặp thanh mà câu hỏi kiểm tra. |
 | Nội dung | `noiDung` | chữ | có |  |
+| Âm thanh | `amThanh` | chữ |  | Thứ được phát ở câu hỏi nghe: một từ ở tab Tu, mã câu ở tab Cau, hoặc một âm tiết Pinyin có ở cột Âm tiết ví dụ của tab PhatAm. |
 | Đáp án đúng | `dapAnDung` | chữ | có |  |
 | Đáp án sai 1 | `dapAnSai1` | chữ |  |  |
 | Nhầm với 1 | `nhamVoi1` | chữ |  | Vì sao người học có thể chọn đáp án sai này. |
@@ -140,6 +151,23 @@ Mỗi tab xuất ra một tệp trong `content/`. Các trường trống không 
 | Đáp án sai 3 | `dapAnSai3` | chữ |  |  |
 | Nhầm với 3 | `nhamVoi3` | chữ |  |  |
 | Lời giải | `loiGiai` | chữ |  |  |
+| Ghi chú | — | chữ |  | Ghi chú khi soạn, không xuất ra app. |
+
+## Tab PhatAm — Phát âm → `content/phat-am.json`
+
+| Cột | Trường JSON | Kiểu | Bắt buộc | Mô tả |
+|---|---|---|---|---|
+| Mã | `ma` | chữ | có | Mã mục phát âm: mã bài, gạch nối, số thứ tự, ví dụ PA02-01. |
+| Trạng thái | — | chọn |  | nháp hoặc đã kiểm tra. Chỉ dòng “đã kiểm tra” và không có lỗi mới được xuất ra JSON. Chọn: nháp, đã kiểm tra. |
+| Bài | `bai` | chữ | có | Mã bài Nền phát âm. Thứ tự các mục trong bài là thứ tự dòng. |
+| Loại | `loai` | chọn | có | Chọn: thanh điệu, âm đầu, vần, quy tắc. |
+| Ký hiệu | `kyHieu` | chữ | có | Âm đầu, vần hoặc tên thanh, quy tắc, ví dụ zh, üe, Thanh 3, Biến điệu của 不. |
+| Cách đọc | `cachDoc` | chữ | có | Cách đặt lưỡi, môi, hơi, cao độ; viết cho người Việt. |
+| So sánh với tiếng Việt | `soSanh` | chữ |  | Âm tiếng Việt gần nhất và chỗ khác. |
+| Lỗi người Việt hay mắc | `loiHayMac` | chữ |  |  |
+| Âm tiết ví dụ | `amTiet` | danh sách |  | Âm tiết Pinyin có dấu thanh, mỗi mục một âm tiết, ví dụ bā, pá. |
+| Chữ đọc mẫu | `chuDoc` | danh sách |  | Mỗi âm tiết ví dụ một chữ Hán đọc đúng âm tiết đó, cùng thứ tự; chỉ dùng để tạo âm thanh, app không hiển thị. |
+| Từ ví dụ | `viDu` | danh sách |  | Từ ở tab Tu minh họa mục này. |
 | Ghi chú | — | chữ |  | Ghi chú khi soạn, không xuất ra app. |
 
 ## Tab CapThanh — Cặp thanh → `content/cap-thanh.json`
@@ -190,6 +218,8 @@ Mỗi tab xuất ra một tệp trong `content/`. Các trường trống không 
 - `bai.json`: `cap` (số, bỏ trống với Nền phát âm), `tu` là mã từ thay cho chữ Hán, `cau` là mã các câu của bài theo thứ tự.
 - `tu.json`: `pinyinGoc` luôn có (tự sinh khi cột Pinyin gốc trống).
 - `cau.json`: `tu` là mã các từ đã học xuất hiện trong câu.
-- `cau-hoi.json`: `dapAnSai` là danh sách `{ dapAn, nhamVoi }` thay cho các cột Đáp án sai, Nhầm với.
+- `bai.json`: `phatAm` là mã các mục phát âm của bài theo thứ tự (chỉ bài có mục ở tab PhatAm).
+- `cau-hoi.json`: `dapAnSai` là danh sách `{ dapAn, nhamVoi }` thay cho các cột Đáp án sai, Nhầm với; `amThanh` là `{ tu: mã từ }`, `{ cau: mã câu }` hoặc `{ amTiet, phatAm: mã mục phát âm }`.
+- `phat-am.json`: `viDu` là mã từ.
 - `cap-thanh.json`: `viDu` là mã từ.
 - `truyen.json`: `cap` theo bài ở cột Sau bài, `cau` là mã các câu của truyện theo thứ tự.

@@ -4,7 +4,7 @@ App cá nhân học tiếng Trung và luyện thi HSK theo HSK 3.0, giải thíc
 
 ## Trạng thái
 
-Đang ở giai đoạn A (chuẩn bị nội dung), chưa có app. Đặc tả hiện hành: [docs/dac-ta.md](docs/dac-ta.md) (bản 1.7). Việc theo từng phiên và nhật ký: [docs/tien-do.md](docs/tien-do.md).
+Đang ở giai đoạn A (chuẩn bị nội dung), chưa có app. Đặc tả hiện hành: [docs/dac-ta.md](docs/dac-ta.md) (bản 1.8). Việc theo từng phiên và nhật ký: [docs/tien-do.md](docs/tien-do.md).
 
 ## Định hướng kỹ thuật
 

@@ -1,6 +1,6 @@
 ---
 title: "Xinyu — Đặc tả ứng dụng học tiếng Trung và luyện thi HSK"
-version: "1.7"
+version: "1.8"
 brand_chinese: "新语"
 brand_pinyin: "Xīnyǔ"
 date: "2026-10-21"
@@ -734,7 +734,8 @@ Người học có thể quay lại xem mẫu hoặc luyện riêng nét chưa v
 | Chữ | Chữ, số nét, bộ thủ, tên Hán Việt của bộ, cấu tạo, âm Hán Việt, cấp nhận biết, cấp viết tay |
 | Ngữ pháp | Mã đề cương, mẫu câu, giải thích, so sánh với tiếng Việt, lỗi người Việt hay mắc, ví dụ, cấp |
 | Câu | Chữ Hán, Pinyin hiển thị, nghĩa, âm thanh, danh sách từ, vai (người nói, dùng cho đóng vai) |
-| Câu hỏi | Mã, dạng bài, kỹ năng, điểm kiến thức, nội dung, đáp án đúng, các đáp án sai kèm trường “nhầm với”, lời giải |
+| Câu hỏi | Mã, dạng bài, kỹ năng, điểm kiến thức, nội dung, âm thanh (với câu hỏi nghe: từ, câu hoặc âm tiết được phát), đáp án đúng, các đáp án sai kèm trường “nhầm với”, lời giải |
+| Mục phát âm | Mã, bài Nền phát âm, loại (thanh điệu, âm đầu, vần, quy tắc), ký hiệu, cách đọc, so sánh với tiếng Việt, lỗi người Việt hay mắc, âm tiết ví dụ, chữ đọc mẫu (chỉ để tạo âm thanh), từ ví dụ |
 | Cặp thanh | Tổ hợp thanh, cách đọc thực tế, từ ví dụ, âm thanh |
 | Cặp dễ nhầm | Mã, các mục trong cặp, giải thích phân biệt, câu hỏi phân biệt |
 | Truyện | Mã, cấp, tiêu đề, danh sách câu, từ mới (tối đa 3), câu hỏi hiểu, âm thanh (nếu có) |
@@ -839,12 +840,13 @@ Thay cho bước rà soát chuyên môn, mỗi phần nội dung đi qua các b�
 
 ### 12.8. Công cụ biên soạn (giai đoạn A)
 
-- Nội dung soạn trên một Google Sheet, mỗi loại một tab: Bai, Tu, Chu, NguPhap, Cau, CauHoi, CapThanh, CapDeNham, Truyen, thêm tab CanSua và tab hướng dẫn HuongDan. Cột theo mô hình dữ liệu ở mục 11.5; mỗi dòng có mã và trạng thái (nháp hoặc đã kiểm tra). Cấu trúc chi tiết ở `docs/mau-sheet.md`; mẫu `tools/mau/xinyu-noi-dung.xlsx` điền sẵn từ, chữ và điểm ngữ pháp HSK 1 của đề cương.
+- Nội dung soạn trên một Google Sheet, mỗi loại một tab: Bai, Tu, Chu, NguPhap, Cau, CauHoi, PhatAm, CapThanh, CapDeNham, Truyen, thêm tab CanSua và tab hướng dẫn HuongDan. Cột theo mô hình dữ liệu ở mục 11.5; mỗi dòng có mã và trạng thái (nháp hoặc đã kiểm tra). Cấu trúc chi tiết ở `docs/mau-sheet.md`; mẫu `tools/mau/xinyu-noi-dung.xlsx` điền sẵn từ, chữ và điểm ngữ pháp HSK 1 của đề cương.
 - Script `tools/xay-noi-dung.mjs` đọc tệp .xlsx tải từ Google Sheet, đường dẫn “Công bố lên web” dạng .xlsx của cả bảng tính, hoặc thư mục CSV (mỗi tab một tệp). Script chuyển dữ liệu thành JSON trong `content/` (mỗi tab một tệp), chạy các bước kiểm tra 1–4 ở mục 11.6 và in báo cáo. Chỉ dòng “đã kiểm tra” và không có lỗi được xuất; dòng cần đến một dòng chưa xuất được (ví dụ bài có từ còn nháp) cũng không được xuất.
 - Bước 2 đối chiếu với CC-CEDICT lấy từ gói npm `cedict-json` (phiên bản cố định, có kiểm tra mã băm), lưu tạm trong `tools/.cache/`, không đưa vào repo.
 - Môi trường cloud chặn docs.google.com: gửi tệp .xlsx tải về cho Claude, hoặc thêm docs.google.com vào danh sách tên miền được phép trong cài đặt mạng của môi trường.
 - Script `tools/tao-am-thanh` tạo MP3 cho từ, câu và truyện mới hoặc đã sửa, đồng thời tính sẵn đường cao độ của âm thanh mẫu. Khóa dịch vụ giọng máy đặt trong biến môi trường (tệp `.env`, không đưa lên repo).
 - Danh sách nội dung cần sửa xuất từ app (màn 29) được dán vào tab CanSua để xử lý.
+- Nội dung Claude soạn nằm trong `tools/noi-dung/`. Script `tools/dien-noi-dung.mjs` đọc Sheet hiện tại, chỉ điền ô trống và thêm dòng chưa có (dòng mới để “nháp”), ghi một tệp .xlsx để nhập lại bằng “Thay thế bảng tính”, rồi chạy thử bước 1–4 của mục 11.6 trên các dòng vừa soạn.
 
 ### 12.9. Giọng máy trên điện thoại
 
@@ -942,6 +944,11 @@ Các nguồn được tra cứu ngày 17/10/2026 và 21/10/2026. Khi xây nội 
 - Mã màn 31–33 giữ trong danh mục ở trạng thái “Bỏ” để đối chiếu bảng ảnh; không dùng lại các mã này cho màn mới.
 
 ## Phụ lục A — Lịch sử thay đổi
+
+### Bản 1.8 (21/10/2026)
+
+- Thêm đối tượng Mục phát âm và tab PhatAm cho các bài Nền phát âm; câu hỏi có trường âm thanh cho câu hỏi nghe (mục 11.5, 12.8).
+- Công cụ điền nội dung Claude soạn vào Google Sheet (mục 12.8).
 
 ### Bản 1.7 (21/10/2026)
 

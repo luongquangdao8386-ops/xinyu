@@ -1,6 +1,6 @@
 # Tiến độ Xinyu
 
-**Cập nhật:** 21/10/2026. **Việc tiếp theo:** A4.
+**Cập nhật:** 21/10/2026. **Việc tiếp theo:** A5 (trước đó người dùng nhập nội dung A4 vào Sheet và xem lại, xem mục A4).
 
 **Thứ tự khuyến nghị:** A1 → A2 → A3 → A4 → A5 → B1.1 → B1.2 → B1.3, sau đó soạn các cụm A7 xen kẽ với B1.4–B1.8. Như vậy Nền phát âm chạy được trong app sớm, không phải đợi soạn xong toàn bộ HSK 1.
 
@@ -18,7 +18,8 @@ Mỗi việc dưới đây làm trong một phiên. “Cần” là thứ ngư�
 - [x] **A2. Công cụ biên soạn** (mục 12.8): mẫu `tools/mau/xinyu-noi-dung.xlsx` (điền sẵn 300 từ, 246 chữ, 70 điểm ngữ pháp HSK 1), cấu trúc ở `docs/mau-sheet.md`, script `tools/xay-noi-dung.mjs` chạy kiểm tra 11.6 bước 1–4 và xuất JSON vào `content/`; 13 kiểm thử.
   - Người dùng cần làm: tải mẫu lên Google Drive, mở bằng Google Trang tính, Tệp > Lưu dưới dạng Google Trang tính. Khi muốn xây nội dung: Tệp > Tải xuống > .xlsx rồi gửi tệp vào phiên.
 - [x] **A3. Lộ trình bài** Nền phát âm và HSK 1 dựng từ đề cương (không có giáo trình): `docs/lo-trinh-hsk1.md`, 56 bài (PA01–PA08, H1-01–H1-48), đủ 300 từ và 70 điểm ngữ pháp; nguồn `tools/lo-trinh/hsk1.mjs`, tab Bai nhập từ `tools/mau/bai-hsk1.csv`.
-- [ ] **A4. Nội dung Nền phát âm:** âm đầu, vần, thanh điệu, 20 cặp thanh, thanh nhẹ, biến điệu, lời chào.
+- [x] **A4. Nội dung Nền phát âm:** âm đầu, vần, thanh điệu, 20 cặp thanh, thanh nhẹ, biến điệu, lời chào. Nguồn `tools/noi-dung/a4-phat-am.mjs`: 76 mục phát âm (tab PhatAm mới), 20 cặp thanh, 72 câu hỏi, 8 câu chào (PA08), cột còn trống của bài PA01–PA08, nghĩa 53 từ dùng làm ví dụ, ngữ pháp NP1-45. Công cụ mới `tools/dien-noi-dung.mjs` điền vào Sheet; đặc tả 1.8.
+  - Người dùng cần làm: nhập `tools/ra/xinyu-noi-dung.xlsx` vào Google Sheet (Tệp > Nhập > Tải lên > Thay thế bảng tính), rồi đọc lại các dòng mới (nháp) và đổi sang “đã kiểm tra”. Sau đó nói “xây nội dung”.
 - [ ] **A5. Âm thanh:** script `tools/tao-am-thanh` và âm thanh cho Nền phát âm. Cần: chọn dịch vụ giọng máy; khóa đặt trong biến môi trường của môi trường cloud, không đưa vào repo.
 - [ ] **A6. Phác bố cục** 13A–13D và 47 bằng HTML tĩnh trong `design/`.
 - [ ] **A7. Nội dung HSK 1**, mỗi phiên một cụm, kèm từ Hán Việt, so sánh ngữ pháp, bộ thủ, cặp dễ nhầm và âm thanh của cụm. Bài của từng cụm theo `docs/lo-trinh-hsk1.md`.
@@ -68,3 +69,4 @@ Mỗi việc dưới đây làm trong một phiên. “Cần” là thứ ngư�
 | 21/10/2026 | Người dùng tạo Google Sheet từ mẫu, công bố dạng .xlsx, mở mạng tới docs.google.com | Đường dẫn ghi trong `CLAUDE.md`; công cụ đọc được (300 từ, 246 chữ, 70 ngữ pháp, chưa dòng nào “đã kiểm tra”). `xay-noi-dung.mjs` tự chạy lại với NODE_USE_ENV_PROXY=1 vì fetch của Node không tự đi qua proxy |
 | 21/10/2026 | A3 không cần sách: lộ trình 56 bài từ đề cương, đặc tả 1.7 | Người dùng không có 贯通中文 nên bỏ đối chiếu giáo trình. Người dùng cần nhập `tools/mau/bai-hsk1.csv` vào tab Bai của Google Sheet (ô A1, “Thay thế dữ liệu tại ô đã chọn”). Điểm ngữ pháp nhiều từ gán vào bài giới thiệu lần đầu (danh sách ở cuối `docs/lo-trinh-hsk1.md`) |
 | 21/10/2026 | Xem đề mẫu HSK 1 người dùng gửi (không đưa tệp vào repo) | Đề này là **HSK 2.0** (国家汉办/孔子学院总部, “新汉语水平考试”, có từ ngoài danh sách HSK 3.0 như 小姐), chưa phải HSK 3.0. Cấu trúc: 40 câu, khoảng 40 phút; nghe 20 câu (4 phần × 5: tranh đúng/sai; nghe câu chọn 1 trong 3 tranh; nghe hội thoại ghép với 6 tranh; nghe câu + câu hỏi chọn 1 trong 3), đọc 20 câu (4 phần × 5: tranh và từ đúng/sai; câu ghép với 6 tranh; câu hỏi ghép câu trả lời; điền từ vào chỗ trống), chữ Hán in kèm Pinyin. Dùng tạm cho B2.1; vẫn cần đề mẫu HSK 3.0 (中外语言交流合作中心 phát hành, 2025–2026) |
+| 21/10/2026 | A4: nội dung Nền phát âm, tab PhatAm, cột Âm thanh của CauHoi, công cụ `dien-noi-dung.mjs`, đặc tả 1.8 | Nội dung soạn ở `tools/noi-dung/`; công cụ chỉ điền ô trống, giữ chữ người dùng đã sửa. Mỗi âm tiết ví dụ có một chữ đọc mẫu (cột Chữ đọc mẫu) để A5 tạo âm thanh bằng giọng máy đọc chữ Hán; câu hỏi nghe ghi rõ thứ được phát ở cột Âm thanh (từ, mã câu hoặc âm tiết của tab PhatAm). Hán Việt mới ghi cho 9 từ chắc chắn cùng nghĩa, còn lại để A7. Chưa kiểm tra việc nhập “Thay thế bảng tính” có giữ đường dẫn công bố của Sheet hay không: lần chạy công cụ sau sẽ biết |

@@ -9,6 +9,7 @@
 export const TRANG_THAI = ['nháp', 'đã kiểm tra'];
 export const CHANG = ['Nền phát âm', 'HSK 1', 'HSK 2', 'HSK 3', 'HSK 4', 'HSK 5', 'HSK 6', 'HSK 7–9'];
 export const KY_NANG = ['nghe', 'nói', 'đọc', 'viết'];
+export const LOAI_PHAT_AM = ['thanh điệu', 'âm đầu', 'vần', 'quy tắc'];
 
 const ma = (moTa) => ({ tieuDe: 'Mã', khoa: 'ma', batBuoc: true, moTa, rong: 10 });
 const trangThai = {
@@ -143,8 +144,14 @@ export const TAB = [
       { tieuDe: 'Bài', khoa: 'bai', moTa: 'Mã bài hoặc mã truyện, nếu câu hỏi thuộc một bài.', rong: 10 },
       { tieuDe: 'Dạng bài', khoa: 'dangBai', batBuoc: true, rong: 15 },
       { tieuDe: 'Kỹ năng', khoa: 'kyNang', chon: KY_NANG, batBuoc: true, rong: 8 },
-      { tieuDe: 'Điểm kiến thức', khoa: 'diemKienThuc', kieu: 'ds', moTa: 'Từ, chữ hoặc mã ngữ pháp mà câu hỏi kiểm tra.', rong: 15 },
+      { tieuDe: 'Điểm kiến thức', khoa: 'diemKienThuc', kieu: 'ds', moTa: 'Từ, chữ, mã ngữ pháp, mã phát âm (tab PhatAm) hoặc mã cặp thanh mà câu hỏi kiểm tra.', rong: 15 },
       { tieuDe: 'Nội dung', khoa: 'noiDung', batBuoc: true, rong: 35 },
+      {
+        tieuDe: 'Âm thanh',
+        khoa: 'amThanh',
+        moTa: 'Thứ được phát ở câu hỏi nghe: một từ ở tab Tu, mã câu ở tab Cau, hoặc một âm tiết Pinyin có ở cột Âm tiết ví dụ của tab PhatAm.',
+        rong: 12,
+      },
       { tieuDe: 'Đáp án đúng', khoa: 'dapAnDung', batBuoc: true, rong: 15 },
       { tieuDe: 'Đáp án sai 1', khoa: 'dapAnSai1', rong: 15 },
       { tieuDe: 'Nhầm với 1', khoa: 'nhamVoi1', moTa: 'Vì sao người học có thể chọn đáp án sai này.', rong: 15 },
@@ -153,6 +160,32 @@ export const TAB = [
       { tieuDe: 'Đáp án sai 3', khoa: 'dapAnSai3', rong: 15 },
       { tieuDe: 'Nhầm với 3', khoa: 'nhamVoi3', rong: 15 },
       { tieuDe: 'Lời giải', khoa: 'loiGiai', rong: 35 },
+      ghiChu,
+    ],
+  },
+  {
+    ten: 'PhatAm',
+    tieuDe: 'Phát âm',
+    tep: 'phat-am.json',
+    khoa: 'ma',
+    cot: [
+      ma('Mã mục phát âm: mã bài, gạch nối, số thứ tự, ví dụ PA02-01.'),
+      trangThai,
+      { tieuDe: 'Bài', khoa: 'bai', batBuoc: true, moTa: 'Mã bài Nền phát âm. Thứ tự các mục trong bài là thứ tự dòng.', rong: 8 },
+      { tieuDe: 'Loại', khoa: 'loai', chon: LOAI_PHAT_AM, batBuoc: true, rong: 11 },
+      { tieuDe: 'Ký hiệu', khoa: 'kyHieu', batBuoc: true, moTa: 'Âm đầu, vần hoặc tên thanh, quy tắc, ví dụ zh, üe, Thanh 3, Biến điệu của 不.', rong: 14 },
+      { tieuDe: 'Cách đọc', khoa: 'cachDoc', batBuoc: true, moTa: 'Cách đặt lưỡi, môi, hơi, cao độ; viết cho người Việt.', rong: 40 },
+      { tieuDe: 'So sánh với tiếng Việt', khoa: 'soSanh', moTa: 'Âm tiếng Việt gần nhất và chỗ khác.', rong: 30 },
+      { tieuDe: 'Lỗi người Việt hay mắc', khoa: 'loiHayMac', rong: 30 },
+      { tieuDe: 'Âm tiết ví dụ', khoa: 'amTiet', kieu: 'ds', moTa: 'Âm tiết Pinyin có dấu thanh, mỗi mục một âm tiết, ví dụ bā, pá.', rong: 20 },
+      {
+        tieuDe: 'Chữ đọc mẫu',
+        khoa: 'chuDoc',
+        kieu: 'ds',
+        moTa: 'Mỗi âm tiết ví dụ một chữ Hán đọc đúng âm tiết đó, cùng thứ tự; chỉ dùng để tạo âm thanh, app không hiển thị.',
+        rong: 15,
+      },
+      { tieuDe: 'Từ ví dụ', khoa: 'viDu', kieu: 'ds', moTa: 'Từ ở tab Tu minh họa mục này.', rong: 15 },
       ghiChu,
     ],
   },

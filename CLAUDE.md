@@ -6,7 +6,7 @@ App cá nhân học tiếng Trung và luyện thi HSK 3.0 cho một người dù
 
 1. Đọc `docs/tien-do.md` trước tiên.
 2. Làm việc người dùng giao. Nếu người dùng chỉ nói “làm tiếp”, làm việc chưa xong đầu tiên theo thứ tự khuyến nghị trong `docs/tien-do.md`.
-3. Đặc tả `docs/dac-ta.md` (bản 1.7) dài gần 1.000 dòng: không đọc hết. Tìm vị trí các mục bằng `grep -n '^##' docs/dac-ta.md`, rồi chỉ đọc những mục ghi trong bảng dưới.
+3. Đặc tả `docs/dac-ta.md` (bản 1.8) dài gần 1.000 dòng: không đọc hết. Tìm vị trí các mục bằng `grep -n '^##' docs/dac-ta.md`, rồi chỉ đọc những mục ghi trong bảng dưới.
 4. Mỗi phiên làm một việc. Chạy thử hoặc kiểm tra trước khi commit.
 5. Cuối phiên: đánh dấu việc đã xong, ghi một dòng vào Nhật ký trong `docs/tien-do.md` (đã làm gì, phiên sau cần biết gì), commit, rồi đẩy lên `main`. Chủ repo đã đồng ý đẩy thẳng lên `main`.
 
@@ -51,4 +51,5 @@ App cá nhân học tiếng Trung và luyện thi HSK 3.0 cho một người dù
 - Xây nội dung từ Google Sheet: `node tools/xay-noi-dung.mjs <tệp .xlsx | thư mục CSV | đường dẫn .xlsx>`, ghi JSON vào `content/` và in báo cáo kiểm tra; mã thoát 1 khi dòng “đã kiểm tra” có lỗi. Lần đầu tự tải CC-CEDICT qua npm vào `tools/.cache/`.
 - Sinh lại mẫu Sheet và `docs/mau-sheet.md` sau khi sửa `tools/lib/cau-truc.mjs`: `node tools/tao-mau-sheet.mjs`.
 - Lộ trình bài HSK 1: sửa `tools/lo-trinh/hsk1.mjs`, rồi chạy `node tools/tao-lo-trinh.mjs` (kiểm tra đủ 300 từ, 70 điểm ngữ pháp; sinh `docs/lo-trinh-hsk1.md` và `tools/mau/bai-hsk1.csv`) và `node tools/tao-mau-sheet.mjs`.
+- Soạn nội dung (A4, A7…): viết vào `tools/noi-dung/<việc>.mjs` (mỗi tab một mảng, theo tên trường JSON của `tools/lib/cau-truc.mjs`), rồi chạy `node tools/dien-noi-dung.mjs <đường dẫn Sheet công bố>`: đọc Sheet, chỉ điền ô trống và thêm dòng mới, ghi `tools/ra/xinyu-noi-dung.xlsx`, chạy thử kiểm tra trên các dòng vừa soạn (phải 0 lỗi). Gửi tệp cho người dùng nhập bằng Tệp > Nhập > Tải lên > Thay thế bảng tính; dòng mới để “nháp” cho người dùng tự xem rồi đổi sang “đã kiểm tra”.
 - Kiểm thử công cụ: `node --test 'tools/kiem-thu/*.test.mjs'`.

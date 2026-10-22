@@ -26,7 +26,7 @@ Mỗi việc dưới đây làm trong một phiên. “Cần” là thứ ngư�
   - Máy báo 5 mục cần nghe kỹ: 大学, 时间, 学校 (thanh 2 lên yếu, đặc điểm của giọng, cả ba cách đọc đều vậy) và 对不起 trong từ và câu (不 chưa xuống thấp hẳn; công cụ đã chọn bản gần đúng nhất).
 - [ ] **A6. Phác bố cục** 13A–13D và 47 bằng HTML tĩnh trong `design/`.
 - [ ] **A7. Nội dung HSK 1**, mỗi phiên một cụm, kèm từ Hán Việt, so sánh ngữ pháp, bộ thủ, cặp dễ nhầm và âm thanh của cụm. Bài của từng cụm theo `docs/lo-trinh-hsk1.md`.
-  - [ ] A7.1 Tên, thông tin cá nhân, câu hỏi cơ bản: **đã soạn** ở `tools/noi-dung/a71-ten-thong-tin.mjs` (bài H1-01–H1-10: 87 câu hội thoại vai A – B, nghĩa và câu ví dụ 63 từ, Hán Việt 10 từ gồm 3 bẫy nghĩa 认识, 先生, 女士, 65 chữ có số nét, bộ thủ, cấu tạo, âm Hán Việt, 25 điểm ngữ pháp, 66 câu hỏi kiểm tra, 5 cặp dễ nhầm). Ghép vào mẫu Sheet: 0 lỗi, 0 cảnh báo.
+  - [ ] A7.1 Tên, thông tin cá nhân, câu hỏi cơ bản: **đã soạn** ở `tools/noi-dung/a71-ten-thong-tin.mjs` (bài H1-01–H1-10: 85 câu hội thoại vai A – B, nghĩa và câu ví dụ 63 từ, Hán Việt 8 từ gồm 3 bẫy nghĩa 认识, 先生, 女士, 65 chữ có số nét, bộ thủ, cấu tạo, âm Hán Việt, 26 điểm ngữ pháp, 63 câu hỏi kiểm tra, 5 cặp dễ nhầm). Ghép vào mẫu Sheet: 0 lỗi, 0 cảnh báo.
     - Còn lại: chạy `node tools/dien-noi-dung.mjs <đường dẫn Sheet>` (cần mở mạng tới docs.google.com, hoặc người dùng gửi tệp .xlsx tải từ Sheet), gửi `tools/ra/xinyu-noi-dung.xlsx` cho người dùng nhập và duyệt; sau khi người dùng đánh dấu “đã kiểm tra”: xây nội dung, `tao-am-thanh`, đăng trang nghe duyệt, `tao-font`, sửa `LUU_SAN` nếu số tệp font đổi.
   - [ ] A7.2 Gia đình, số đếm, ngày giờ
   - [ ] A7.3 Ăn uống, mua sắm

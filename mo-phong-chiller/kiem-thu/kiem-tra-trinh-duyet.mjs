@@ -36,6 +36,11 @@ async function moTrang(w, h) {
   return pg;
 }
 const cho = (pg, ms) => pg.waitForTimeout(ms);
+// Chờ đủ số khung hình được vẽ thêm (Chromium kiểm thử vẽ bằng phần mềm nên tốc độ khung không đều)
+const choKhung = async (pg, n = 6) => {
+  const k0 = await pg.evaluate(() => window.__moPhong.soKhungDaVe());
+  await pg.waitForFunction((k) => window.__moPhong.soKhungDaVe() >= k, k0 + n, { timeout: 180000 });
+};
 const chup = async (pg, ten) => { await pg.screenshot({ path: path.join(THU_ANH, ten), type: 'jpeg', quality: 84, timeout: 240000 }); console.log(`     ảnh ${ten}`); };
 const tuaNhanh = (pg, giay) => pg.evaluate((g) => { for (let i = 0; i < g; i++) window.__moPhong.vh.capNhat(1); }, giay);
 const goc = (pg) => pg.evaluate(() => {
@@ -47,6 +52,8 @@ const goc = (pg) => pg.evaluate(() => {
     phaNL: M.ong.dsTuyen.find((t) => t.ma === 'nl-cap').pha, phaGN: M.ong.dsTuyen.find((t) => t.ma === 'gn-ve').pha,
   };
 });
+// Bảng điều khiển cập nhật theo vòng vẽ; Chromium kiểm thử vẽ bằng phần mềm nên chờ theo điều kiện thay vì chờ cố định
+const doiChu = (pg, re) => pg.waitForFunction((nguon) => new RegExp(nguon, 'i').test(document.querySelector('.thong-bao').textContent), re.source, { timeout: 120000 }).catch(() => {});
 const bam = async (pg, tab, id) => { await pg.click(`#nut-${tab}`); await pg.click(`#${id}`, { force: true }); };
 
 try {
@@ -70,20 +77,22 @@ try {
   ghi('Đầu ống nối đúng thiết bị, đúng mạch; ống không xuyên thiết bị hay xuyên nhau', kt.loi.length === 0, kt.loi.length ? kt.loi.join(' | ') : `${kt.ok.length} mối nối đúng, ${kt.soTuyen} tuyến`);
 
   // 3. Đứng yên khi dừng
-  let a = await goc(pg); await cho(pg, 1500); let b = await goc(pg);
+  let a = await goc(pg); await choKhung(pg); let b = await goc(pg);
   ghi('Khi dừng: rotor, bơm, quạt tháp đứng yên', a.duc === b.duc && a.bomNL === b.bomNL && a.bomGN === b.bomGN && a.quat === b.quat);
   await chup(pg, '01-tong-the-luc-dung.jpg');
 
   // 4. Liên động: bật máy nén khi chưa có bơm
   await bam(pg, 'van-hanh', 'bat-may-nen');
-  await tuaNhanh(pg, 10); await cho(pg, 800);
+  await tuaNhanh(pg, 10);
+  await doiChu(pg, /chờ lưu lượng/i);
   let tt = await pg.evaluate(() => ({ s: window.__moPhong.vh.so.ttMN, tb: document.querySelector('.thong-bao').textContent }));
   ghi('Máy nén không chạy khi chưa có lưu lượng, giao diện giải thích', tt.s === 'cho-luu-luong' && /chờ lưu lượng/i.test(tt.tb), tt.tb.slice(0, 140));
 
   // 5. Chạy toàn hệ thống
   await pg.click('#nut-chay-het');
   await tuaNhanh(pg, 240); await cho(pg, 800);
-  a = await goc(pg); await cho(pg, 2500); b = await goc(pg);
+  await choKhung(pg, 3);
+  a = await goc(pg); await choKhung(pg); b = await goc(pg);
   const tiSo = (b.cai - a.cai) / (b.duc - a.duc);
   ghi('Khi chạy: rotor đực và cái quay ăn khớp (tỉ số −4:6)', b.duc !== a.duc && Math.abs(tiSo + 4 / 6) < 0.01, `tỉ số ${tiSo.toFixed(3)}`);
   ghi('Khi chạy: bánh công tác hai bơm, quạt tháp, quạt AHU quay', b.bomNL !== a.bomNL && b.bomGN !== a.bomGN && b.quat !== a.quat && b.ahu !== a.ahu);
@@ -95,7 +104,8 @@ try {
   // 6. Dòng chảy: hạt đi theo tuyến khi bơm chạy
   await bam(pg, 'hien-thi', 'xem-dong');
   await cho(pg, 1500);
-  a = await goc(pg); await cho(pg, 2000); b = await goc(pg);
+  await choKhung(pg, 3);
+  a = await goc(pg); await choKhung(pg); b = await goc(pg);
   ghi('Chế độ dòng chảy: hạt nước lạnh và nước giải nhiệt chuyển động', b.phaNL !== a.phaNL && b.phaGN !== a.phaGN);
   const hatTrenTuyen = await pg.evaluate(() => {
     const M = window.__moPhong, T = M.THREE, m = new T.Matrix4(), p = new T.Vector3();
@@ -116,8 +126,10 @@ try {
 
   // 7. Dừng bơm nước lạnh: máy nén ngừng, chờ lưu lượng, hạt nước lạnh dừng
   await bam(pg, 'van-hanh', 'bat-bom-nl');
-  await tuaNhanh(pg, 12); await cho(pg, 1200);
-  a = await goc(pg); await cho(pg, 1800); b = await goc(pg);
+  await tuaNhanh(pg, 12);
+  await doiChu(pg, /chờ lưu lượng/i);
+  await choKhung(pg, 3);
+  a = await goc(pg); await choKhung(pg); b = await goc(pg);
   tt = await pg.evaluate(() => ({ s: window.__moPhong.vh.so.ttMN, n: window.__moPhong.vh.so.nMayNen, tb: document.querySelector('.thong-bao').textContent }));
   ghi('Bơm nước lạnh dừng: máy nén ngừng và chờ lưu lượng', tt.s === 'cho-luu-luong' && tt.n < 0.01 && /chờ lưu lượng/i.test(tt.tb), tt.tb.slice(0, 120));
   ghi('Bơm nước lạnh dừng: hạt mạch nước lạnh và rotor đứng yên, mạch giải nhiệt vẫn chảy', a.phaNL === b.phaNL && a.duc === b.duc && a.phaGN !== b.phaGN);
@@ -169,9 +181,11 @@ try {
 
   // 9. Chọn thiết bị bằng chuột: bấm vào giữa tháp giải nhiệt và vào thân máy nén
   await pg.evaluate(() => window.__moPhong.ui.datGoc('tongThe', true)); await cho(pg, 1200);
-  for (const [ten, x, y, z, mong] of [['tháp', -4.4, 2.6, -5.6, /tháp|Vỏ|Khung|Cửa|đệm|quạt/i], ['máy nén', 0.2, 1.88, 0.0, /máy nén|Vỏ|chiller|động cơ|rotor|Hộp/i]]) {
+  for (const [ten, x, y, z, mong] of [['tháp', -4.4, 2.6, -5.5, /tháp/i], ['máy nén', 0.2, 1.97, 0.0, /máy nén|rotor|động cơ|hộp đấu dây/i]]) {
     const xy = await pg.evaluate(([x, y, z]) => {
-      const M = window.__moPhong, v = new M.THREE.Vector3(x, y, z).project(M.canh.camera), r = M.canh.renderer.domElement.getBoundingClientRect();
+      const M = window.__moPhong;
+      M.canh.camera.updateMatrixWorld();
+      const v = new M.THREE.Vector3(x, y, z).project(M.canh.camera), r = M.canh.renderer.domElement.getBoundingClientRect();
       return { x: r.left + ((v.x + 1) / 2) * r.width, y: r.top + ((1 - v.y) / 2) * r.height };
     }, [x, y, z]);
     await pg.mouse.click(xy.x, xy.y);

@@ -1,0 +1,105 @@
+{
+  "ngay": "2026-10-22T08:53:24.317Z",
+  "ketQua": [
+    {
+      "ten": "Mô hình hiển thị trên canvas WebGL",
+      "dat": true,
+      "chiTiet": "67 nhóm màu khác nhau trên lưới 24×24 điểm"
+    },
+    {
+      "ten": "Three.js và addon cùng phiên bản",
+      "dat": true,
+      "chiTiet": "REVISION 186, khai báo 0.186.1"
+    },
+    {
+      "ten": "Đầu ống nối đúng thiết bị, đúng mạch; ống không xuyên thiết bị hay xuyên nhau",
+      "dat": true,
+      "chiTiet": "19 mối nối đúng, 17 tuyến"
+    },
+    {
+      "ten": "Khi dừng: rotor, bơm, quạt tháp đứng yên",
+      "dat": true,
+      "chiTiet": ""
+    },
+    {
+      "ten": "Máy nén không chạy khi chưa có lưu lượng, giao diện giải thích",
+      "dat": true,
+      "chiTiet": "!Máy nén chờ lưu lượng: bơm nước lạnh đang dừng nên công tắc dòng chảy bình bay hơi hở; bơm giải nhiệt đang dừng nên công tắc dòng chảy bình"
+    },
+    {
+      "ten": "Khi chạy: rotor đực và cái quay ăn khớp (tỉ số −4:6)",
+      "dat": true,
+      "chiTiet": "tỉ số -0.667"
+    },
+    {
+      "ten": "Khi chạy: bánh công tác hai bơm, quạt tháp, quạt AHU quay",
+      "dat": true,
+      "chiTiet": ""
+    },
+    {
+      "ten": "Thông số giả lập hợp lý khi chạy ổn định",
+      "dat": true,
+      "chiTiet": "nước lạnh 7.0/11.0 °C, giải nhiệt 29.4/33.2 °C, COP 5.63"
+    },
+    {
+      "ten": "Chế độ dòng chảy: hạt nước lạnh và nước giải nhiệt chuyển động",
+      "dat": true,
+      "chiTiet": ""
+    },
+    {
+      "ten": "Hạt dòng chảy nằm đúng trên đường tâm tuyến ống",
+      "dat": true,
+      "chiTiet": "0 hạt lệch tuyến"
+    },
+    {
+      "ten": "Bơm nước lạnh dừng: máy nén ngừng và chờ lưu lượng",
+      "dat": true,
+      "chiTiet": "!Máy nén chờ lưu lượng: bơm nước lạnh đang dừng nên công tắc dòng chảy bình bay hơi hở. Máy nén chỉ chạy khi cả hai mạch"
+    },
+    {
+      "ten": "Bơm nước lạnh dừng: hạt mạch nước lạnh và rotor đứng yên, mạch giải nhiệt vẫn chảy",
+      "dat": true,
+      "chiTiet": ""
+    },
+    {
+      "ten": "Có lại lưu lượng: máy nén tự khởi động lại",
+      "dat": true,
+      "chiTiet": "chay"
+    },
+    {
+      "ten": "Mặt cắt bình bay hơi, bình ngưng, máy nén, bơm hoạt động",
+      "dat": true,
+      "chiTiet": "{\"bbh\":true,\"mn\":true,\"bom\":true,\"long\":true}"
+    },
+    {
+      "ten": "Tháo nắp hộp nước: nắp trượt ra, thấy mặt sàng và miệng ống",
+      "dat": true,
+      "chiTiet": ""
+    },
+    {
+      "ten": "Ẩn/hiện vỏ chiller, vỏ tháp, vỏ AHU",
+      "dat": true,
+      "chiTiet": "{\"thap\":true,\"ahu\":true,\"chiller\":true}"
+    },
+    {
+      "ten": "Chọn tháp bằng chuột: làm nổi bật và hiện tên, chức năng",
+      "dat": true,
+      "chiTiet": "Vỏ tháp (10 mesh nổi bật)"
+    },
+    {
+      "ten": "Chọn máy nén bằng chuột: làm nổi bật và hiện tên, chức năng",
+      "dat": true,
+      "chiTiet": "Vỏ máy nén (8 mesh nổi bật)"
+    },
+    {
+      "ten": "Bố cục điện thoại 400 px không tràn ngang",
+      "dat": true,
+      "chiTiet": "chênh 0px"
+    },
+    {
+      "ten": "Không có lỗi JavaScript trong suốt quá trình kiểm tra",
+      "dat": true,
+      "chiTiet": ""
+    }
+  ]
+}

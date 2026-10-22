@@ -291,8 +291,9 @@ export function dungThap() {
   dangKy('thap-xa', xa, { ten: 'Đường xả tràn và xả đáy', cha: 'thap', chucNang: 'Ống tràn giữ mực nước không vượt mức cho phép; van xả đáy dùng để xả cặn và tháo cạn bể, nước dẫn về rãnh thoát sàn.' });
 
   // Hạt nước rơi và hạt không khí
-  const giot = new THREE.InstancedMesh(dungChung('giotThap', () => { const g = new THREE.SphereGeometry(0.02, 6, 4); g.scale(1, 2.8, 1); return g; }), VL.giot, 520);
+  const giot = new THREE.InstancedMesh(dungChung('giotThap', () => { const g = new THREE.SphereGeometry(0.022, 6, 4); g.scale(1, 3.6, 1); return g; }), VL.giot, 520);
   giot.frustumCulled = false;
+  giot.renderOrder = 3; // vẽ sau tấm đệm bán trong suốt
   goc.add(giot);
   hoatAnh.giot = { mesh: giot, nua: H - 0.1, yTren: T.yPhun - 0.1, yDuoi: T.yNuoc, yDem: T.yDem };
   const khi = new THREE.InstancedMesh(dungChung('muiKhi', () => { const g = new THREE.ConeGeometry(0.045, 0.14, 8); return g; }), new THREE.MeshStandardMaterial({ color: '#9fb3c2', roughness: 0.6, transparent: true, opacity: 0.85 }), 180);

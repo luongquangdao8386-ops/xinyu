@@ -38,7 +38,7 @@ export function taoVatLieu() {
     betong: chuan('#bdbbb4', 0.95, 0),
     frp: chuan('#cfd7dc', 0.6, 0.05), // vỏ tháp composite
     frpDam: chuan('#7d8b95', 0.55, 0.15),
-    fill: chuan('#eef3f5', 0.75, 0, { side: THREE.DoubleSide, transparent: true, opacity: 0.72 }),
+    fill: chuan('#eef3f5', 0.75, 0, { side: THREE.DoubleSide, transparent: true, opacity: 0.55 }),
     tamAHU: chuan('#e5e8ea', 0.5, 0.1),
     tuDien: chuan('#d5d8d3', 0.55, 0.1),
     loc: chuan('#f4f1e6', 0.9, 0, { side: THREE.DoubleSide }),

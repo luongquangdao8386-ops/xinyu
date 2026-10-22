@@ -234,7 +234,7 @@ export function taoGiaoDien({ canh, tb, ong, vh, ha }) {
   }
   const GOC_TB = {
     chiller: [26, 42], 'ch-mn': [24, 18], 'ch-bbh': [22, 28], 'ch-bn': [30, 160], 'ch-bbh-hop': [14, -62], 'ch-tu': [12, 88], 'ch-exv': [22, 62],
-    thap: [24, 48], 'bom-nl': [26, 68], 'bom-gn': [26, 112], ahu: [22, 58], bgn: [20, 55],
+    thap: [24, 48], 'bom-nl': [34, 52], 'bom-gn': [34, 128], ahu: [22, 58], bgn: [20, 55],
   };
   function phongTo(ma, tucThi = false) {
     const m = thanhPhan.get(ma);
@@ -294,7 +294,7 @@ export function taoGiaoDien({ canh, tb, ong, vh, ha }) {
     dangChon = m;
     lamNoiBat(m);
     the.hidden = false;
-    the.replaceChildren(
+    the.replaceChildren(...[
       h('div', { class: 'the-dau' },
         h('div', {}, m.the ? h('span', { class: 'the-nho' }, m.the) : null, h('h3', {}, m.ten),
           h('p', { class: 'duong-dan' }, chuoiCha(ma))),
@@ -307,7 +307,7 @@ export function taoGiaoDien({ canh, tb, ong, vh, ha }) {
         h('button', { class: 'nut nho', onclick: () => datHien(ma, false) }, 'Ẩn'),
         h('button', { class: 'nut nho', onclick: () => coLapMa(ma) }, 'Chỉ xem mục này'),
         h('button', { class: 'nut nho', onclick: hienTatCa }, 'Hiện tất cả')),
-    );
+    ].filter(Boolean));
     capNhatSoThe();
     for (const [k, r] of hangCay) r.ten.classList.toggle('dang-chon', k === ma);
   }

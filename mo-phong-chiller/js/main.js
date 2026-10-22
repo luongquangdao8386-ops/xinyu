@@ -67,7 +67,7 @@ function khoiDong() {
 
   const dongHo = new THREE.Timer();
   dongHo.connect(document);
-  let soKhung = 0, tgDo = 0, fps = 0;
+  let soKhung = 0, tgDo = 0, fps = 0, tongKhung = 0;
   function vong(thoiDiem) {
     requestAnimationFrame(vong);
     dongHo.update(thoiDiem);
@@ -83,7 +83,7 @@ function khoiDong() {
     ui.capNhat(dt);
     canh.renderer.render(canh.scene, canh.camera);
     canh.lopNhan.render(canh.scene, canh.camera);
-    soKhung++; tgDo += dt;
+    soKhung++; tongKhung++; tgDo += dt;
     if (tgDo > 1) { fps = soKhung / tgDo; soKhung = 0; tgDo = 0; }
   }
   requestAnimationFrame(vong);
@@ -93,6 +93,7 @@ function khoiDong() {
     canh, tb, ong, vh, ui, ha, THREE, phienBan: PHIEN_BAN_THREE,
     kiemTra: () => kiemTraDuongOng(tb, ong),
     fps: () => fps,
+    soKhungDaVe: () => tongKhung,
     thongKe: () => canh.renderer.info.render,
   };
   document.body.dataset.sanSang = '1';

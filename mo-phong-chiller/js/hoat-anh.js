@@ -135,7 +135,7 @@ export function taoHoatAnh(tb, ong) {
     for (let i = 0; i < nG; i++) {
       if (i >= nGH) { if (nGHien !== nGH) giot.mesh.setMatrixAt(i, AN); continue; }
       const trongDem = gy[i] < giot.yDem[1] && gy[i] > giot.yDem[0];
-      gy[i] -= (trongDem ? 0.55 : 2.4) * dt;
+      gy[i] -= (trongDem ? 1.0 : 1.9) * dt; // chậm lại khi chảy thành màng trên tấm đệm
       if (gy[i] < giot.yDuoi) { gy[i] = giot.yTren - Math.random() * 0.05; gx[i] = ngauNhien(-giot.nua, giot.nua); gz[i] = ngauNhien(-giot.nua, giot.nua); }
       giot.mesh.setMatrixAt(i, m4.makeTranslation(gx[i], gy[i], gz[i]));
     }

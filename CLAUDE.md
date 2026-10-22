@@ -6,7 +6,7 @@ App cá nhân học tiếng Trung và luyện thi HSK 3.0 cho một người dù
 
 1. Đọc `docs/tien-do.md` trước tiên.
 2. Làm việc người dùng giao. Nếu người dùng chỉ nói “làm tiếp”, làm việc chưa xong đầu tiên theo thứ tự khuyến nghị trong `docs/tien-do.md`.
-3. Đặc tả `docs/dac-ta.md` (bản 1.9) dài gần 1.000 dòng: không đọc hết. Tìm vị trí các mục bằng `grep -n '^##' docs/dac-ta.md`, rồi chỉ đọc những mục ghi trong bảng dưới.
+3. Đặc tả `docs/dac-ta.md` (bản 1.10) dài gần 1.000 dòng: không đọc hết. Tìm vị trí các mục bằng `grep -n '^##' docs/dac-ta.md`, rồi chỉ đọc những mục ghi trong bảng dưới.
 4. Mỗi phiên làm một việc. Chạy thử hoặc kiểm tra trước khi commit.
 5. Cuối phiên: đánh dấu việc đã xong, ghi một dòng vào Nhật ký trong `docs/tien-do.md` (đã làm gì, phiên sau cần biết gì), commit, rồi đẩy lên `main`. Chủ repo đã đồng ý đẩy thẳng lên `main`.
 
@@ -51,7 +51,10 @@ App cá nhân học tiếng Trung và luyện thi HSK 3.0 cho một người dù
 - Google Sheet nội dung (công bố dạng .xlsx, tự cập nhật sau vài phút): `https://docs.google.com/spreadsheets/d/e/2PACX-1vQnaG34ixtjKtqfgf6IFNRp9s5t9XEfqOOb_-QCQLWn_qNbdlHNDW1gX2j3fCgC9GtPsnpnsso-MaqD/pub?output=xlsx`. Khi người dùng nói “xây nội dung”, chạy công cụ với đường dẫn này.
 - Xây nội dung từ Google Sheet: `node tools/xay-noi-dung.mjs <tệp .xlsx | thư mục CSV | đường dẫn .xlsx>`, ghi JSON vào `content/` và in báo cáo kiểm tra; mã thoát 1 khi dòng “đã kiểm tra” có lỗi. Lần đầu tự tải CC-CEDICT qua npm vào `tools/.cache/`.
 - Sinh lại mẫu Sheet và `docs/mau-sheet.md` sau khi sửa `tools/lib/cau-truc.mjs`: `node tools/tao-mau-sheet.mjs`.
-- Lộ trình bài HSK 1: sửa `tools/lo-trinh/hsk1.mjs`, rồi chạy `node tools/tao-lo-trinh.mjs` (kiểm tra đủ 300 từ, 70 điểm ngữ pháp; sinh `docs/lo-trinh-hsk1.md` và `tools/mau/bai-hsk1.csv`) và `node tools/tao-mau-sheet.mjs`.
+- Lộ trình bài HSK 1: sửa `tools/lo-trinh/hsk1.mjs`, rồi chạy `node tools/tao-lo-trinh.mjs` (kiểm tra đủ 300 từ, 70 điểm ngữ pháp; sinh `docs/lo-trinh-hsk1.md`, `tools/mau/bai-hsk1.csv` và `content/lo-trinh.json` cho app) và `node tools/tao-mau-sheet.mjs`.
 - Soạn nội dung (A4, A7…): viết vào `tools/noi-dung/<việc>.mjs` (mỗi tab một mảng, theo tên trường JSON của `tools/lib/cau-truc.mjs`), rồi chạy `node tools/dien-noi-dung.mjs <đường dẫn Sheet công bố>`: đọc Sheet, chỉ điền ô trống và thêm dòng mới, ghi `tools/ra/xinyu-noi-dung.xlsx`, chạy thử kiểm tra trên các dòng vừa soạn (phải 0 lỗi). Gửi tệp cho người dùng nhập bằng Tệp > Nhập > Tải lên > Thay thế bảng tính; dòng mới để “nháp” cho người dùng tự xem rồi đổi sang “đã kiểm tra”.
 - Tạo âm thanh mẫu sau mỗi lần xây nội dung: `node tools/tao-am-thanh.mjs` (`--thu` để xem trước, `--lam-lai <mã>` để tạo lại một mục). Tạo MP3 cho âm tiết, từ, câu mới hoặc đã sửa vào `audio/`, tự kiểm tra thanh điệu, ghi trang nghe duyệt `tools/ra/nghe-duyet.html`. Đăng lại trang đó vào Artifact `https://claude.ai/artifact/Fux3aY5A32rjeQuYWBjyEJ` (truyền `url`) để người dùng nghe; tệp người dùng đánh dấu “Cần sửa” đọc bằng ArtifactData, bộ sưu tập `canSua`. Đổi giọng hoặc ép cách đọc riêng một mục ở `tools/am-thanh/cau-hinh.mjs`.
-- Kiểm thử công cụ: `node --test 'tools/kiem-thu/*.test.mjs'`.
+- Font của app: `node tools/tao-font.mjs` sau mỗi lần xây nội dung có chữ Hán mới (cắt font Noto theo chữ trong `content/` và `app/`, ghi `vendor/font/`). Số tệp font đổi thì sửa danh sách lưu sẵn trong `sw.js`.
+- Chạy app trên máy: `python3 -m http.server 8765` ở thư mục cha của repo rồi mở `http://127.0.0.1:8765/xinyu/` (giống đường dẫn GitHub Pages). Chạy thử tự động bằng Playwright có sẵn ở `/opt/node-tools/node_modules/playwright`; github.io bị chặn trong môi trường cloud.
+- Thêm tệp vào `app/`, `vendor/font/` hoặc `content/`: thêm vào `LUU_SAN` trong `sw.js`; đổi cách lưu của service worker thì tăng `BAN`.
+- Kiểm thử công cụ và app: `node --test 'tools/kiem-thu/*.test.mjs'`.

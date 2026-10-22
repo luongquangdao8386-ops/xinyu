@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Kiểm tra lộ trình Nền phát âm và HSK 1 (tools/lo-trinh/hsk1.mjs) với đề cương thi, rồi sinh:
-// docs/lo-trinh-hsk1.md (bảng bài) và tools/mau/bai-hsk1.csv (nhập vào tab Bai của Google Sheet).
+// docs/lo-trinh-hsk1.md (bảng bài), tools/mau/bai-hsk1.csv (nhập vào tab Bai của Google Sheet) và
+// content/lo-trinh.json (danh sách bài theo lộ trình cho app, gồm cả bài chưa soạn).
 //
 // Cách dùng: node tools/tao-lo-trinh.mjs   (mã thoát 1 khi lộ trình sai)
 
@@ -9,6 +10,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { TAB } from './lib/cau-truc.mjs';
+import { vietJson } from './lib/json.mjs';
 import { CUM } from './lo-trinh/hsk1.mjs';
 
 const GOC = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -117,5 +119,14 @@ const dong = [
 ];
 writeFileSync(join(GOC, 'tools', 'mau', 'bai-hsk1.csv'), '﻿' + dong.map((h) => h.map(csv).join(',')).join('\r\n') + '\r\n');
 
-console.log(`${bai.length} bài, ${daGap.size} từ, ${npGap.size} điểm ngữ pháp. Đã ghi docs/lo-trinh-hsk1.md và tools/mau/bai-hsk1.csv`);
+// ---------- content/lo-trinh.json ----------
+// App dùng để biết thứ tự toàn bộ bài (kể cả bài chưa soạn) khi chọn điểm bắt đầu và tính kế hoạch.
+const loTrinh = CUM.map((c) => ({
+  cum: c.ten,
+  chang: c.bai[0].ma.startsWith('PA') ? 'Nền phát âm' : 'HSK 1',
+  bai: c.bai.map((b) => ({ ma: b.ma, chuDe: b.chuDe, mucTieu: b.mucTieu })),
+}));
+writeFileSync(join(GOC, 'content', 'lo-trinh.json'), vietJson(loTrinh) + '\n');
+
+console.log(`${bai.length} bài, ${daGap.size} từ, ${npGap.size} điểm ngữ pháp. Đã ghi docs/lo-trinh-hsk1.md, tools/mau/bai-hsk1.csv và content/lo-trinh.json`);
 for (const g of ghiChu) console.log(`Ghi chú: ${g}`);

@@ -1,6 +1,6 @@
 # Tiến độ Xinyu
 
-**Cập nhật:** 22/10/2026. **Việc tiếp theo:** B1.1.
+**Cập nhật:** 22/10/2026. **Việc tiếp theo:** B1.2.
 
 **Thứ tự khuyến nghị:** A1 → A2 → A3 → A4 → A5 → B1.1 → B1.2 → B1.3, sau đó soạn các cụm A7 xen kẽ với B1.4–B1.8. Như vậy Nền phát âm chạy được trong app sớm, không phải đợi soạn xong toàn bộ HSK 1.
 
@@ -35,7 +35,11 @@ Mỗi việc dưới đây làm trong một phiên. “Cần” là thứ ngư�
 
 ## Giai đoạn B1 — Lõi học tập
 
-- [ ] **B1.1 Khung app:** cấu trúc thư mục, giao diện chung (màu, font, 5 tab), service worker, IndexedDB, bật GitHub Pages; màn 01–04.
+- [x] **B1.1 Khung app:** cấu trúc thư mục, giao diện chung (màu, font, 5 tab), service worker, IndexedDB, bật GitHub Pages; màn 01–04. Đặc tả 1.10 (mục 12.1).
+  - Mã ở gốc repo: `index.html`, `sw.js`, `manifest.webmanifest`, `app/` (CSS, `app/js/` mỗi màn một module trong `man/`, biểu tượng dấu son 新), `vendor/font/` (Noto cắt theo chữ trong nội dung, 239 KB, công cụ `tools/tao-font.mjs`). `content/lo-trinh.json` cho app biết toàn bộ 56 bài.
+  - Màn 01–04 làm đủ; tab Hôm nay hiện bài tiếp theo, tab Tôi xem và sửa hồ sơ, xin lưu trữ lâu dài, thiết lập lại; Lộ trình, Luyện tập, Thư viện ghi “đang xây” kèm việc sẽ làm.
+  - Chạy thử bằng Chromium (khổ iPhone 13 và máy tính 1280 px): đi hết 01 → 05, tải lại vẫn giữ hồ sơ, mở được khi ngoại tuyến, không lỗi console, không cuộn ngang. 4 kiểm thử mới (kế hoạch, danh sách lưu sẵn của service worker, manifest, module).
+  - **Người dùng cần làm:** bật GitHub Pages (Settings > Pages > Source: Deploy from a branch > `main`, thư mục `/ (root)` > Save), rồi mở `https://luongquangdao8386-ops.github.io/xinyu/` bằng Safari trên iPhone và Thêm vào MH chính. Môi trường cloud không mở được github.io nên chưa kiểm tra trên trang thật.
 - [ ] **B1.2 Lộ trình và bài học:** 05, 06, 07, 08, 39, 42, 34A.
 - [ ] **B1.3 Hoạt động trong bài:** 09, 09A, 09B, 10, 11, 12, 35.
 - [ ] **B1.4 Luyện chữ:** 13, 13A–13D (Hanzi Writer).
@@ -77,3 +81,4 @@ Mỗi việc dưới đây làm trong một phiên. “Cần” là thứ ngư�
 | 21/10/2026 | So sánh Google, Azure, Polly cho A5; người dùng chọn Azure | Hướng dẫn người dùng tạo tài nguyên Speech (F0, southeastasia), thêm khóa vào biến môi trường và tên miền vào danh sách cho phép; A5 làm ở phiên mới khi khóa đã có |
 | 21/10/2026 | Đổi dịch vụ giọng máy A5 sang Google Cloud TTS | Microsoft chặn tạo tài khoản (“unusual activity”) nên bỏ Azure. Đã gửi hướng dẫn tạo dự án, bật API, tạo khóa API giới hạn và thêm vào môi trường cloud; A5 làm ở phiên mới khi khóa đã có |
 | 22/10/2026 | A5: công cụ tạo âm thanh, âm thanh Nền phát âm, trang nghe duyệt, đặc tả 1.9 | Ép cách đọc bằng SSML `<phoneme alphabet="pinyin" ph="huan2">还</phoneme>` (ü viết v, thanh nhẹ 5, âm cuốn lưỡi r5): Wavenet bỏ qua `customPronunciations`, chỉ nhận thẻ này; Chirp 3 HD nhận cả hai. Khi bị ép, giọng máy vẫn tự biến điệu 3-3 nhưng không tự biến điệu 一, 不, nên ép theo Pinyin hiển thị. Ép riêng một chữ giữa từ có thể làm hỏng ngữ điệu (不 trong 对不起), vì vậy công cụ thử ba cách đọc và giữ bản khớp nhất. Âm thanh cho A7 tạo bằng cùng lệnh sau mỗi lần xây nội dung; câu trên 4 âm tiết không tự kiểm thanh điệu, phải nghe. Quota Chirp 3 HD thấp (lỗi 429 khi gửi nhiều yêu cầu), Wavenet không vướng. B1 cần: phát chậm bằng `playbackRate` khoảng 0,75; làm mới bộ nhớ đệm âm thanh theo mã băm trong `audio/danh-sach.json` |
+| 22/10/2026 | B1.1: khung app, màn 01–04, IndexedDB, service worker, font cắt sẵn, biểu tượng; đặc tả 1.10 | Không có bảng ảnh trong `design/` nên giao diện dựng theo mục 8 (màu 8.1, font 8.4, bố cục 8.5). Màn 04 ước tính 45 phút mỗi bài (khung 12 tuần). Màn 02 chỉ cho chọn HSK 1; màn 03 chỉ cho chọn bài đã có trong `content/bai.json`, nên sau mỗi cụm A7 các bài mới tự mở. B1.2 làm màn 05 thật, 06, 07, 08, 39, 42, 34A và phát âm thanh (tốc độ chậm bằng `playbackRate`, làm mới bộ nhớ đệm theo mã băm). Chưa xác nhận GitHub Pages đã bật |

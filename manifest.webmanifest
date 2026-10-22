@@ -1,0 +1,17 @@
+{
+  "name": "Xinyu 新语",
+  "short_name": "Xinyu",
+  "description": "Học tiếng Trung và luyện thi HSK 3.0, giải thích bằng tiếng Việt.",
+  "lang": "vi",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FBF6EE",
+  "theme_color": "#FBF6EE",
+  "icons": [
+    { "src": "app/hinh/bieu-tuong-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "app/hinh/bieu-tuong-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "app/hinh/bieu-tuong-mask-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

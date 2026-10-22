@@ -1,6 +1,6 @@
 ---
 title: "Xinyu — Đặc tả ứng dụng học tiếng Trung và luyện thi HSK"
-version: "1.9"
+version: "1.10"
 brand_chinese: "新语"
 brand_pinyin: "Xīnyǔ"
 date: "2026-10-22"
@@ -356,7 +356,7 @@ Mỗi điểm ngữ pháp có phần so sánh với tiếng Việt và lỗi ng�
 - **Lịch học:** các ngày đã học hiện dạng ô theo ngày, kèm số phút. Không có thưởng chuỗi ngày, huy hiệu hay điểm.
 - **Chế độ “Chỉ có 5 phút”** trên màn Hôm nay: chỉ ôn thẻ đến hạn, thẻ quá hạn lâu nhất trước, dừng sau 5 phút. Dùng cho ngày bận để không đứt thói quen.
 - **Dự báo ôn:** số thẻ đến hạn trong 7 ngày tới. Khi số thẻ của ngày mai vượt 1,5 lần mức trung bình 14 ngày gần nhất, màn Hôm nay đề xuất học ít từ mới hơn.
-- **Ước tính hoàn thành:** ngày dự kiến học xong cấp đang học theo tốc độ trung bình 14 ngày gần nhất, so với ngày thi.
+- **Ước tính hoàn thành:** ngày dự kiến học xong cấp đang học theo tốc độ trung bình 14 ngày gần nhất, so với ngày thi. Khi chưa có dữ liệu học (màn 04 lúc thiết lập), ước tính khoảng 45 phút cho mỗi bài kể cả ôn tập, theo khung 12 tuần ở mục 4.3 (56 bài, 84 ngày, 30 phút mỗi ngày), và giả định học mỗi ngày.
 - **Nước rút:** từ 28 ngày trước ngày thi, mỗi tuần một bài thi thử đầy đủ; buổi học hằng ngày ưu tiên sổ lỗi, cặp dễ nhầm và dạng bài yếu nhất; bài mới chỉ học khi còn bài chưa học trong cấp thi. Màn Kế hoạch (04) hiện ngày bắt đầu nước rút.
 
 ## 6. Luyện thi HSK
@@ -556,7 +556,7 @@ Màn bài học tập trung, kiểm tra và thi thử ẩn thanh điều hướn
 - Nội dung và điều khiển: Noto Sans.
 - Chữ Hán: Noto Sans SC cho nội dung, Noto Serif SC cho tiêu đề. Mọi đoạn chữ Hán gắn `lang="zh-CN"` để máy dùng đúng tự dạng giản thể.
 - Kiểm tra trước khi chốt font: hiển thị đủ ā á ǎ à, ē é ě è, ī í ǐ ì, ō ó ǒ ò, ū ú ǔ ù, ǖ ǘ ǚ ǜ ü; các chữ 直, 骨, 角 hiện đúng tự dạng giản thể.
-- Font chữ Hán dùng bản chia nhỏ của Google Fonts hoặc tự cắt theo danh sách chữ có trong nội dung, để trang tải nhanh và chạy được khi không có mạng.
+- Font chữ Hán dùng bản chia nhỏ của Google Fonts hoặc tự cắt theo danh sách chữ có trong nội dung, để trang tải nhanh và chạy được khi không có mạng. Đang dùng cách cắt: `tools/tao-font.mjs` tải từ Google Fonts các font Noto chỉ gồm chữ Hán có trong `content/` và mã giao diện (chữ Latin lấy đủ tiếng Việt và Pinyin) về `vendor/font/`; chạy lại sau mỗi lần xây nội dung có chữ mới.
 
 ### 8.5. Bố cục máy tính
 
@@ -801,6 +801,14 @@ Thay cho bước rà soát chuyên môn, mỗi phần nội dung đi qua các b�
 | Đồng bộ | Google Apps Script + Google Sheet, bảo vệ bằng mã PIN 6 số (B2) |
 | AI | Gọi qua Apps Script; khóa API lưu trong Script Properties (C) |
 
+**Mã app (từ B1.1):**
+
+- Ở gốc repo, chạy thẳng không cần bước build: `index.html`, `manifest.webmanifest`, `sw.js` (service worker), `app/css/`, `app/js/` (module JavaScript, mỗi màn một tệp trong `app/js/man/`), `app/hinh/` (biểu tượng: dấu son chữ 新), `vendor/font/`. Mọi đường dẫn là tương đối để chạy ở GitHub Pages (`https://luongquangdao8386-ops.github.io/xinyu/`).
+- Chuyển màn theo địa chỉ `#/ten-man` (ví dụ `#/hom-nay`, `#/ke-hoach/sua` khi mở lại màn thiết lập để sửa). Chưa thiết lập xong thì chỉ vào được 01–04.
+- IndexedDB tên `xinyu`; mỗi bản ghi có `capNhat`. Kho `caiDat`, khóa `hoSo`: mục tiêu (`hoc`, `thi`, `ca-hai`), cấp mục tiêu, điểm bắt đầu (mã bài), thời lượng mỗi ngày, ngày thi, đã thiết lập xong. Kho mới thêm bằng nâng phiên bản cơ sở dữ liệu trong `app/js/kho.mjs`.
+- Service worker lưu sẵn khung app, font, `content/*.json` và `audio/danh-sach.json`; trang và nội dung lấy bản mới trên mạng trước (chờ tối đa 3 giây) rồi mới dùng bản đã lưu; font và âm thanh dùng bản đã lưu trước, âm thanh lưu khi đã mở. Thêm tệp vào app thì thêm vào danh sách lưu sẵn trong `sw.js` (kiểm thử báo khi thiếu).
+- `content/lo-trinh.json` (sinh bằng `tools/tao-lo-trinh.mjs`) liệt kê mọi bài theo lộ trình, kể cả bài chưa soạn; `content/bai.json` chỉ có bài đã soạn. Màn 03 chỉ cho chọn bài đã soạn.
+
 ### 12.2. Lưu dữ liệu trên iPhone
 
 - Cài app ra Màn hình chính và mở app từ đó, để dữ liệu ít có nguy cơ bị Safari xóa khi lâu không mở trang.
@@ -947,6 +955,11 @@ Các nguồn được tra cứu ngày 17/10/2026 và 21/10/2026. Khi xây nội 
 - Mã màn 31–33 giữ trong danh mục ở trạng thái “Bỏ” để đối chiếu bảng ảnh; không dùng lại các mã này cho màn mới.
 
 ## Phụ lục A — Lịch sử thay đổi
+
+### Bản 1.10 (22/10/2026)
+
+- Mã app ở gốc repo, IndexedDB, service worker, `content/lo-trinh.json` (mục 12.1); font cắt theo chữ trong nội dung bằng `tools/tao-font.mjs` (mục 8.4).
+- Màn 04 ước tính khoảng 45 phút cho mỗi bài khi chưa có dữ liệu học (mục 5.10).
 
 ### Bản 1.9 (22/10/2026)
 

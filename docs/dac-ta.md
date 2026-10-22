@@ -1,9 +1,9 @@
 ---
 title: "Xinyu — Đặc tả ứng dụng học tiếng Trung và luyện thi HSK"
-version: "1.8"
+version: "1.9"
 brand_chinese: "新语"
 brand_pinyin: "Xīnyǔ"
-date: "2026-10-21"
+date: "2026-10-22"
 language: "vi-VN"
 status: "Đã chốt đặc tả; app dùng cá nhân; chưa triển khai"
 ---
@@ -761,7 +761,7 @@ Thay cho bước rà soát chuyên môn, mỗi phần nội dung đi qua các b�
 3. Kiểm tra câu ví dụ, bài đọc và truyện chỉ dùng từ đã học và từ của bài (truyện thêm tối đa 3 từ mới). Từ đã học là từ của các bài có thứ tự nhỏ hơn hoặc bằng bài chứa câu; tên riêng khai trong bài không tính là từ mới.
 4. Kiểm tra cách ghi 一 và 不 trong Pinyin hiển thị; trường hợp ngoại lệ xem lại bằng tay.
 5. Kiểm tra từ Hán Việt, nhất là các từ ghi “bẫy nghĩa”.
-6. Nghe lại toàn bộ âm thanh.
+6. Nghe lại toàn bộ âm thanh trên trang nghe duyệt của công cụ tạo âm thanh (mục 12.8); máy tự kiểm tra thanh điệu trước và đưa những tệp lệch lên đầu trang.
 7. Trong app, nút “Báo lỗi” trên thẻ từ, câu và câu hỏi ghi vào danh sách nội dung cần sửa (xem ở màn 29).
 8. Khi có thể, nhờ giáo viên hoặc người bản xứ xem mẫu một số bài.
 
@@ -810,9 +810,12 @@ Thay cho bước rà soát chuyên môn, mỗi phần nội dung đi qua các b�
 ### 12.3. Âm thanh mẫu
 
 - Từ, câu, hội thoại và truyện: tạo sẵn bằng giọng máy neural tiếng Phổ thông, nghe duyệt trước khi dùng; tên tệp theo mã nội dung. Mỗi câu có tệp riêng để dùng cho nhại theo và đóng vai.
-- Âm tiết, thanh điệu và cặp thanh ở Nền phát âm: ưu tiên ghi âm người thật; nếu dùng giọng máy thì nghe kỹ thanh nhẹ và biến điệu.
-- Đường cao độ của âm thanh mẫu được tính sẵn khi tạo âm thanh.
-- Có hai tốc độ phát: bình thường và chậm.
+- Âm tiết, thanh điệu và cặp thanh ở Nền phát âm: ưu tiên ghi âm người thật; hiện dùng giọng máy, có kiểm tra thanh điệu tự động và nghe kỹ thanh nhẹ, biến điệu.
+- Giọng máy: Google Cloud Text-to-Speech. Giọng cmn-CN-Wavenet-A (nữ) đọc âm tiết, từ, câu và vai xuất hiện trước trong mỗi hội thoại; cmn-CN-Wavenet-C (nam) đọc vai sau. Chọn bằng đo thanh điệu: khi đọc riêng 173 âm tiết ví dụ của Nền phát âm, các giọng Wavenet đúng thanh cả 173, các giọng Chirp 3 HD chỉ đúng 158–168 và cho kết quả khác nhau mỗi lần gọi. Khi có giọng tốt hơn thì đổi trong cấu hình của công cụ (mục 12.8) và tạo lại.
+- Cách đọc: âm tiết đọc riêng luôn ép theo Pinyin bằng thẻ SSML `phoneme` vì chữ đứng một mình hay bị đọc theo âm khác (还 thành hái thay cho huán). Từ và câu đọc thường để giữ ngữ điệu, chỉ ép theo Pinyin hiển thị các âm tiết thanh nhẹ và chữ 一, 不 (giọng máy từng đọc 喜欢 thành xǐhuān, 一下 không lên giọng ở 一); mục nào vẫn lệch thì công cụ thử ép cả đoạn hoặc đọc thường và giữ bản khớp nhất. Biến điệu thanh 3 giọng máy tự làm.
+- Tệp: MP3 một kênh 24 kHz, 48 kbps, đã cắt lặng hai đầu và chuẩn âm lượng: `audio/am-tiet/<Pinyin số>.mp3` (ma1, lv4), `audio/tu/<mã từ>.mp3`, `audio/cau/<mã câu>.mp3`. `audio/danh-sach.json` ghi giọng, chữ đã đọc (đoạn bị ép ghi trong ngoặc vuông kèm Pinyin số), thời lượng và mã băm của từng tệp cùng cao độ trung bình của từng giọng; app dùng mã băm để làm mới bộ nhớ đệm khi tệp được tạo lại. Trường âm thanh của từ, câu, cặp thanh và câu hỏi nghe (mục 11.5) ứng với các tệp này theo mã, không ghi trong JSON nội dung.
+- Đường cao độ của âm thanh mẫu được tính sẵn khi tạo âm thanh: `audio/cao-do/am-tiet.json`, `tu.json`, `cau.json`, mỗi tệp một mảng Hz theo khung 10 ms tính từ đầu tệp, 0 là khung không có thanh.
+- Có hai tốc độ phát: bình thường và chậm. Tốc độ chậm do app giảm tốc độ phát (khoảng 0,75, giữ cao độ), không tạo tệp riêng.
 
 ### 12.4. Ghi âm và đường cao độ
 
@@ -844,7 +847,7 @@ Thay cho bước rà soát chuyên môn, mỗi phần nội dung đi qua các b�
 - Script `tools/xay-noi-dung.mjs` đọc tệp .xlsx tải từ Google Sheet, đường dẫn “Công bố lên web” dạng .xlsx của cả bảng tính, hoặc thư mục CSV (mỗi tab một tệp). Script chuyển dữ liệu thành JSON trong `content/` (mỗi tab một tệp), chạy các bước kiểm tra 1–4 ở mục 11.6 và in báo cáo. Chỉ dòng “đã kiểm tra” và không có lỗi được xuất; dòng cần đến một dòng chưa xuất được (ví dụ bài có từ còn nháp) cũng không được xuất.
 - Bước 2 đối chiếu với CC-CEDICT lấy từ gói npm `cedict-json` (phiên bản cố định, có kiểm tra mã băm), lưu tạm trong `tools/.cache/`, không đưa vào repo.
 - Môi trường cloud chặn docs.google.com: gửi tệp .xlsx tải về cho Claude, hoặc thêm docs.google.com vào danh sách tên miền được phép trong cài đặt mạng của môi trường.
-- Script `tools/tao-am-thanh` tạo MP3 cho từ, câu và truyện mới hoặc đã sửa, đồng thời tính sẵn đường cao độ của âm thanh mẫu. Khóa dịch vụ giọng máy đặt trong biến môi trường (tệp `.env`, không đưa lên repo).
+- Script `tools/tao-am-thanh.mjs` đọc JSON trong `content/`, tạo MP3 cho âm tiết ví dụ của Nền phát âm, từ và câu (truyện là chuỗi câu) mới hoặc đã sửa (so với dấu vết yêu cầu ghi trong `audio/danh-sach.json`), đồng thời tính sẵn đường cao độ (dò kiểu YIN, chọn đường liền mạch giữa các khung). Script tự kiểm tra thanh điệu của mục tối đa 4 âm tiết theo hướng đi của đường cao độ (thanh 1 phẳng, thanh 2 lên ở cuối, thanh 4 rơi, thanh nhẹ không cao phẳng như thanh 1…; tính cả biến điệu thanh 3 và nửa thanh), rồi ghi trang nghe duyệt `tools/ra/nghe-duyet.html` (không đưa lên repo): nghe từng tệp, xem đường cao độ, đánh dấu tệp cần sửa. Đăng trang này thành Artifact có kho dữ liệu thì đánh dấu lưu ở bộ sưu tập `canSua` để Claude đọc ở phiên sau. Giọng và cách đọc riêng từng mục ở `tools/am-thanh/cau-hinh.mjs`. Khóa dịch vụ giọng máy không nằm trong repo: trong môi trường cloud, proxy tự gắn khóa (network secret của host texttospeech.googleapis.com); máy khác ghi `GOOGLE_TTS_KEY` trong tệp `.env`. Cần ffmpeg có libmp3lame.
 - Danh sách nội dung cần sửa xuất từ app (màn 29) được dán vào tab CanSua để xử lý.
 - Nội dung Claude soạn nằm trong `tools/noi-dung/`. Script `tools/dien-noi-dung.mjs` đọc Sheet hiện tại, chỉ điền ô trống và thêm dòng chưa có (dòng mới để “nháp”), ghi một tệp .xlsx để nhập lại bằng “Thay thế bảng tính”, rồi chạy thử bước 1–4 của mục 11.6 trên các dòng vừa soạn.
 
@@ -944,6 +947,11 @@ Các nguồn được tra cứu ngày 17/10/2026 và 21/10/2026. Khi xây nội 
 - Mã màn 31–33 giữ trong danh mục ở trạng thái “Bỏ” để đối chiếu bảng ảnh; không dùng lại các mã này cho màn mới.
 
 ## Phụ lục A — Lịch sử thay đổi
+
+### Bản 1.9 (22/10/2026)
+
+- Âm thanh mẫu (mục 12.3): giọng Google Cloud Text-to-Speech Wavenet chọn bằng đo thanh điệu; hội thoại đọc hai giọng theo vai; âm tiết đọc riêng ép theo Pinyin, từ và câu chỉ ép thanh nhẹ và 一, 不; thư mục `audio/`, danh sách tệp và đường cao độ; tốc độ chậm do app giảm tốc độ phát, không tạo tệp riêng.
+- Công cụ tạo âm thanh `tools/tao-am-thanh.mjs` kèm kiểm tra thanh điệu tự động và trang nghe duyệt (mục 11.6 bước 6, 12.8).
 
 ### Bản 1.8 (21/10/2026)
 

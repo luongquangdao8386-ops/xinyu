@@ -6,7 +6,7 @@ App cá nhân học tiếng Trung và luyện thi HSK 3.0 cho một người dù
 
 1. Đọc `docs/tien-do.md` trước tiên.
 2. Làm việc người dùng giao. Nếu người dùng chỉ nói “làm tiếp”, làm việc chưa xong đầu tiên theo thứ tự khuyến nghị trong `docs/tien-do.md`.
-3. Đặc tả `docs/dac-ta.md` (bản 1.8) dài gần 1.000 dòng: không đọc hết. Tìm vị trí các mục bằng `grep -n '^##' docs/dac-ta.md`, rồi chỉ đọc những mục ghi trong bảng dưới.
+3. Đặc tả `docs/dac-ta.md` (bản 1.9) dài gần 1.000 dòng: không đọc hết. Tìm vị trí các mục bằng `grep -n '^##' docs/dac-ta.md`, rồi chỉ đọc những mục ghi trong bảng dưới.
 4. Mỗi phiên làm một việc. Chạy thử hoặc kiểm tra trước khi commit.
 5. Cuối phiên: đánh dấu việc đã xong, ghi một dòng vào Nhật ký trong `docs/tien-do.md` (đã làm gì, phiên sau cần biết gì), commit, rồi đẩy lên `main`. Chủ repo đã đồng ý đẩy thẳng lên `main`.
 
@@ -43,6 +43,7 @@ App cá nhân học tiếng Trung và luyện thi HSK 3.0 cho một người dù
 
 - Phiên ngày 21/10/2026: môi trường cloud chặn các trang .cn và nhiều trang web khác; npm và raw.githubusercontent.com vẫn tải được. Khi cần tài liệu từ trang bị chặn, nhờ người dùng gửi tệp.
 - Người dùng đã cho phép docs.google.com và *.googleusercontent.com để đọc Google Sheet công bố.
+- Google Cloud Text-to-Speech: khóa API là network secret của môi trường cloud, proxy tự gắn header `X-Goog-Api-Key` cho texttospeech.googleapis.com nên script không cần khóa. Trang tài liệu docs.cloud.google.com bị chặn; xem cấu trúc API ở `https://texttospeech.googleapis.com/$discovery/rest?version=v1`.
 
 ## Lệnh
 
@@ -52,4 +53,5 @@ App cá nhân học tiếng Trung và luyện thi HSK 3.0 cho một người dù
 - Sinh lại mẫu Sheet và `docs/mau-sheet.md` sau khi sửa `tools/lib/cau-truc.mjs`: `node tools/tao-mau-sheet.mjs`.
 - Lộ trình bài HSK 1: sửa `tools/lo-trinh/hsk1.mjs`, rồi chạy `node tools/tao-lo-trinh.mjs` (kiểm tra đủ 300 từ, 70 điểm ngữ pháp; sinh `docs/lo-trinh-hsk1.md` và `tools/mau/bai-hsk1.csv`) và `node tools/tao-mau-sheet.mjs`.
 - Soạn nội dung (A4, A7…): viết vào `tools/noi-dung/<việc>.mjs` (mỗi tab một mảng, theo tên trường JSON của `tools/lib/cau-truc.mjs`), rồi chạy `node tools/dien-noi-dung.mjs <đường dẫn Sheet công bố>`: đọc Sheet, chỉ điền ô trống và thêm dòng mới, ghi `tools/ra/xinyu-noi-dung.xlsx`, chạy thử kiểm tra trên các dòng vừa soạn (phải 0 lỗi). Gửi tệp cho người dùng nhập bằng Tệp > Nhập > Tải lên > Thay thế bảng tính; dòng mới để “nháp” cho người dùng tự xem rồi đổi sang “đã kiểm tra”.
+- Tạo âm thanh mẫu sau mỗi lần xây nội dung: `node tools/tao-am-thanh.mjs` (`--thu` để xem trước, `--lam-lai <mã>` để tạo lại một mục). Tạo MP3 cho âm tiết, từ, câu mới hoặc đã sửa vào `audio/`, tự kiểm tra thanh điệu, ghi trang nghe duyệt `tools/ra/nghe-duyet.html`. Đăng lại trang đó vào Artifact `https://claude.ai/artifact/Fux3aY5A32rjeQuYWBjyEJ` (truyền `url`) để người dùng nghe; tệp người dùng đánh dấu “Cần sửa” đọc bằng ArtifactData, bộ sưu tập `canSua`. Đổi giọng hoặc ép cách đọc riêng một mục ở `tools/am-thanh/cau-hinh.mjs`.
 - Kiểm thử công cụ: `node --test 'tools/kiem-thu/*.test.mjs'`.

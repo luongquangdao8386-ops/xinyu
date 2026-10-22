@@ -11,3 +11,6 @@ Thumbs.db
 
 # Dữ liệu tải về khi chạy công cụ (CC-CEDICT…)
 tools/.cache/
+
+# Trang nghe duyệt âm thanh do tools/tao-am-thanh.mjs sinh (nhúng sẵn MP3, đăng thành Artifact khi cần)
+tools/ra/nghe-duyet.html

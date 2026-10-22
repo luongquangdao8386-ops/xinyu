@@ -172,7 +172,7 @@ test('Bài luyện trong bài: chọn nghĩa, hiểu hội thoại, điền từ
   const ghi = {};
   assert.deepEqual(chuoiDongVai(cauBai.slice(0, 2), 'A', new Map([['CPA08-01', ghi]])), [{ blob: ghi }, { loai: 'cau', ma: 'CPA08-02' }]);
 
-  const np = docNoiDung('ngu-phap')[0];
+  const np = docNoiDung('ngu-phap').find((n) => n.ma === 'NP1-45');
   const tach = tachTenNguPhap(np.giaiThich);
   assert.equal(tach.ten, 'Câu không chủ vị (非主谓句)');
   assert.match(tach.giaiThich, /^Câu chỉ gồm/);

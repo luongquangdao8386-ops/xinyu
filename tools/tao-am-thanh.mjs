@@ -108,7 +108,8 @@ for (const q of cauHoi) {
 }
 
 const amTietCua = (chuHan, pinyin) => canChinh(chuHan, pinyin).cap?.filter((a) => a.am !== 'r');
-for (const t of tuDs) {
+// Từ có nhiều cách đọc ghi cách nhau bằng “/” (谁 shéi/shuí): âm thanh đọc cách đầu.
+for (const t of tuDs.map((t) => ({ ...t, pinyin: t.pinyin.split('/')[0].trim() }))) {
   const r = ssmlCau(t.tu, t.pinyin);
   if (r.loi) {
     loi.push(`Tu ${t.ma} ${t.tu}: ${r.loi}`);

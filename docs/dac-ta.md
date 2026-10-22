@@ -1,6 +1,6 @@
 ---
 title: "Xinyu — Đặc tả ứng dụng học tiếng Trung và luyện thi HSK"
-version: "1.14"
+version: "1.15"
 brand_chinese: "新语"
 brand_pinyin: "Xīnyǔ"
 date: "2026-10-22"
@@ -554,7 +554,7 @@ Màn bài học tập trung, kiểm tra và thi thử ẩn thanh điều hướn
 
 ### 8.4. Chữ và font
 
-- Tiêu đề: giữ font serif trong bảng ảnh nếu hiển thị đủ dấu tiếng Việt và Pinyin; nếu không, dùng Noto Serif. Font của bảng không rõ tên nên dùng Noto Serif Display bản hẹp (độ rộng 80, đậm 700), gần với bảng và đủ dấu; nút cũng dùng font này như bảng.
+- Tiêu đề, nút và chữ to tiếng Việt, Pinyin: Noto Sans đậm 700. Bảng ảnh dùng font serif hẹp (trước đây dựng bằng Noto Serif Display hẹp), nhưng người dùng thấy khó đọc nên đổi sang chữ không chân; chữ Hán trong tiêu đề vẫn dùng Noto Serif SC.
 - Nội dung và điều khiển: Noto Sans.
 - Chữ Hán: Noto Sans SC cho nội dung, Noto Serif SC cho tiêu đề. Mọi đoạn chữ Hán gắn `lang="zh-CN"` để máy dùng đúng tự dạng giản thể.
 - Kiểm tra trước khi chốt font: hiển thị đủ ā á ǎ à, ē é ě è, ī í ǐ ì, ō ó ǒ ò, ū ú ǔ ù, ǖ ǘ ǚ ǜ ü; các chữ 直, 骨, 角 hiện đúng tự dạng giản thể.
@@ -973,6 +973,10 @@ Các nguồn được tra cứu ngày 17/10/2026 và 21/10/2026. Khi xây nội 
 - Mã màn 31–33 giữ trong danh mục ở trạng thái “Bỏ” để đối chiếu bảng ảnh; không dùng lại các mã này cho màn mới.
 
 ## Phụ lục A — Lịch sử thay đổi
+
+### Bản 1.15 (22/10/2026)
+
+- Font tiêu đề, nút (mục 8.4): đổi Noto Serif Display hẹp sang Noto Sans đậm 700 vì chữ serif hẹp khó đọc; chữ Hán giữ nguyên.
 
 ### Bản 1.14 (22/10/2026)
 

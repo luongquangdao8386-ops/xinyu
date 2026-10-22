@@ -19,7 +19,7 @@
   --vien-o: #8F7C6C;
   --phan-cach: #E2D5C3;
   /* Font theo mục 8.4; chữ Hán dùng Noto SC, máy không tải được thì dùng font giản thể có sẵn. */
-  --font-tieu-de: 'Noto Serif Display', 'Noto Serif SC', 'Songti SC', Georgia, serif;
+  --font-tieu-de: 'Noto Sans', 'Noto Sans SC', system-ui, -apple-system, 'Segoe UI', 'PingFang SC', sans-serif;
   --font-than: 'Noto Sans', 'Noto Sans SC', system-ui, -apple-system, 'Segoe UI', 'PingFang SC', sans-serif;
   --font-han: 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
   --font-han-tieu-de: 'Noto Serif SC', 'Songti SC', 'Noto Sans SC', serif;

@@ -1,7 +1,6 @@
 #!/usr/bin/env node
-// Tải font của app (mục 8.4) về vendor/font/ để chạy được khi không có mạng: Noto Serif Display hẹp (tiêu đề,
-// gần font serif của bảng ảnh), Noto Sans
-// (nội dung, điều khiển), Noto Sans SC và Noto Serif SC (chữ Hán). Chữ Hán chỉ lấy những chữ có trong content/
+// Tải font của app (mục 8.4) về vendor/font/ để chạy được khi không có mạng: Noto Sans (tiêu đề, nút, nội dung,
+// điều khiển), Noto Sans SC và Noto Serif SC (chữ Hán). Chữ Hán chỉ lấy những chữ có trong content/
 // và mã giao diện (app/, index.html), cắt bằng tham số text= của Google Fonts; chữ Latin lấy đủ tiếng Việt và
 // Pinyin. Chạy lại sau mỗi lần xây nội dung có chữ Hán mới; nhóm chữ không đổi thì không tải lại.
 //
@@ -22,9 +21,9 @@ const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 const CHU_MOI_TEP = 300;
 
 const MAT = [
-  { ten: 'noto-serif-display-700', ho: 'Noto Serif Display', dam: 700, truc: 'wdth,wght@80,700', loai: 'latin' },
   { ten: 'noto-sans-400', ho: 'Noto Sans', dam: 400, loai: 'latin' },
   { ten: 'noto-sans-600', ho: 'Noto Sans', dam: 600, loai: 'latin' },
+  { ten: 'noto-sans-700', ho: 'Noto Sans', dam: 700, loai: 'latin' },
   { ten: 'noto-sans-sc-400', ho: 'Noto Sans SC', dam: 400, loai: 'han' },
   { ten: 'noto-sans-sc-600', ho: 'Noto Sans SC', dam: 600, loai: 'han' },
   { ten: 'noto-serif-sc-600', ho: 'Noto Serif SC', dam: 600, loai: 'han' },

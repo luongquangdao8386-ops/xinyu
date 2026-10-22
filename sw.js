@@ -4,7 +4,7 @@
 // tệp được tạo lại, mã băm đổi nên tải bản mới và xóa bản cũ cùng đường dẫn.
 // Thêm tệp vào app/, vendor/font/ hoặc content/ thì thêm vào LUU_SAN (kiểm thử báo khi thiếu).
 
-const BAN = 'xinyu-3';
+const BAN = 'xinyu-4';
 const KHO_AM_THANH = 'xinyu-am-thanh';
 const LUU_SAN = [
   './',
@@ -54,11 +54,11 @@ const LUU_SAN = [
   'vendor/font/font.css',
   'vendor/font/noto-sans-400.woff2',
   'vendor/font/noto-sans-600.woff2',
+  'vendor/font/noto-sans-700.woff2',
   'vendor/font/noto-sans-sc-400-1.woff2',
   'vendor/font/noto-sans-sc-400-2.woff2',
   'vendor/font/noto-sans-sc-600-1.woff2',
   'vendor/font/noto-sans-sc-600-2.woff2',
-  'vendor/font/noto-serif-display-700.woff2',
   'vendor/font/noto-serif-sc-600-1.woff2',
   'vendor/font/noto-serif-sc-600-2.woff2',
   'content/bai.json',

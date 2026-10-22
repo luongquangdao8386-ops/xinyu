@@ -39,6 +39,7 @@ Bảng ảnh là căn cứ về bố cục và phong cách; các quyết định
 - Màn 28 không có tên và ảnh đại diện (app một người dùng, không tài khoản).
 - Trong bài làm và bài thi, đáp án đang chọn dùng viền chu-chinh trên nền kem, không tô đỏ như bảng (mục 8.2). Ở phần thiết lập (02, 03) ô đang chọn vẫn dùng chấm đỏ son như bảng.
 - Kết quả bài luyện không ghi điểm phát âm, huy chương hay tỷ lệ đỗ (mục 8.2).
+- Tiêu đề, nút và chữ to tiếng Việt dùng Noto Sans đậm (không chân) thay cho font serif hẹp của bảng, vì người dùng thấy font serif khó đọc (mục 8.4, đặc tả 1.15). Chữ Hán trong tiêu đề vẫn là Noto Serif SC.
 - Màn 09, 10, 12: tốc độ nghe là công tắc “Nghe chậm” (0,75) thay cho ô chọn 0,8×; ô “Ẩn pinyin” là công tắc. Màn 09 kiểm tra hiểu bằng câu “nghe một câu, chọn nghĩa” dựng từ hội thoại, không có câu hỏi soạn riêng như “Ai tên là An?”.
 - Màn 12: chưa có dải sóng âm hai bên nút micro (đường cao độ làm ở B2.2); thêm chọn âm tiết hoặc từ ví dụ, phần cách đọc, so với tiếng Việt, lỗi hay mắc và tự đánh giá hai mức. Bài Nền phát âm hiện ký hiệu âm (j, Thanh 1…) làm tiêu đề thay cho một từ.
 - Màn 10: hàng “Lưu vào sổ từ” bật tắt tại chỗ; thêm ô mẹo nhớ (mục 5.4); câu chọn nghĩa chấm ngay khi chọn.

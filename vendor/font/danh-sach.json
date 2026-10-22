@@ -1,10 +1,4 @@
 {
-  "noto-serif-display-700.woff2": {
-    "ho": "Noto Serif Display",
-    "dam": 700,
-    "soChu": 281,
-    "bam": "6e09c9858ea5"
-  },
   "noto-sans-400.woff2": {
     "ho": "Noto Sans",
     "dam": 400,
@@ -17,40 +11,46 @@
     "soChu": 281,
     "bam": "5fbb48f640ee"
   },
+  "noto-sans-700.woff2": {
+    "ho": "Noto Sans",
+    "dam": 700,
+    "soChu": 281,
+    "bam": "b6d1d14236e1"
+  },
   "noto-sans-sc-400-1.woff2": {
     "ho": "Noto Sans SC",
     "dam": 400,
     "soChu": 300,
-    "bam": "b698afc7850d"
+    "bam": "572dea72faf5"
   },
   "noto-sans-sc-400-2.woff2": {
     "ho": "Noto Sans SC",
     "dam": 400,
-    "soChu": 134,
-    "bam": "2b3e902f3cc7"
+    "soChu": 136,
+    "bam": "83063b4d888d"
   },
   "noto-sans-sc-600-1.woff2": {
     "ho": "Noto Sans SC",
     "dam": 600,
     "soChu": 300,
-    "bam": "c9a0b3902303"
+    "bam": "6dfb72ab209e"
   },
   "noto-sans-sc-600-2.woff2": {
     "ho": "Noto Sans SC",
     "dam": 600,
-    "soChu": 134,
-    "bam": "7b0525d76430"
+    "soChu": 136,
+    "bam": "66d88c11bbf1"
   },
   "noto-serif-sc-600-1.woff2": {
     "ho": "Noto Serif SC",
     "dam": 600,
     "soChu": 300,
-    "bam": "0b0d835d68b5"
+    "bam": "09886743ed46"
   },
   "noto-serif-sc-600-2.woff2": {
     "ho": "Noto Serif SC",
     "dam": 600,
-    "soChu": 134,
-    "bam": "2c3cc4a5f45b"
+    "soChu": 136,
+    "bam": "7062225aa118"
   }
 }

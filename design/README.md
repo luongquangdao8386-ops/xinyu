@@ -42,4 +42,9 @@ Bảng ảnh là căn cứ về bố cục và phong cách; các quyết định
 
 ## Tranh mực trong app
 
-Tranh trong `app/hinh/tranh-nui.webp` và `app/hinh/tranh-goc.webp` cắt tạm từ bảng 01 (màn 01), độ phân giải thấp nên trên iPhone hơi mờ. Khi có tệp tranh gốc (núi, đình, cành cây, trăng; nền sáng), thay hai tệp này, giữ tên tệp; mỗi tranh dưới khoảng 150 KB (mục 12.7).
+Bảng ảnh dùng tranh mực vẽ riêng (núi, đình, cành cây, trăng). App dùng tranh thủy mặc cổ hết bản quyền thay cho tranh của bảng: một đoạn cuộn “Phỏng Cự Nhiên, Yến Văn Quý sơn thủy đồ” (倣巨然燕文貴山水圖) của Vương Huy (王翬, 1632–1717), vẽ năm 1713, mực và màu nhạt trên giấy, Bảo tàng Metropolitan, số 1979.458.2 ([trang tác phẩm](https://www.metmuseum.org/art/collection/search/49157), ảnh Open Access CC0, [tệp trên Wikimedia Commons](https://commons.wikimedia.org/wiki/File:%E6%B8%85_%E7%8E%8B%E7%BF%AC_%E5%80%A3%E5%B7%A8%E7%84%B6%E7%87%95%E6%96%87%E8%B2%B4%E5%B1%B1%E6%B0%B4%E5%9C%96_%E5%8D%B7-Landscape_in_the_Style_of_Juran_and_Yan_Wengui_MET_DP204419.jpg)). Đoạn này có vách núi, rặng thông, lầu cổng, tháp, thác và thuyền; không có trăng.
+
+- `app/hinh/tranh-nui.webp` (1170 × 872, màn 01 và 34A): cả đoạn tranh.
+- `app/hinh/tranh-goc.webp` (640 × 1088, góc trên bên phải các màn và thẻ bài ở màn 05): rặng thông, tháp và lầu cổng.
+
+Tạo lại bằng `node tools/tao-tranh.mjs` (mục 12.7): tải ảnh 3840 px, chuyển xám, chia cho nền giấy ước lượng để giấy ố thành trắng, xóa chấm bẩn trên giấy trống, cắt khung theo tỉ lệ trong `app/css/xinyu.css`, làm mờ mép trái, phải (tranh vẽ kín tới mép, không mờ thì trên màn rộng lộ cạnh thẳng), nén WebP dưới 150 KB. Đổi tranh khác thì giữ tên tệp và tỉ lệ khung (381 : 284 và 167 : 284), hoặc sửa tỉ lệ trong CSS cùng lúc.

@@ -1,6 +1,6 @@
 ---
 title: "Xinyu — Đặc tả ứng dụng học tiếng Trung và luyện thi HSK"
-version: "1.12"
+version: "1.13"
 brand_chinese: "新语"
 brand_pinyin: "Xīnyǔ"
 date: "2026-10-22"
@@ -855,6 +855,7 @@ Thay cho bước rà soát chuyên môn, mỗi phần nội dung đi qua các b�
 ### 12.7. Hiệu năng
 
 - Tranh mực xuất dạng WebP hoặc SVG, mỗi tranh dưới khoảng 150 KB.
+- Tranh mực lấy từ tranh thủy mặc cổ hết bản quyền (ảnh của bảo tàng công bố miền công cộng hoặc CC0). Đang dùng một đoạn cuộn “Phỏng Cự Nhiên, Yến Văn Quý sơn thủy đồ” của Vương Huy (1713, Bảo tàng Metropolitan) có núi, thông, lầu và tháp; script `tools/tao-tranh.mjs` tải ảnh từ Wikimedia Commons, chuyển xám, làm trắng nền giấy, xóa chấm bẩn, cắt khung và nén.
 - Font theo mục 8.4.
 - Âm thanh tải theo bài và được lưu vào bộ nhớ đệm khi đã mở.
 
@@ -964,6 +965,10 @@ Các nguồn được tra cứu ngày 17/10/2026 và 21/10/2026. Khi xây nội 
 - Mã màn 31–33 giữ trong danh mục ở trạng thái “Bỏ” để đối chiếu bảng ảnh; không dùng lại các mã này cho màn mới.
 
 ## Phụ lục A — Lịch sử thay đổi
+
+### Bản 1.13 (22/10/2026)
+
+- Tranh mực của app lấy từ tranh thủy mặc cổ hết bản quyền thay cho tranh cắt tạm từ bảng ảnh; công cụ `tools/tao-tranh.mjs` (mục 12.7).
 
 ### Bản 1.12 (22/10/2026)
 

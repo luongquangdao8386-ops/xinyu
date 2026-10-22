@@ -21,7 +21,7 @@ export default {
       h('div', { class: 'logo' }, h('span', { class: 'dau-son lon', lang: 'zh-CN', 'aria-hidden': 'true' }, '新'), h('span', { class: 'ten-app' }, 'Xinyu')),
       h('h1', {}, 'Tiếng Trung,', h('br'), 'từng bước vững vàng.'),
       h('p', { class: 'loi-gioi-thieu' }, 'Học từ đầu và luyện thi HSK', h('br'), 'theo lộ trình của bạn.'),
-      h('div', { class: 'tranh-lon', role: 'img', 'aria-label': 'Tranh mực núi, đình và trăng' }),
+      h('div', { class: 'tranh-lon', role: 'img', 'aria-label': 'Tranh thủy mặc núi, rặng thông, lầu và tháp' }),
       nut('Bắt đầu học', { chinh: true, mui: true, onclick: () => di('muc-tieu') }),
       goiYCaiDat(),
     );

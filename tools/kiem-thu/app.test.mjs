@@ -66,6 +66,19 @@ test('Manifest và biểu tượng', () => {
   for (const m of html.matchAll(/(?:href|src)="([^"#]+)"/g)) assert.ok(existsSync(join(GOC, m[1])), `index.html gọi ${m[1]}`);
 });
 
+test('Tranh mực dưới 150 KB và đúng tỉ lệ khung trong CSS (mục 12.7)', () => {
+  const css = readFileSync(join(GOC, 'app', 'css', 'xinyu.css'), 'utf8');
+  for (const [lop, tep] of [['tranh-lon', 'tranh-nui'], ['tranh-goc', 'tranh-goc']]) {
+    const webp = readFileSync(join(GOC, 'app', 'hinh', `${tep}.webp`));
+    assert.ok(webp.length <= 150_000, `${tep}.webp ${webp.length} byte`);
+    // WebP nén mất dữ liệu (khối VP8): bề rộng, bề cao 14 bit ở byte 26 và 28.
+    assert.equal(webp.toString('latin1', 12, 16), 'VP8 ', tep);
+    const tiLe = (webp.readUInt16LE(26) & 0x3fff) / (webp.readUInt16LE(28) & 0x3fff);
+    const [, a, b] = css.match(new RegExp(`\\.${lop} \\{[^}]*aspect-ratio: (\\d+) / (\\d+)`));
+    assert.ok(Math.abs(tiLe / (a / b) - 1) < 0.01, `${tep}.webp tỉ lệ ${tiLe.toFixed(3)}, khung .${lop} ${a}/${b}`);
+  }
+});
+
 test('Module của app đúng cú pháp và chỉ nhập tệp có thật', () => {
   for (const t of tepTrong('app').filter((x) => x.endsWith('.mjs'))) {
     const r = spawnSync(process.execPath, ['--check', join(GOC, t)]);

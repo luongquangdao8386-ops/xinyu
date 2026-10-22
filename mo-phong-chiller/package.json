@@ -1,0 +1,11 @@
+{
+  "name": "mo-phong-chiller",
+  "private": true,
+  "description": "Mô phỏng 3D tương tác hệ thống chiller trục vít giải nhiệt nước (Three.js 0.186.1)",
+  "type": "module",
+  "scripts": {
+    "test": "node --test kiem-thu/*.test.mjs",
+    "kiem-tra-trinh-duyet": "node kiem-thu/kiem-tra-trinh-duyet.mjs",
+    "chay": "node kiem-thu/may-chu.mjs"
+  }
+}

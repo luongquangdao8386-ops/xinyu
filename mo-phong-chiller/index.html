@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mô phỏng chiller trục vít</title>
+<meta name="description" content="Mô hình 3D tương tác của hệ thống chiller trục vít giải nhiệt nước: cấu tạo thiết bị, đấu nối ba mạch và nguyên lý hoạt động.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/giao-dien.css">
+<!-- Three.js 0.186.1 và addon cùng phiên bản, lưu sẵn trong vendor/three để chạy không cần mạng -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three/three.module.js",
+    "three/addons/": "./vendor/three/addons/"
+  }
+}
+</script>
+</head>
+<body>
+<div class="ung-dung">
+  <main class="vung-mo-hinh" id="vung-mo-hinh">
+    <div id="khung-3d" class="khung-3d" role="img" aria-label="Mô hình 3D phòng máy chiller: chiller ở giữa, tháp giải nhiệt phía sau, hai bơm và AHU bên trái"></div>
+    <header class="dau-trang">
+      <div class="ten-trang">
+        <p class="dong-tren">Mô hình minh họa kỹ thuật · không theo sản phẩm của hãng nào</p>
+        <h1>Hệ thống chiller trục vít giải nhiệt nước</h1>
+      </div>
+      <ul class="tinh-trang" id="tinh-trang" aria-label="Tình trạng thiết bị"></ul>
+    </header>
+    <section id="the-chon" class="the-chon" aria-live="polite" hidden></section>
+    <div class="chu-giai" id="chu-giai"></div>
+    <div class="goi-y" id="goi-y" hidden></div>
+    <p class="huong-dan">Kéo để xoay · cuộn hoặc chụm hai ngón để phóng · chuột phải hoặc hai ngón để dịch · bấm vào thiết bị để xem tên và chức năng</p>
+  </main>
+  <aside class="bang" id="bang" aria-label="Bảng điều khiển">
+    <nav class="the-bang" role="tablist" aria-label="Nhóm điều khiển"></nav>
+    <section id="tab-van-hanh" class="noi-dung-tab" role="tabpanel" aria-labelledby="nut-van-hanh"></section>
+    <section id="tab-hien-thi" class="noi-dung-tab" role="tabpanel" aria-labelledby="nut-hien-thi" hidden></section>
+    <section id="tab-cau-tao" class="noi-dung-tab" role="tabpanel" aria-labelledby="nut-cau-tao" hidden></section>
+  </aside>
+</div>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

@@ -55,6 +55,11 @@ const BIEU_TUONG = {
   dung: '<circle cx="12" cy="12" r="8.5"/><path d="M8 12.5l2.8 2.8L16.5 9.5"/>',
   sai: '<circle cx="12" cy="12" r="8.5"/><path d="M9 9l6 6M15 9l-6 6"/>',
   'thong-tin': '<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8h.01"/>',
+  'danh-dau': '<path d="M7 4.5h10v15.5l-5-3.5-5 3.5z"/>',
+  'canh-bao': '<path d="M12 4.5l8.5 15h-17z"/><path d="M12 10v4.5M12 17h.01"/>',
+  'dung-ghi': '<rect x="7" y="7" width="10" height="10" rx="1.5"/>',
+  'xen-ke': '<path d="M4.5 8.5h13l-3.5-3.5M19.5 15.5h-13l3.5 3.5"/>',
+  'ghi-chu': '<path d="M5.5 4.5h13v15h-13zM8.5 9h7M8.5 12h7M8.5 15h4"/>',
 };
 export function bieuTuong(ten) {
   const span = document.createElement('span');

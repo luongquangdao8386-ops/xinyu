@@ -1,6 +1,8 @@
 // Khởi động Xinyu: đăng ký service worker, đọc hồ sơ học, dựng thanh điều hướng 5 tab (mục 8.3) và chuyển màn
 // theo địa chỉ dạng #/ten-man/tham-so… (#/muc-tieu/sua, #/bai/PA01). Lần đầu mở app đi qua 01 → 02 → 03 → 04 → 05
 // (mục 10.1). Màn bài học, kiểm tra và hoàn thành bài ẩn thanh điều hướng (mục 8.3).
+import { dung } from './am-thanh.mjs';
+import { dungGhi } from './ghi-am.mjs';
 import { demCho } from './gio-hoc.mjs';
 import { bieuTuong, h } from './giao-dien.mjs';
 import { doc, ghi, xoa } from './kho.mjs';
@@ -87,6 +89,10 @@ async function veMan() {
   }
   const lan = ++lanVe;
   const man = MAN[ten];
+  // Rời màn: dừng tiếng đang phát, bỏ bản đang ghi, đóng bảng đang mở (màn 35).
+  dung();
+  dungGhi();
+  for (const b of document.querySelectorAll('dialog.bang-duoi')) b.remove();
   // Nơi vào bài học (05, 07…) để nút lùi ở màn 08 quay về đúng chỗ.
   const tenTruoc = duongTruoc?.split('/')[0];
   if (ten === 'bai' && duongTruoc && !TRONG_BAI.includes(tenTruoc)) vaoBaiTu = duongTruoc;
@@ -106,7 +112,7 @@ async function veMan() {
     noiDung = [h('h1', {}, 'Không mở được màn này'), h('p', {}, e.message), h('p', { class: 'phu' }, 'Kiểm tra kết nối mạng rồi tải lại trang.')];
   }
   if (lan !== lanVe) return;
-  document.title = `${man.tieuDe} · Xinyu`;
+  document.title = `${man.tieuDeCua?.(thamSo) || man.tieuDe} · Xinyu`;
   vungMan.replaceChildren(...[noiDung].flat().filter(Boolean));
   window.scrollTo(0, 0);
   vungMan.focus({ preventScroll: true });

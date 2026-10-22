@@ -20,6 +20,7 @@ Theo mục 11.5 và 12.8 của [đặc tả](dac-ta.md). Công cụ xây nội d
 6. Câu của bài hoặc truyện nằm ở tab Cau, cột Bài ghi mã bài hoặc mã truyện; thứ tự dòng là thứ tự câu. Câu chỉ được dùng từ đã học tính đến bài đó, tên riêng khai ở cột Tên riêng của tab Bai.
 7. Xây nội dung: Tệp > Tải xuống > Microsoft Excel (.xlsx), gửi tệp cho Claude để chạy node tools/xay-noi-dung.mjs <tệp>. Hoặc Tệp > Chia sẻ > Công bố lên web (Publish to web), chọn cả tài liệu và định dạng .xlsx, rồi dùng đường dẫn đó thay cho tệp.
 8. Tab CanSua: dán danh sách nội dung cần sửa xuất từ app (màn 29); ghi x ở cột Đã xử lý khi sửa xong.
+9. Nội dung Claude soạn đến dạng tệp .xlsx cập nhật (chỉ điền ô trống, thêm dòng mới để “nháp”): Tệp > Nhập > Tải lên > Thay thế bảng tính, làm ngay khi nhận tệp vì chỗ sửa trên Sheet sau khi Claude tạo tệp sẽ mất. Cần quay lại thì dùng Tệp > Nhật ký phiên bản.
 
 ## Kiểm tra khi xây
 
@@ -111,7 +112,7 @@ Nhập vào Google Sheet ngay sau khi tạo tệp (sửa Sheet sau thời điể
 | Cấp | `cap` | cấp | có |  |
 | Theo đề cương | — | chữ |  | Nội dung ghi trong đề cương, chỉ để tham khảo khi soạn. |
 | Mẫu câu | `mauCau` | chữ | có |  |
-| Giải thích | `giaiThich` | chữ | có |  |
+| Giải thích | `giaiThich` | chữ | có | Mở đầu bằng tên điểm ngữ pháp rồi dấu hai chấm (app lấy làm tiêu đề màn 11), ví dụ: Câu không chủ vị (非主谓句): … |
 | So sánh với tiếng Việt | `soSanh` | chữ |  |  |
 | Lỗi người Việt hay mắc | `loiHayMac` | chữ |  |  |
 | Ví dụ | `viDu` | danh sách |  | Mã câu ở tab Cau. |

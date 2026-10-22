@@ -66,14 +66,15 @@ export function trangThaiChang(ds, tienDo, tiepTheo) {
 
 // Hoạt động của một bài theo chu trình ở mục 5.3, suy ra từ nội dung bài. man: mã màn (mục 9.1); viec: việc trong
 // docs/tien-do.md sẽ dựng màn đó (null là đã có). PA06 ghi “(47)” ở cột Hoạt động nên có thêm Luyện thanh điệu.
+// Nói gồm nhại theo (09A) rồi đóng vai (09B).
 const HOAT_DONG = [
-  { khoa: 'phat-am', ten: 'Âm và thanh', bieuTuong: 'loa', man: '12', viec: 'B1.3', co: (b) => b.phatAm?.length, moTa: (b) => `${b.phatAm.length} mục · Nghe mẫu · Đọc theo` },
+  { khoa: 'phat-am', ten: 'Âm và thanh', bieuTuong: 'loa', man: '12', viec: null, co: (b) => b.phatAm?.length, moTa: (b) => `${b.phatAm.length} mục · Nghe mẫu · Đọc theo` },
   { khoa: 'cap-thanh', ten: 'Luyện thanh điệu', bieuTuong: 'song-am', man: '47', viec: 'B1.6', co: (b) => /\(47\)/.test(b.hoatDong || ''), moTa: () => '20 cặp thanh · Nghe · Đọc liền' },
-  { khoa: 'nghe-doc', ten: 'Nghe & đọc', bieuTuong: 'tai-nghe', man: '09', viec: 'B1.3', co: (b) => b.cau?.length, moTa: () => 'Hội thoại · Hiểu nội dung' },
-  { khoa: 'tu-vung', ten: 'Từ vựng', bieuTuong: 'sach', man: '10', viec: 'B1.3', co: (b) => b.tu?.length, moTa: (b) => `${b.tu.length} từ · Nghĩa · Cách dùng` },
-  { khoa: 'mau-cau', ten: 'Mẫu câu', bieuTuong: 'loi-thoai', man: '11', viec: 'B1.3', co: (b) => b.nguPhap?.length, moTa: () => 'Cấu trúc · So với tiếng Việt' },
+  { khoa: 'nghe-doc', ten: 'Nghe & đọc', bieuTuong: 'tai-nghe', man: '09', viec: null, co: (b) => b.cau?.length, moTa: () => 'Hội thoại · Hiểu nội dung' },
+  { khoa: 'tu-vung', ten: 'Từ vựng', bieuTuong: 'sach', man: '10', viec: null, co: (b) => b.tu?.length, moTa: (b) => `${b.tu.length} từ · Nghĩa · Cách dùng` },
+  { khoa: 'mau-cau', ten: 'Mẫu câu', bieuTuong: 'loi-thoai', man: '11', viec: null, co: (b) => b.nguPhap?.length, moTa: () => 'Cấu trúc · So với tiếng Việt' },
   { khoa: 'chu-han', ten: 'Chữ Hán', bieuTuong: 'but', man: '13', viec: 'B1.4', co: (b) => b.chu?.length, moTa: (b) => `${b.chu.length} chữ · Thứ tự nét` },
-  { khoa: 'noi', ten: 'Nói', bieuTuong: 'mic', man: '09A', viec: 'B1.3', co: (b) => b.cau?.length, moTa: () => 'Nhại theo · Đóng vai' },
+  { khoa: 'noi', ten: 'Nói', bieuTuong: 'mic', man: '09A', viec: null, co: (b) => b.cau?.length, moTa: () => 'Nhại theo · Đóng vai' },
   { khoa: 'kiem-tra', ten: 'Kiểm tra mục tiêu bài', bieuTuong: 'muc-tieu', man: '42', viec: null, co: (b, ch) => ch.length, moTa: (b, ch) => `${ch.length} câu · ${[...new Set(ch.map((q) => q.kyNang))].join(', ')}` },
 ];
 

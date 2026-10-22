@@ -424,3 +424,145 @@ details.mo-rong summary { cursor: pointer; min-height: var(--cham); display: fle
 .tranh-trong { margin-top: -8px; }
 .trang-trong { display: grid; gap: 10px; text-align: center; justify-items: center; }
 .trang-trong h2 { font-size: clamp(1.9rem, 8vw, 2.4rem); line-height: 1.1; }
+
+/* ---------- Hoạt động trong bài (B1.3): màn 09, 09A, 09B, 10, 11, 12, 35 ---------- */
+.hoat-dong { display: grid; gap: 18px; }
+.hoat-dong > h1 { font-size: clamp(2rem, 8vw, 2.5rem); }
+.hoat-dong h2 { font-size: 1.2rem; }
+
+/* Chữ lớn của từ, âm tiết, câu (bảng 04, màn 10 và 12). */
+.tu-lon, .mau-lon, .cau-nhai, .goi-y-vai { display: grid; justify-items: center; text-align: center; gap: 2px; }
+.han-lon { font: 600 clamp(3.4rem, 17vw, 4.6rem)/1.15 var(--font-han-tieu-de); color: var(--tieu-de); }
+.han-lon .han { font-family: var(--font-han-tieu-de); }
+.han-lon.cau { font-size: clamp(2.1rem, 9vw, 2.8rem); }
+.pinyin-lon { font: 700 clamp(1.5rem, 6vw, 1.9rem)/1.25 var(--font-tieu-de); color: var(--chu-chinh); }
+.pinyin-lon.chi-pinyin { font-size: clamp(2.8rem, 13vw, 3.6rem); color: var(--tieu-de); }
+.nghia { font-size: 1.2rem; color: var(--chu-chinh); }
+.ky-hieu { font-size: clamp(2.4rem, 11vw, 3.2rem); }
+.ky-hieu.dai { font-size: clamp(1.6rem, 6.5vw, 2rem); }
+.cach-doc { font-size: 1.05rem; }
+
+/* Nút viên “Nghe mẫu” và hàng công tắc nghe. */
+.hang-nghe { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; }
+.nut-nghe-mau { display: inline-flex; align-items: center; gap: 8px; min-height: var(--cham); padding: 0 18px; border: 1px solid var(--vien-o); border-radius: 999px; background: var(--nen-the); color: var(--chu-chinh); font: 600 .95rem/1 var(--font-than); cursor: pointer; }
+.nut-nghe-mau.dang { border-color: var(--chu-chinh); background: var(--nen-phu); }
+
+/* Ví dụ chọn để nghe, tự đánh giá. */
+.chip-vi-du { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.chip { min-height: var(--cham); min-width: var(--cham); padding: 0 16px; border: 1px solid var(--phan-cach); border-radius: 999px; background: var(--nen-the); color: var(--chu-chinh); font: 600 1.05rem/1 var(--font-than); cursor: pointer; }
+.chip .han { font-size: 1.15rem; }
+.chip[aria-pressed='true'] { border: 1.5px solid var(--chu-chinh); background: var(--nen-chinh); }
+.chip.rong { flex: 1; }
+.tu-danh-gia { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.tu-danh-gia p { flex-basis: 100%; color: var(--chu-phu); }
+
+/* Cách đọc, so sánh, lỗi hay mắc. */
+dl.meo { display: grid; gap: 4px; margin: 0; padding: 14px 16px; border-radius: var(--bo-goc); background: var(--nen-phu); }
+dl.meo:empty { display: none; }
+dl.meo dt { font: 700 1rem/1.3 var(--font-tieu-de); color: var(--tieu-de); display: flex; align-items: center; gap: 6px; }
+dl.meo dt.canh-bao { color: var(--canh-bao); }
+dl.meo dt svg.bt { width: 18px; height: 18px; }
+dl.meo dd { margin: 0 0 8px; }
+dl.meo dd:last-child { margin-bottom: 0; }
+
+/* Từ Hán Việt; bẫy nghĩa luôn có biểu tượng và chữ (mục 5.5). */
+.han-viet { color: var(--chu-chinh); }
+.bay-nghia { grid-template-columns: auto minmax(0, 1fr); align-items: start; }
+.bay-nghia svg.bt { margin-top: 2px; }
+
+/* Câu có nút nghe: chữ Hán, Pinyin, nghĩa (bảng 03, 04). */
+.vi-du { gap: 0; }
+.dong-cau { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--phan-cach); }
+.dong-cau > .cau-han { grid-column: 1; }
+.dong-cau > .nut-nghe { grid-column: 2; grid-row: 1; }
+.dong-cau > .cau-pinyin, .dong-cau > .cau-nghia { grid-column: 1 / -1; }
+.cau-han { font: 600 1.55rem/1.3 var(--font-han-tieu-de); color: var(--tieu-de); }
+.cau-han .han { font-family: var(--font-han-tieu-de); }
+.cau-pinyin { color: var(--chu-phu); }
+.cau-nghia { color: var(--chu-chinh); }
+.vai { justify-self: start; display: inline-grid; place-items: center; min-width: 28px; height: 28px; padding: 0 8px; border-radius: 999px; background: var(--nen-phu); color: var(--son); font-size: .85rem; font-weight: 600; }
+.hoi-thoai { display: grid; padding: 4px 16px; border-radius: var(--bo-goc); background: var(--nen-the); border: 1px solid var(--phan-cach); }
+.hoi-thoai .dong-cau { grid-template-columns: auto minmax(0, 1fr) auto; }
+.hoi-thoai .dong-cau > .vai { grid-column: 1; grid-row: 1; margin-right: 10px; }
+.hoi-thoai .dong-cau > .cau-han { grid-column: 2; }
+.hoi-thoai .dong-cau > .nut-nghe { grid-column: 3; }
+.hoi-thoai .dong-cau > .cau-pinyin, .hoi-thoai .dong-cau > .cau-nghia { grid-column: 2 / -1; }
+.hoi-thoai .dong-cau:last-child { border-bottom: 0; }
+.dang-phat { background: var(--nen-phu); border-radius: 8px; }
+.trinh-phat { grid-template-columns: auto minmax(0, 1fr); }
+
+/* Lưu từ, mẹo nhớ. */
+.hang-luu { border: 1px solid var(--phan-cach); border-radius: var(--bo-goc); background: var(--nen-the); }
+.hang-luu[aria-pressed='true'] .tron { background: var(--son); color: var(--nen-chinh); }
+.hang-luu[aria-pressed='true'] .tron svg { fill: currentColor; }
+.o-ghi-chu { display: grid; gap: 6px; }
+.o-ghi-chu label { display: flex; align-items: center; gap: 8px; font: 700 1.05rem/1.2 var(--font-tieu-de); color: var(--tieu-de); }
+.o-ghi-chu textarea { width: 100%; min-height: 64px; padding: 10px 12px; border: 1px solid var(--vien-o); border-radius: 8px; background: var(--nen-the); font: inherit; resize: vertical; }
+
+/* Bài luyện nhanh trong hoạt động; đáp án ngắn xếp hàng (điền từ, bảng 04). */
+.luyen-nhanh { padding: 16px; border-radius: var(--bo-goc); background: var(--nen-phu); }
+.luyen-nhanh .khoi-nghe { background: var(--nen-the); grid-template-columns: auto minmax(0, 1fr); }
+.cau-chon { display: grid; gap: 12px; }
+.dap-an.ngang { grid-template-columns: repeat(auto-fit, minmax(84px, 1fr)); }
+.dap-an.ngang .o-dap-an { grid-template-columns: minmax(0, 1fr); justify-items: center; text-align: center; gap: 2px; min-height: 52px; padding: 8px; }
+.dap-an.ngang .o-dap-an .dau { display: none; }
+.dap-an.ngang .o-dap-an .ket-qua { font-size: .75rem; }
+.ten-ngu-phap .han { font-family: var(--font-han-tieu-de); }
+.cong-thuc .mau-cau { font: 700 clamp(1.6rem, 7vw, 2.1rem)/1.3 var(--font-tieu-de); color: var(--tieu-de); }
+.cong-thuc .mau-cau .han { font-family: var(--font-han-tieu-de); }
+.dien-tu { display: grid; gap: 10px; }
+.cau-dien { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 10px; background: var(--nen-the); }
+.cho-trong { display: inline-block; min-width: 2.6em; margin: 0 .2em; border-bottom: 2px solid var(--chu-chinh); color: transparent; }
+
+/* Chân màn có hai nút: lùi (nhỏ) và tiếp (đỏ son). */
+.chan-co-dinh.hai-nut { display: flex; gap: 10px; }
+.chan-co-dinh.hai-nut .nut-rong { flex: 1; }
+
+/* Phần “Đến lượt bạn” (bảng 04, màn 12). */
+.luot-ban { display: grid; justify-items: center; gap: 10px; padding: 20px 16px 18px; border-radius: 18px; background: var(--nen-the); border: 1px solid var(--phan-cach); text-align: center; }
+.luot-ban h2 { font-size: 1.35rem; }
+.vung-mic { display: grid; justify-items: center; gap: 8px; }
+.nut-mic { width: 84px; height: 84px; border-radius: 50%; border: 0; background: var(--son); color: var(--nen-chinh); display: grid; place-items: center; cursor: pointer; box-shadow: 0 0 0 10px rgb(171 72 59 / .12), 0 3px 8px rgb(171 72 59 / .3); }
+.nut-mic svg.bt { width: 36px; height: 36px; }
+.luot-ban.dang-ghi .nut-mic svg.bt { fill: currentColor; }
+.nhan-mic { font-weight: 600; }
+.trang-thai-mic { color: var(--chu-phu); font-size: .92rem; min-height: 1.4em; }
+.trang-thai-mic svg.bt { width: 18px; height: 18px; vertical-align: -3px; }
+.goi-y-luot { display: flex; align-items: center; gap: 8px; color: var(--chu-chinh); font-size: .95rem; }
+.goi-y-luot svg.bt { color: var(--canh-bao); }
+.luot-ban .hang-nut { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.luot-ban .lien-ket { justify-self: center; }
+@media (prefers-reduced-motion: no-preference) {
+  .luot-ban.dang-ghi .nut-mic { animation: dang-ghi 1.2s ease-in-out infinite; }
+  @keyframes dang-ghi { 50% { box-shadow: 0 0 0 18px rgb(171 72 59 / .08), 0 3px 8px rgb(171 72 59 / .3); } }
+}
+
+/* Màn 09A: chọn mức hiện chữ, câu đang nhại. */
+.chon-doan.nho label { min-height: var(--cham); font: 600 .9rem/1.15 var(--font-than); text-align: center; padding: 4px; }
+.chon-doan.nho legend { font-size: 1rem; margin-bottom: 8px; }
+.cau-nhai { gap: 6px; padding: 18px 12px; border-radius: var(--bo-goc); background: var(--nen-phu); }
+.cau-nhai .vai, .goi-y-vai .vai { justify-self: center; }
+.chu-an { display: inline-flex; align-items: center; gap: 8px; min-height: 3.2em; color: var(--chu-phu); }
+.dau-xong.nho { width: 60px; height: 60px; box-shadow: 0 0 0 10px rgb(171 72 59 / .12); margin: 8px 0; }
+.dau-xong.nho svg.bt { width: 30px; height: 30px; }
+
+/* Màn 09B: lời thoại dạng bong bóng; lời của mình nằm bên phải. */
+.hoi-thoai.dong-vai { background: none; border: 0; padding: 0; gap: 10px; }
+.bong-loi { display: grid; gap: 2px; max-width: 85%; justify-self: start; padding: 10px 14px; border-radius: 14px 14px 14px 4px; background: var(--nen-the); border: 1px solid var(--phan-cach); }
+.bong-loi.cua-minh { justify-self: end; border-radius: 14px 14px 4px 14px; background: var(--nen-phu); }
+.bong-loi.hien-tai, .bong-loi.dang-phat { border-color: var(--chu-chinh); }
+.bong-loi .cau-han { font-size: 1.35rem; }
+.bong-loi .cau-nghia { font-size: .92rem; color: var(--chu-phu); }
+.goi-y-vai { gap: 4px; padding: 16px 12px; border-radius: var(--bo-goc); background: var(--nen-phu); }
+
+/* Màn 35: bảng xin bật micro trượt lên từ chân màn (bảng 12). */
+dialog.bang-duoi { width: min(560px, 100%); max-width: 100%; max-height: 90dvh; margin: auto auto 0; padding: 28px 20px calc(20px + env(safe-area-inset-bottom, 0px)); border: 0; border-radius: 22px 22px 0 0; background: var(--nen-chinh); color: var(--chu-chinh); display: grid; gap: 12px; justify-items: center; text-align: center; }
+dialog.bang-duoi:not([open]) { display: none; }
+dialog.bang-duoi::backdrop { background: rgb(53 37 33 / .45); }
+dialog.bang-duoi h2 { font-size: clamp(1.8rem, 8vw, 2.2rem); line-height: 1.1; }
+dialog.bang-duoi .nhom-nut { width: 100%; margin-top: 8px; }
+.tron-lon { width: 76px; height: 76px; border-radius: 50%; background: var(--nen-phu); color: var(--son); display: grid; place-items: center; }
+.tron-lon svg.bt { width: 34px; height: 34px; }
+@media (min-width: 900px) {
+  dialog.bang-duoi { margin: auto; border-radius: 22px; }
+}

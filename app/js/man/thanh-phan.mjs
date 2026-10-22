@@ -1,5 +1,5 @@
 // Thành phần dùng chung của các màn theo bảng ảnh: đầu màn, tranh góc, nút, hàng danh sách, ô lựa chọn, vòng số
-// của lộ trình, nút nghe.
+// của lộ trình, nút nghe, công tắc.
 import { chuanBi, dung, phat } from '../am-thanh.mjs';
 import { bieuTuong, h } from '../giao-dien.mjs';
 
@@ -92,3 +92,14 @@ export function nutNghe({ loai, ma, nhan = 'Nghe', lon = false, layCham = () => 
   nut.phat = batTat;
   return nut;
 }
+
+// Công tắc dạng chip (Nghe chậm, Ẩn Pinyin…): bat là trạng thái ban đầu; doi(bat) gọi khi đổi.
+export const congTac = (nhan, bat, doi) =>
+  h('label', { class: 'cong-tac' }, h('input', { type: 'checkbox', checked: !!bat, onchange: (e) => doi(e.target.checked) }), h('span', {}, nhan));
+
+// Công tắc nghe chậm (tốc độ 0,75), nhớ trong hồ sơ (hoSo.ngheCham).
+export const congTacCham = (hoSo, luuHoSo) =>
+  congTac('Nghe chậm', hoSo.ngheCham, (bat) => {
+    hoSo.ngheCham = bat;
+    luuHoSo({ ngheCham: bat });
+  });

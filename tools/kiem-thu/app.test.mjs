@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 
 import { amThanhCauHoi, maAmTiet } from '../../app/js/am-thanh.mjs';
 import { baiSau, baiTiepTheo, chuDeCuaChang, danhSachBai, hoatDongCuaBai, hoatDongTiep, nhanBai, tachY, trangThaiChang, xaoDapAn } from '../../app/js/bai-hoc.mjs';
+import { cacVai, cauChonNghia, cauDienTu, cauHieuHoiThoai, chuoiDongVai, tachTenNguPhap, tenTuLoai } from '../../app/js/bai-tap.mjs';
 import { BUOI_HOC, baiDenCap, cachNgay, capCoNoiDung, congNgay, uocTinh } from '../../app/js/ke-hoach.mjs';
 import { maAmTiet as maAmTietCongCu } from '../lib/am-thanh.mjs';
 
@@ -131,6 +132,68 @@ test('Bài học: hoạt động theo nội dung, ý của tài liệu tham chi�
     assert.deepEqual([...d].sort(), [q.dapAnDung, ...q.dapAnSai.map((s) => s.dapAn)].sort(), q.ma);
     assert.deepEqual(d, xaoDapAn(q, 12345));
   }
+});
+
+test('Bài luyện trong bài: chọn nghĩa, hiểu hội thoại, điền từ, vai, tên điểm ngữ pháp, loại từ', () => {
+  const tu = docNoiDung('tu');
+  const tuTheoMa = new Map(tu.map((t) => [t.ma, t]));
+  const cauTheoMa = new Map(docNoiDung('cau').map((c) => [c.ma, c]));
+  const bai = docNoiDung('bai').find((b) => b.ma === 'PA08');
+  const tuBai = bai.tu.map((m) => tuTheoMa.get(m));
+  const cauBai = bai.cau.map((m) => cauTheoMa.get(m));
+
+  for (const [i, t] of tuBai.entries()) {
+    const q = cauChonNghia(t, tuBai, tu, i);
+    assert.equal(q.dapAn.length, 3, t.tu);
+    assert.equal(new Set(q.dapAn).size, 3, t.tu);
+    assert.ok(q.dapAn.includes(t.nghia));
+    assert.deepEqual(cauChonNghia(t, tuBai, tu, i), q, 'cố định theo hạt');
+  }
+  // Bài chỉ có một từ: đáp án nhiễu lấy từ khác cùng cấp.
+  assert.equal(cauChonNghia(tuBai[0], [tuBai[0]], tu, 3).dapAn.length, 3);
+
+  const hieu = cauHieuHoiThoai(cauBai, 5);
+  assert.equal(hieu.length, 3);
+  assert.equal(new Set(hieu.map((x) => x.cau.chuHan)).size, 3, 'không hỏi trùng câu');
+  for (const x of hieu) {
+    assert.ok(x.dapAn.includes(x.dung));
+    assert.equal(new Set(x.dapAn).size, x.dapAn.length);
+  }
+  assert.deepEqual(cauHieuHoiThoai(cauBai.slice(0, 2), 5), [], 'hai câu giống nhau thì không hỏi');
+
+  for (const c of cauBai) {
+    const d = cauDienTu(c, tuTheoMa, tuBai, tu, 1);
+    assert.equal(d.truoc + d.dung + d.sau, c.chuHan, c.ma);
+    assert.ok(d.dapAn.includes(d.dung) && d.dapAn.length === 3, c.ma);
+  }
+  assert.equal(cauDienTu({ chuHan: '好。', tu: ['T147'] }, tuTheoMa, tuBai, tu, 1), null);
+
+  assert.deepEqual(cacVai(cauBai), ['A', 'B']);
+  const ghi = {};
+  assert.deepEqual(chuoiDongVai(cauBai.slice(0, 2), 'A', new Map([['CPA08-01', ghi]])), [{ blob: ghi }, { loai: 'cau', ma: 'CPA08-02' }]);
+
+  const np = docNoiDung('ngu-phap')[0];
+  const tach = tachTenNguPhap(np.giaiThich);
+  assert.equal(tach.ten, 'Câu không chủ vị (非主谓句)');
+  assert.match(tach.giaiThich, /^Câu chỉ gồm/);
+  assert.deepEqual(tachTenNguPhap('Dùng 是 để giới thiệu.'), { ten: null, giaiThich: 'Dùng 是 để giới thiệu.' });
+  assert.equal(tenTuLoai('数量、（副）'), 'số lượng từ, (phó từ)');
+  assert.equal(tenTuLoai('动、名'), 'động từ, danh từ');
+});
+
+test('Mỗi hoạt động đã dựng (viec null) có màn riêng; hoạt động còn lại mở màn chờ', async () => {
+  const { manHoatDong } = await import('../../app/js/man/hoat-dong.mjs');
+  const bai = Object.fromEntries(docNoiDung('bai').map((b) => [b.ma, b]));
+  const cauHoi = docNoiDung('cau-hoi');
+  for (const ma of Object.keys(bai)) {
+    for (const d of hoatDongCuaBai(bai[ma], cauHoi.filter((q) => q.bai === ma))) {
+      if (d.khoa === 'kiem-tra') continue;
+      const ten = manHoatDong([ma, d.khoa]).tieuDe;
+      if (d.viec) assert.equal(ten, 'Bài học', `${ma} ${d.khoa} còn chờ ${d.viec}`);
+      else assert.notEqual(ten, 'Bài học', `${ma} ${d.khoa} cần màn ${d.man}`);
+    }
+  }
+  assert.equal(manHoatDong(['PA08', 'noi', 'dong-vai']).tieuDe, 'Đóng vai');
 });
 
 test('Âm thanh: tên tệp âm tiết giống công cụ, câu hỏi nghe có tệp', () => {

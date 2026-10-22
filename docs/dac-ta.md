@@ -1,6 +1,6 @@
 ---
 title: "Xinyu — Đặc tả ứng dụng học tiếng Trung và luyện thi HSK"
-version: "1.13"
+version: "1.14"
 brand_chinese: "新语"
 brand_pinyin: "Xīnyǔ"
 date: "2026-10-22"
@@ -662,6 +662,11 @@ Từ màn 39, người học có thể ôn lại hoặc sang bài tiếp theo. K
 - Bài tiếp theo (05, 06, 07) là bài đầu tiên chưa xong tính từ điểm bắt đầu; học hết thì quay lại các bài trước điểm bắt đầu.
 - Bài xong khi làm xong kiểm tra mục tiêu bài. Câu trả lời sai được giải thích ngay (đáp án đúng, chỗ dễ nhầm của đáp án đã chọn, lời giải) rồi hỏi lại một lần ở cuối bài kiểm tra, đáp án xáo lại. Màn 39 ghi số câu đúng ngay lần đầu, không tính điểm hay phần trăm.
 - Hoạt động trên màn 08 suy ra từ nội dung bài: Âm và thanh (12) khi có mục phát âm, Luyện thanh điệu (47) khi cột Hoạt động ghi “(47)”, Nghe & đọc (09) và Nói (09A, 09B) khi có câu, Từ vựng (10), Mẫu câu (11), Chữ Hán (13), Kiểm tra mục tiêu bài (42) khi có câu hỏi.
+- Làm xong một hoạt động thì sang thẳng hoạt động sau của bài; hoạt động Nói gồm nhại theo (09A) rồi đóng vai (09B).
+- Bài luyện trong hoạt động chỉ dựng từ nội dung đã kiểm tra, đáp án nhiễu là từ hoặc câu khác của cùng bài (thiếu thì từ khác cùng cấp), phản hồi ✓/✕ kèm chữ như màn 42: 09 nghe một câu của hội thoại rồi chọn nghĩa (tối đa 3 câu khác nhau); 10 chọn nghĩa của từ, chấm ngay khi chọn; 11 điền từ còn thiếu vào câu ví dụ (bỏ từ dài nhất của câu, tối đa 3 câu). Tiêu đề màn 11 là phần đầu cột Giải thích trước dấu hai chấm.
+- Màn 12: từng mục phát âm, chọn âm tiết hoặc từ ví dụ để nghe, ghi âm, nghe xen kẽ mẫu – giọng mình, tự đánh giá “Còn khác mẫu” hoặc “Đã giống mẫu”. Không có điểm.
+- Màn 09A: hiện chữ theo ba mức (Hán + Pinyin, chỉ chữ Hán, ẩn chữ), hết các câu thì nhại lại với mức cao hơn hoặc sang 09B. Màn 09B: chọn vai, app phát lời vai kia, lượt mình hiện gợi ý (ẩn được) và ghi âm, tự sang câu sau khi ghi xong; cuối đoạn nghe lại cả hội thoại ghép giọng mẫu với bản ghi, đổi vai.
+- Câu trả lời và tự đánh giá của 09–12 lưu thành lần làm (kho `lanLam`, loại là khóa hoạt động) để sổ lỗi dùng.
 
 ### 10.3. Ôn tập
 
@@ -812,7 +817,7 @@ Thay cho bước rà soát chuyên môn, mỗi phần nội dung đi qua các b�
 
 - Ở gốc repo, chạy thẳng không cần bước build: `index.html`, `manifest.webmanifest`, `sw.js` (service worker), `app/css/`, `app/js/` (module JavaScript, mỗi màn một tệp trong `app/js/man/`), `app/hinh/` (biểu tượng: dấu son chữ 新), `vendor/font/`. Mọi đường dẫn là tương đối để chạy ở GitHub Pages (`https://luongquangdao8386-ops.github.io/xinyu/`).
 - Chuyển màn theo địa chỉ `#/ten-man/tham-so` (ví dụ `#/hom-nay`, `#/ke-hoach/sua` khi mở lại màn thiết lập để sửa, `#/chang/hsk-1`, `#/bai/PA01`, `#/hoc/PA01/phat-am`, `#/kiem-tra/PA01`, `#/xong/PA01`). Chưa thiết lập xong thì chỉ vào được 01–04.
-- IndexedDB tên `xinyu`; mỗi bản ghi có `capNhat`. Kho `caiDat`, khóa `hoSo`: mục tiêu (`hoc`, `thi`, `ca-hai`), cấp mục tiêu, điểm bắt đầu (mã bài), thời lượng mỗi ngày, ngày thi, đã thiết lập xong. Kho `tienDo` (từ B1.2), khóa mã bài: thời điểm bắt đầu, xong, các hoạt động đã làm. Kho `nhatKy`, khóa ngày: số giây học, các bài. Kho `lanLam`: mỗi lần làm kiểm tra, từng câu trả lời (câu hỏi, đáp án chọn, đúng hay sai, lần hỏi). Kho mới thêm bằng nâng phiên bản cơ sở dữ liệu trong `app/js/kho.mjs`.
+- IndexedDB tên `xinyu`; mỗi bản ghi có `capNhat`. Kho `caiDat`, khóa `hoSo`: mục tiêu (`hoc`, `thi`, `ca-hai`), cấp mục tiêu, điểm bắt đầu (mã bài), thời lượng mỗi ngày, ngày thi, đã thiết lập xong. Kho `tienDo` (từ B1.2), khóa mã bài: thời điểm bắt đầu, xong, các hoạt động đã làm. Kho `nhatKy`, khóa ngày: số giây học, các bài. Kho `lanLam`: mỗi lần làm kiểm tra hoặc hoạt động có câu trả lời, từng câu trả lời (câu hỏi hoặc mục, đáp án chọn, đúng hay sai, lần hỏi). Từ B1.3: kho `banGhi` (khóa mục ghi âm, 3 bản gần nhất), `ghiChu` (khóa đối tượng như `tu/T147`, mẹo nhớ), `tuDaLuu` (khóa mã từ, từ lưu vào sổ từ ở màn 10); hồ sơ thêm nghe chậm, ẩn Pinyin, ẩn gợi ý đóng vai, luyện không ghi âm, đã giới thiệu micro. Kho mới thêm bằng nâng phiên bản cơ sở dữ liệu trong `app/js/kho.mjs`.
 - Service worker lưu sẵn khung app, font, `content/*.json` và `audio/danh-sach.json`; trang và nội dung lấy bản mới trên mạng trước (chờ tối đa 3 giây) rồi mới dùng bản đã lưu; font và âm thanh dùng bản đã lưu trước, âm thanh lưu khi đã mở. App gọi âm thanh kèm mã băm trong `audio/danh-sach.json` (`?v=…`) nên tệp tạo lại thay bản cũ trong bộ nhớ đệm; tệp được tải thành Blob rồi mới phát, vì Safari trên iPhone không phát được âm thanh do service worker trả về khi yêu cầu theo từng đoạn. Thêm tệp vào app thì thêm vào danh sách lưu sẵn trong `sw.js` (kiểm thử báo khi thiếu).
 - `content/lo-trinh.json` (sinh bằng `tools/tao-lo-trinh.mjs`) liệt kê mọi bài theo lộ trình, kể cả bài chưa soạn; `content/bai.json` chỉ có bài đã soạn. Màn 03 chỉ cho chọn bài đã soạn.
 
@@ -837,6 +842,9 @@ Thay cho bước rà soát chuyên môn, mỗi phần nội dung đi qua các b�
 ### 12.4. Ghi âm và đường cao độ
 
 - Ghi bằng MediaRecorder; lưu trên máy, không đồng bộ. Mỗi mục giữ 3 bản ghi gần nhất, gồm cả bản ghi nhại theo và đóng vai.
+- Mục ghi âm đặt theo âm thanh mẫu của nó (`amTiet/ma1`, `tu/T147`, `cau/CPA08-01`), nên bản nhại theo và bản đóng vai của một câu dùng chung ba chỗ. Bản ghi lưu dạng ArrayBuffer kèm định dạng (Safari ghi `audio/mp4`, Chrome `audio/webm`).
+- Quyền micro chỉ xin khi bấm ghi âm lần đầu: màn 35 giới thiệu trước rồi trình duyệt mới hỏi. Bị chặn, không có micro hoặc trình duyệt không ghi âm được thì màn 35 hướng dẫn và cho chọn luyện không ghi âm (đọc to theo mẫu; ở 09B bấm “Tôi đã nói xong”), lựa chọn nhớ trong hồ sơ và bật lại được ngay trên màn. Rời màn thì bản đang ghi bị bỏ.
+- Trên Safari có phiên âm thanh (16.4+), app đặt chế độ ghi và phát khi ghi, chỉ phát khi ghi xong, để bản ghi phát lại qua loa ngoài.
 - Đường cao độ (B2): dò cao độ ngay trên máy bằng Web Audio API (thuật toán kiểu YIN), vẽ đường của mẫu và của bản ghi trên cùng một khung.
 - Quy đổi theo cao độ trung bình của từng giọng (đơn vị nửa cung) để so hình dạng lên xuống, không so độ cao tuyệt đối giữa hai giọng.
 - Không tính điểm và không hiển thị phần trăm.
@@ -965,6 +973,11 @@ Các nguồn được tra cứu ngày 17/10/2026 và 21/10/2026. Khi xây nội 
 - Mã màn 31–33 giữ trong danh mục ở trạng thái “Bỏ” để đối chiếu bảng ảnh; không dùng lại các mã này cho màn mới.
 
 ## Phụ lục A — Lịch sử thay đổi
+
+### Bản 1.14 (22/10/2026)
+
+- Hoạt động trong bài (B1.3, mục 10.2): cách chuyển giữa hoạt động, bài luyện dựng từ nội dung của bài ở 09, 10, 11, tự đánh giá ở 12, ba mức hiện chữ ở 09A, luồng đóng vai ở 09B; tiêu đề màn 11 lấy ở cột Giải thích.
+- Ghi âm (mục 12.4): mục ghi âm, cách lưu, xin quyền micro qua màn 35, luyện không ghi âm; kho `banGhi`, `ghiChu`, `tuDaLuu` (mục 12.1).
 
 ### Bản 1.13 (22/10/2026)
 

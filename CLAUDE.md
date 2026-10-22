@@ -6,7 +6,7 @@ App cá nhân học tiếng Trung và luyện thi HSK 3.0 cho một người dù
 
 1. Đọc `docs/tien-do.md` trước tiên.
 2. Làm việc người dùng giao. Nếu người dùng chỉ nói “làm tiếp”, làm việc chưa xong đầu tiên theo thứ tự khuyến nghị trong `docs/tien-do.md`.
-3. Đặc tả `docs/dac-ta.md` (bản 1.13) dài gần 1.000 dòng: không đọc hết. Tìm vị trí các mục bằng `grep -n '^##' docs/dac-ta.md`, rồi chỉ đọc những mục ghi trong bảng dưới.
+3. Đặc tả `docs/dac-ta.md` (bản 1.14) dài gần 1.000 dòng: không đọc hết. Tìm vị trí các mục bằng `grep -n '^##' docs/dac-ta.md`, rồi chỉ đọc những mục ghi trong bảng dưới.
 4. Mỗi phiên làm một việc. Chạy thử hoặc kiểm tra trước khi commit.
 5. Cuối phiên: đánh dấu việc đã xong, ghi một dòng vào Nhật ký trong `docs/tien-do.md` (đã làm gì, phiên sau cần biết gì), commit, rồi đẩy lên `main`. Chủ repo đã đồng ý đẩy thẳng lên `main`.
 

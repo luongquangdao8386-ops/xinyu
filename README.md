@@ -4,7 +4,7 @@ App cá nhân học tiếng Trung và luyện thi HSK theo HSK 3.0, giải thíc
 
 ## Trạng thái
 
-Đã có khung app (B1.1) và lộ trình, bài học (B1.2): thiết lập lần đầu, kế hoạch học, 5 tab, lộ trình các chặng, chi tiết bài, kiểm tra mục tiêu bài có âm thanh, hoàn thành bài; các hoạt động trong bài (nghe đọc, từ vựng, phát âm…) đang xây. Đặc tả hiện hành: [docs/dac-ta.md](docs/dac-ta.md) (bản 1.13). Việc theo từng phiên và nhật ký: [docs/tien-do.md](docs/tien-do.md).
+Đã có khung app (B1.1), lộ trình, bài học (B1.2) và các hoạt động trong bài (B1.3): thiết lập lần đầu, kế hoạch học, 5 tab, lộ trình các chặng, chi tiết bài; âm và thanh, nghe và đọc hội thoại, từ vựng, mẫu câu, nhại theo và đóng vai có ghi âm; kiểm tra mục tiêu bài, hoàn thành bài. Luyện chữ, ôn tập và luyện thi đang xây. Đặc tả hiện hành: [docs/dac-ta.md](docs/dac-ta.md) (bản 1.14). Việc theo từng phiên và nhật ký: [docs/tien-do.md](docs/tien-do.md).
 
 ## Định hướng kỹ thuật
 

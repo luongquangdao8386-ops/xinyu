@@ -109,7 +109,7 @@ export const TAB = [
       { tieuDe: 'Cấp', khoa: 'cap', kieu: 'cap', batBuoc: true, rong: 6 },
       { tieuDe: 'Theo đề cương', khoa: 'deCuong', xuat: false, moTa: 'Nội dung ghi trong đề cương, chỉ để tham khảo khi soạn.', rong: 30 },
       { tieuDe: 'Mẫu câu', khoa: 'mauCau', batBuoc: true, rong: 20 },
-      { tieuDe: 'Giải thích', khoa: 'giaiThich', batBuoc: true, rong: 35 },
+      { tieuDe: 'Giải thích', khoa: 'giaiThich', batBuoc: true, moTa: 'Mở đầu bằng tên điểm ngữ pháp rồi dấu hai chấm (app lấy làm tiêu đề màn 11), ví dụ: Câu không chủ vị (非主谓句): …', rong: 35 },
       { tieuDe: 'So sánh với tiếng Việt', khoa: 'soSanh', rong: 30 },
       { tieuDe: 'Lỗi người Việt hay mắc', khoa: 'loiHayMac', rong: 30 },
       { tieuDe: 'Ví dụ', khoa: 'viDu', kieu: 'ds', moTa: 'Mã câu ở tab Cau.', rong: 15 },

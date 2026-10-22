@@ -7,7 +7,7 @@ import { xaoDapAn } from '../bai-hoc.mjs';
 import { bieuTuong, h, tronChu } from '../giao-dien.mjs';
 import { ghiLanLam, napLoTrinh, xongBai, xongHoatDong } from '../hoc.mjs';
 import { napNoiDung } from '../noi-dung.mjs';
-import { dauLui, nut, nutNghe } from './thanh-phan.mjs';
+import { congTacCham, dauLui, nut, nutNghe } from './thanh-phan.mjs';
 
 const KY_NANG = { nghe: 'Nghe', 'đọc': 'Đọc', 'nói': 'Nói', 'viết': 'Viết' };
 
@@ -88,12 +88,7 @@ export default {
         nutKiem.focus();
       }
 
-      const doiCham = h(
-        'label',
-        { class: 'cong-tac' },
-        h('input', { type: 'checkbox', checked: !!hoSo.ngheCham, onchange: (e) => { hoSo.ngheCham = e.target.checked; luuHoSo({ ngheCham: e.target.checked }); } }),
-        h('span', {}, 'Nghe chậm'),
-      );
+      const doiCham = congTacCham(hoSo, luuHoSo);
       // replaceChildren của DOM ghi null thành chữ "null" nên lọc trước.
       vung.replaceChildren(
         ...[

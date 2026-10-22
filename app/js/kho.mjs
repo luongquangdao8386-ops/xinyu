@@ -12,6 +12,13 @@ const NANG_CAP = [
     db.createObjectStore('nhatKy', { keyPath: 'ngay' });
     db.createObjectStore('lanLam', { keyPath: 'ma' }).createIndex('bai', 'bai');
   },
+  // Phiên bản 3 (B1.3): bản ghi âm (khóa mục, ví dụ tu/T147: 3 bản gần nhất, không đồng bộ), ghi chú mẹo nhớ (khóa
+  // đối tượng, ví dụ tu/T147), từ đã lưu vào sổ từ (khóa mã từ).
+  (db) => {
+    db.createObjectStore('banGhi', { keyPath: 'muc' });
+    db.createObjectStore('ghiChu', { keyPath: 'doiTuong' });
+    db.createObjectStore('tuDaLuu', { keyPath: 'ma' });
+  },
 ];
 
 let moSan = null;

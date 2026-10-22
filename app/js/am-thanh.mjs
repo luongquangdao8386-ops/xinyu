@@ -63,12 +63,10 @@ export function chuanBi(loai, ma) {
 
 let loa = null;
 let dangPhat = null;
-// Phát một tệp; cham: tốc độ 0,75. onXong gọi khi phát hết hoặc bị dừng. Trả về false khi chưa có tệp.
-export async function phat(loai, ma, { cham = false, onXong } = {}) {
-  loa ||= new Audio();
-  dung();
-  const url = await chuanBi(loai, ma);
-  if (!url) return false;
+let chuoiDang = null;
+
+async function phatUrl(url, cham, onXong) {
+  dungLoa();
   const lan = (dangPhat = { onXong });
   loa.src = url;
   loa.preservesPitch = loa.webkitPreservesPitch = true;
@@ -80,15 +78,67 @@ export async function phat(loai, ma, { cham = false, onXong } = {}) {
     xong(lan);
     throw e;
   }
+}
+
+// Phát một nguồn: { loai, ma } (âm thanh mẫu) hoặc { blob } (bản ghi của người học; luôn tốc độ thường).
+// Trả về false khi chưa có tệp.
+async function phatNguon(nguon, cham, onXong) {
+  loa ||= new Audio();
+  dungLoa();
+  if (nguon.blob) {
+    const url = URL.createObjectURL(nguon.blob);
+    await phatUrl(url, false, () => {
+      URL.revokeObjectURL(url);
+      onXong?.();
+    });
+    return true;
+  }
+  const url = await chuanBi(nguon.loai, nguon.ma);
+  if (!url) return false;
+  await phatUrl(url, cham, onXong);
   return true;
 }
+
+// Phát một tệp mẫu; cham: tốc độ 0,75. onXong gọi khi phát hết hoặc bị dừng. Trả về false khi chưa có tệp.
+export function phat(loai, ma, { cham = false, onXong } = {}) {
+  chuoiDang = null;
+  return phatNguon({ loai, ma }, cham, onXong);
+}
+
+// Phát bản ghi của người học.
+export function phatBanGhi(blob, { onXong } = {}) {
+  chuoiDang = null;
+  return phatNguon({ blob }, false, onXong);
+}
+
+// Phát lần lượt nhiều nguồn, nghỉ giữa hai nguồn: mẫu xen kẽ bản ghi (09A, 12), cả hội thoại (09, 09B).
+// onMoi(i) gọi khi bắt đầu nguồn thứ i; dừng giữa chừng (dung) thì dừng cả chuỗi. onXong gọi khi hết hoặc bị dừng.
+export async function phatChuoi(ds, { cham = false, nghi = 500, onMoi, onXong } = {}) {
+  dung();
+  const chuoi = (chuoiDang = {});
+  for (let i = 0; i < ds.length && chuoiDang === chuoi; i++) {
+    onMoi?.(i);
+    await new Promise((ok) => {
+      phatNguon(ds[i], cham, ok).then((co) => co || ok(), ok);
+    });
+    if (i + 1 < ds.length && chuoiDang === chuoi) await new Promise((ok) => setTimeout(ok, nghi));
+  }
+  if (chuoiDang === chuoi) chuoiDang = null;
+  onXong?.();
+}
+
 function xong(lan) {
   if (dangPhat !== lan) return;
   dangPhat = null;
   lan.onXong?.();
 }
-export function dung() {
+function dungLoa() {
   if (!loa || !dangPhat) return;
   loa.pause();
   xong(dangPhat);
+}
+// Dừng tiếng đang phát và cả chuỗi đang phát.
+export function dung() {
+  chuoiDang = null;
+  dungLoa();
 }

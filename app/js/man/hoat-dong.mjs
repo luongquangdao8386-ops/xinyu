@@ -1,39 +1,44 @@
-// Hoạt động trong bài chưa dựng (màn 09–13, 47): giữ đầu màn của bài học và tiến độ trong bài, ghi rõ màn nào sẽ
-// có ở việc nào trong docs/tien-do.md, cho sang phần tiếp theo. Không đánh dấu hoạt động là đã làm.
-import { hoatDongCuaBai } from '../bai-hoc.mjs';
+// Hoạt động trong bài (địa chỉ hoc/<mã bài>/<khóa>[/phần]): chuyển tới màn của hoạt động. Hoạt động chưa dựng (13,
+// 47) mở màn chờ: giữ đầu màn của bài học và tiến độ trong bài, ghi rõ màn nào sẽ có ở việc nào trong
+// docs/tien-do.md, cho sang phần tiếp theo. Màn chờ không đánh dấu hoạt động là đã làm.
 import { h } from '../giao-dien.mjs';
-import { napLoTrinh } from '../hoc.mjs';
-import { napNoiDung } from '../noi-dung.mjs';
 import { duongHoatDong } from './bai.mjs';
-import { dauLui, nut } from './thanh-phan.mjs';
+import dongVai from './dong-vai.mjs';
+import mauCau from './mau-cau.mjs';
+import ngheDoc from './nghe-doc.mjs';
+import nhaiTheo from './nhai-theo.mjs';
+import phatAm from './phat-am.mjs';
+import { nut } from './thanh-phan.mjs';
+import { dauHoatDong, napHoatDong } from './trong-bai.mjs';
+import tuVung from './tu-vung.mjs';
 
-const SE_CO = {
-  'phat-am': 'Nghe mẫu từng âm và thanh, xem cách đọc và so sánh với tiếng Việt, đọc theo, ghi âm và nghe lại.',
-  'cap-thanh': 'Nghe từ và chọn cặp thanh, nghe mẫu rồi đọc liền hai âm tiết của 20 cặp thanh.',
-  'nghe-doc': 'Nghe hội thoại, xem Pinyin và nghĩa khi cần, trả lời câu hỏi hiểu nội dung.',
-  'tu-vung': 'Từ, Pinyin, âm thanh, nghĩa, âm Hán Việt, câu ví dụ và ghi chú của bạn.',
-  'mau-cau': 'Mẫu câu, giải thích, so sánh với tiếng Việt, lỗi hay mắc và ví dụ.',
-  'chu-han': 'Xem thứ tự nét, đồ theo, tự viết và đối chiếu.',
-  noi: 'Nhại theo từng câu, ghi âm, nghe xen kẽ với mẫu; đóng vai một người trong hội thoại.',
+// Màn của từng hoạt động; hoạt động Nói gồm nhại theo (09A) rồi đóng vai (09B, phần dong-vai).
+const MAN = {
+  'phat-am': phatAm,
+  'nghe-doc': ngheDoc,
+  'tu-vung': tuVung,
+  'mau-cau': mauCau,
+  noi: nhaiTheo,
+  'noi/dong-vai': dongVai,
 };
 
-export default {
+const SE_CO = {
+  'cap-thanh': 'Nghe từ và chọn cặp thanh, nghe mẫu rồi đọc liền hai âm tiết của 20 cặp thanh.',
+  'chu-han': 'Xem thứ tự nét, đồ theo, tự viết và đối chiếu.',
+};
+
+const choXay = {
   tieuDe: 'Bài học',
   async ve({ di, thamSo }) {
     const [ma, khoa] = thamSo;
-    const [{ ds, noiDung }, cauHoi] = await Promise.all([napLoTrinh(), napNoiDung('cau-hoi')]);
-    const bai = noiDung[ma];
-    const hoatDong = bai ? hoatDongCuaBai(bai, cauHoi.filter((q) => q.bai === ma)) : [];
-    const i = hoatDong.findIndex((d) => d.khoa === khoa);
-    if (i < 0) {
-      di(bai ? `bai/${ma}` : 'lo-trinh');
+    const hd = await napHoatDong(ma, khoa);
+    if (!hd) {
+      di(`bai/${ma}`);
       return [];
     }
-    const d = hoatDong[i];
-    const sau = hoatDong[i + 1];
-    const soThu = ds.find((b) => b.ma === ma).soThu;
+    const { d, sau } = hd;
     return [
-      dauLui({ lui: () => di(`bai/${ma}`), nhanLui: 'Chi tiết bài học', tieuDe: `Bài ${String(soThu).padStart(2, '0')} / ${d.ten}`, tienDo: [i + 1, hoatDong.length] }),
+      dauHoatDong({ di, hd, tienDo: [hd.hoatDong.indexOf(d) + 1, hd.hoatDong.length] }),
       h('div', { class: 'mo-dau rong' }, h('h1', {}, d.ten), h('p', { class: 'phu' }, d.moTa)),
       h('section', { class: 'the' }, h('p', {}, SE_CO[khoa] || ''), h('p', { class: 'phu nho' }, `Màn ${d.man} đang xây ở việc ${d.viec}. Trong lúc chờ, bạn có thể sang phần tiếp theo của bài.`)),
       h(
@@ -44,4 +49,12 @@ export default {
       ),
     ];
   },
+};
+
+export const manHoatDong = (thamSo) => MAN[[thamSo[1], thamSo[2]].filter(Boolean).join('/')] || choXay;
+
+export default {
+  tieuDe: 'Bài học',
+  tieuDeCua: (thamSo) => manHoatDong(thamSo).tieuDe,
+  ve: (boi) => manHoatDong(boi.thamSo).ve(boi),
 };

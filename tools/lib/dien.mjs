@@ -46,10 +46,30 @@ export function dienNoiDung({ bang, noiDung }) {
     const tenTu = (o) => `${String(o.tu ?? '').trim()}|${rong(o.dongHinh) ? '' : parseInt(o.dongHinh, 10)}`;
     const theoTu = new Map(tab.ten === 'Tu' ? ds.map((o) => [tenTu(o), o]) : []);
 
+    // Nhiều tệp soạn có thể cùng nói về một dòng (A4 ghi nghĩa một từ, A7 thêm câu ví dụ): gộp lại trước khi điền.
+    // Cùng một cột mà hai chỗ ghi khác nhau là lỗi.
+    const soan = [];
+    const theoKhoaSoan = new Map();
+    for (const a of noiDung[tab.ten] || []) {
+      const k = !rong(a[tab.khoa]) ? String(a[tab.khoa]).trim() : tab.ten === 'Tu' ? `#${tenTu(a)}` : null;
+      const cu = k === null ? undefined : theoKhoaSoan.get(k);
+      if (!cu) {
+        const o = { ...a };
+        if (k !== null) theoKhoaSoan.set(k, o);
+        soan.push(o);
+        continue;
+      }
+      for (const [c, v] of Object.entries(a)) {
+        if (rong(oSheet(v))) continue;
+        if (rong(oSheet(cu[c]))) cu[c] = v;
+        else if (!giong(oSheet(cu[c]), oSheet(v))) baoCao.push({ muc: 'loi', tab: tab.ten, khoa: k.replace(/^#|\|$/g, ''), noiDung: `hai chỗ soạn ghi khác nhau ở trường ${c}: “${oSheet(cu[c])}” và “${oSheet(v)}”` });
+      }
+    }
+
     const daSoan = new Set();
     let dien = 0;
     let moi = 0;
-    for (const a of noiDung[tab.ten] || []) {
+    for (const a of soan) {
       let khoa = rong(a[tab.khoa]) ? undefined : String(a[tab.khoa]).trim();
       let cu = khoa !== undefined ? theoKhoa.get(khoa) : undefined;
       if (!cu && khoa === undefined && tab.ten === 'Tu') {

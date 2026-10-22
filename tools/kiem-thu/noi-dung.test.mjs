@@ -70,17 +70,20 @@ test('Điền nội dung: chỉ điền ô trống, giữ chữ trên Sheet, th�
     bang,
     noiDung: {
       Bai: [{ ma: 'PA01', chuDe: 'Bốn thanh', mucTieu: 'Nghe thanh', trangThai: 'nháp' }, { ma: 'PA02', chuDe: 'Âm đầu', tu: ['你', '好'] }],
-      Tu: [{ tu: '会', dongHinh: 1, nghia: 'biết' }, { tu: '我', nghia: 'tôi' }, { tu: '他', nghia: 'anh ấy' }],
+      Tu: [{ tu: '会', dongHinh: 1, nghia: 'biết' }, { tu: '我', nghia: 'tôi' }, { tu: '他', nghia: 'anh ấy' }, { tu: '会', dongHinh: 1, cauViDu: ['C1'] }, { tu: '我', nghia: 'ta' }],
     },
   });
   assert.deepEqual(dong.Bai[0], { ma: 'PA01', trangThai: DA, thuTu: 1, chuDe: 'Thanh', mucTieu: 'Nghe thanh', '+Ghi chú riêng': 'của tôi' });
   assert.deepEqual(dong.Bai[1], { trangThai: 'nháp', ma: 'PA02', chuDe: 'Âm đầu', tu: '你、好' });
+  // Hai chỗ soạn cùng một từ được gộp; ghi khác nhau ở cùng một trường là lỗi.
   assert.equal(dong.Tu[0].nghia, 'biết');
+  assert.equal(dong.Tu[0].cauViDu, 'C1');
   assert.deepEqual(cotRieng.Bai, ['Ghi chú riêng']);
   assert.deepEqual(tabKhac, ['TabRieng']);
   const co = (muc, chua) => baoCao.some((m) => m.muc === muc && m.noiDung.includes(chua));
   assert.ok(co('khac', 'Sheet ghi “Thanh”'));
   assert.ok(co('loi', 'không tìm thấy từ 他'));
+  assert.ok(co('loi', 'hai chỗ soạn ghi khác nhau ở trường nghia: “tôi” và “ta”'));
   assert.ok(co('ghiChu', 'thêm cột Chặng'));
   assert.ok(co('ghiChu', 'Sheet chưa có tab này'));
 });
@@ -97,9 +100,16 @@ test('Nội dung đã soạn (tools/noi-dung/) ghép vào mẫu Sheet và qua ki
   assert.deepEqual(ghep.baoCao.filter((m) => m.muc !== 'ghiChu'), []);
   const { soDong, baoCao, duLieu } = chayThu({ ...ghep, noiDung, deCuong: [hsk1] });
   assert.deepEqual(baoCao.filter((m) => m.muc === 'loi' || m.muc === 'canhBao'), []);
-  assert.equal(duLieu.Bai.length, 8);
+  assert.equal(duLieu.Bai.length, 18);
   assert.ok(soDong >= 200);
-  for (const b of duLieu.Bai.filter((x) => x.ma !== 'PA08')) assert.ok(b.phatAm?.length, `bài ${b.ma} chưa có mục phát âm`);
+  for (const b of duLieu.Bai.filter((x) => /^PA0[1-7]$/.test(x.ma))) assert.ok(b.phatAm?.length, `bài ${b.ma} chưa có mục phát âm`);
+  // Bài HSK 1 có hội thoại đủ hai vai (đóng vai, 09B), mỗi điểm ngữ pháp của bài có ví dụ, có câu hỏi kiểm tra (42).
+  for (const b of duLieu.Bai.filter((x) => x.chang === 'HSK 1')) {
+    const cau = duLieu.Cau.filter((c) => b.cau?.includes(c.ma));
+    assert.ok(new Set(cau.map((c) => c.vai)).size >= 2, `bài ${b.ma} chưa có hội thoại hai vai`);
+    for (const m of b.nguPhap || []) assert.ok(duLieu.NguPhap.find((n) => n.ma === m)?.viDu?.length, `ngữ pháp ${m} chưa có ví dụ`);
+    assert.ok(duLieu.CauHoi.filter((q) => q.bai === b.ma).length >= 5, `bài ${b.ma} có ít hơn 5 câu hỏi`);
+  }
   // Đủ 20 cặp thanh: 16 tổ hợp của bốn thanh và 4 tổ hợp có thanh nhẹ ở sau (mục 5.7).
   const toHop = new Set(duLieu.CapThanh.map((c) => c.toHop));
   for (const a of [1, 2, 3, 4]) for (const b of [0, 1, 2, 3, 4]) assert.ok(toHop.has(`${a}-${b}`), `thiếu cặp ${a}-${b}`);

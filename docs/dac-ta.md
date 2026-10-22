@@ -1,6 +1,6 @@
 ---
 title: "Xinyu — Đặc tả ứng dụng học tiếng Trung và luyện thi HSK"
-version: "1.11"
+version: "1.12"
 brand_chinese: "新语"
 brand_pinyin: "Xīnyǔ"
 date: "2026-10-22"
@@ -659,6 +659,10 @@ Màn 37–38 là bản máy tính; các màn còn lại là điện thoại và 
 
 Từ màn 39, người học có thể ôn lại hoặc sang bài tiếp theo. Khi hết một chủ đề: 42 (kiểm tra cuối chủ đề) → 07.
 
+- Bài tiếp theo (05, 06, 07) là bài đầu tiên chưa xong tính từ điểm bắt đầu; học hết thì quay lại các bài trước điểm bắt đầu.
+- Bài xong khi làm xong kiểm tra mục tiêu bài. Câu trả lời sai được giải thích ngay (đáp án đúng, chỗ dễ nhầm của đáp án đã chọn, lời giải) rồi hỏi lại một lần ở cuối bài kiểm tra, đáp án xáo lại. Màn 39 ghi số câu đúng ngay lần đầu, không tính điểm hay phần trăm.
+- Hoạt động trên màn 08 suy ra từ nội dung bài: Âm và thanh (12) khi có mục phát âm, Luyện thanh điệu (47) khi cột Hoạt động ghi “(47)”, Nghe & đọc (09) và Nói (09A, 09B) khi có câu, Từ vựng (10), Mẫu câu (11), Chữ Hán (13), Kiểm tra mục tiêu bài (42) khi có câu hỏi.
+
 ### 10.3. Ôn tập
 
 - Thường ngày: 05 hoặc 44 → 16/17 → hoạt động luyện lại → cập nhật tiến độ ở 27.
@@ -807,10 +811,12 @@ Thay cho bước rà soát chuyên môn, mỗi phần nội dung đi qua các b�
 **Mã app (từ B1.1):**
 
 - Ở gốc repo, chạy thẳng không cần bước build: `index.html`, `manifest.webmanifest`, `sw.js` (service worker), `app/css/`, `app/js/` (module JavaScript, mỗi màn một tệp trong `app/js/man/`), `app/hinh/` (biểu tượng: dấu son chữ 新), `vendor/font/`. Mọi đường dẫn là tương đối để chạy ở GitHub Pages (`https://luongquangdao8386-ops.github.io/xinyu/`).
-- Chuyển màn theo địa chỉ `#/ten-man` (ví dụ `#/hom-nay`, `#/ke-hoach/sua` khi mở lại màn thiết lập để sửa). Chưa thiết lập xong thì chỉ vào được 01–04.
-- IndexedDB tên `xinyu`; mỗi bản ghi có `capNhat`. Kho `caiDat`, khóa `hoSo`: mục tiêu (`hoc`, `thi`, `ca-hai`), cấp mục tiêu, điểm bắt đầu (mã bài), thời lượng mỗi ngày, ngày thi, đã thiết lập xong. Kho mới thêm bằng nâng phiên bản cơ sở dữ liệu trong `app/js/kho.mjs`.
-- Service worker lưu sẵn khung app, font, `content/*.json` và `audio/danh-sach.json`; trang và nội dung lấy bản mới trên mạng trước (chờ tối đa 3 giây) rồi mới dùng bản đã lưu; font và âm thanh dùng bản đã lưu trước, âm thanh lưu khi đã mở. Thêm tệp vào app thì thêm vào danh sách lưu sẵn trong `sw.js` (kiểm thử báo khi thiếu).
+- Chuyển màn theo địa chỉ `#/ten-man/tham-so` (ví dụ `#/hom-nay`, `#/ke-hoach/sua` khi mở lại màn thiết lập để sửa, `#/chang/hsk-1`, `#/bai/PA01`, `#/hoc/PA01/phat-am`, `#/kiem-tra/PA01`, `#/xong/PA01`). Chưa thiết lập xong thì chỉ vào được 01–04.
+- IndexedDB tên `xinyu`; mỗi bản ghi có `capNhat`. Kho `caiDat`, khóa `hoSo`: mục tiêu (`hoc`, `thi`, `ca-hai`), cấp mục tiêu, điểm bắt đầu (mã bài), thời lượng mỗi ngày, ngày thi, đã thiết lập xong. Kho `tienDo` (từ B1.2), khóa mã bài: thời điểm bắt đầu, xong, các hoạt động đã làm. Kho `nhatKy`, khóa ngày: số giây học, các bài. Kho `lanLam`: mỗi lần làm kiểm tra, từng câu trả lời (câu hỏi, đáp án chọn, đúng hay sai, lần hỏi). Kho mới thêm bằng nâng phiên bản cơ sở dữ liệu trong `app/js/kho.mjs`.
+- Service worker lưu sẵn khung app, font, `content/*.json` và `audio/danh-sach.json`; trang và nội dung lấy bản mới trên mạng trước (chờ tối đa 3 giây) rồi mới dùng bản đã lưu; font và âm thanh dùng bản đã lưu trước, âm thanh lưu khi đã mở. App gọi âm thanh kèm mã băm trong `audio/danh-sach.json` (`?v=…`) nên tệp tạo lại thay bản cũ trong bộ nhớ đệm; tệp được tải thành Blob rồi mới phát, vì Safari trên iPhone không phát được âm thanh do service worker trả về khi yêu cầu theo từng đoạn. Thêm tệp vào app thì thêm vào danh sách lưu sẵn trong `sw.js` (kiểm thử báo khi thiếu).
 - `content/lo-trinh.json` (sinh bằng `tools/tao-lo-trinh.mjs`) liệt kê mọi bài theo lộ trình, kể cả bài chưa soạn; `content/bai.json` chỉ có bài đã soạn. Màn 03 chỉ cho chọn bài đã soạn.
+
+- Thời gian học (màn 05, nhật ký học) chỉ đếm khi đang ở màn hoạt động trong bài hoặc kiểm tra, trang đang hiện và có thao tác trong 3 phút gần nhất.
 
 ### 12.2. Lưu dữ liệu trên iPhone
 
@@ -958,6 +964,11 @@ Các nguồn được tra cứu ngày 17/10/2026 và 21/10/2026. Khi xây nội 
 - Mã màn 31–33 giữ trong danh mục ở trạng thái “Bỏ” để đối chiếu bảng ảnh; không dùng lại các mã này cho màn mới.
 
 ## Phụ lục A — Lịch sử thay đổi
+
+### Bản 1.12 (22/10/2026)
+
+- Luồng bài học (mục 10.2): cách chọn bài tiếp theo, bài xong khi làm xong kiểm tra, câu sai hỏi lại một lần, hoạt động của bài suy ra từ nội dung.
+- Mã app (mục 12.1): đường dẫn màn có tham số, kho `tienDo`, `nhatKy`, `lanLam`, âm thanh gọi kèm mã băm và phát qua Blob, cách đếm thời gian học.
 
 ### Bản 1.11 (22/10/2026)
 

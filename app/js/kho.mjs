@@ -5,6 +5,13 @@ const TEN = 'xinyu';
 const NANG_CAP = [
   // Phiên bản 1: cài đặt và hồ sơ học (khóa 'hoSo': mục tiêu, cấp, điểm bắt đầu, thời lượng, ngày thi).
   (db) => db.createObjectStore('caiDat', { keyPath: 'khoa' }),
+  // Phiên bản 2 (B1.2): tiến độ từng bài (khóa mã bài: bắt đầu, xong, các hoạt động đã làm), nhật ký học theo ngày
+  // (khóa YYYY-MM-DD: số giây học, các bài), lần làm bài (kiểm tra mục tiêu bài…: từng câu trả lời).
+  (db) => {
+    db.createObjectStore('tienDo', { keyPath: 'ma' });
+    db.createObjectStore('nhatKy', { keyPath: 'ngay' });
+    db.createObjectStore('lanLam', { keyPath: 'ma' }).createIndex('bai', 'bai');
+  },
 ];
 
 let moSan = null;
@@ -33,6 +40,8 @@ async function giaoDich(kho, cheDo, viec) {
 }
 
 export const doc = (kho, khoa) => giaoDich(kho, 'readonly', (s) => s.get(khoa));
+export const docHet = (kho) => giaoDich(kho, 'readonly', (s) => s.getAll());
+export const docTheo = (kho, chiMuc, gt) => giaoDich(kho, 'readonly', (s) => s.index(chiMuc).getAll(gt));
 export const xoa = (kho, khoa) => giaoDich(kho, 'readwrite', (s) => s.delete(khoa));
 export async function ghi(kho, banGhi) {
   const ban = { ...banGhi, capNhat: new Date().toISOString() };

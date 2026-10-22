@@ -1,28 +1,40 @@
 // Service worker của Xinyu (mục 12.1, 12.7): lưu sẵn khung app, font và nội dung để mở được khi không có mạng;
 // âm thanh lưu vào bộ nhớ đệm khi đã mở. Trang và nội dung lấy bản mới trên mạng trước (chờ tối đa 3 giây),
-// không được thì dùng bản đã lưu; font và âm thanh dùng bản đã lưu trước.
+// không được thì dùng bản đã lưu; font và âm thanh dùng bản đã lưu trước. Âm thanh gọi kèm mã băm (?v=…): khi
+// tệp được tạo lại, mã băm đổi nên tải bản mới và xóa bản cũ cùng đường dẫn.
 // Thêm tệp vào app/, vendor/font/ hoặc content/ thì thêm vào LUU_SAN (kiểm thử báo khi thiếu).
 
-const BAN = 'xinyu-2';
+const BAN = 'xinyu-3';
 const KHO_AM_THANH = 'xinyu-am-thanh';
 const LUU_SAN = [
   './',
   'index.html',
   'manifest.webmanifest',
   'app/css/xinyu.css',
+  'app/js/am-thanh.mjs',
+  'app/js/bai-hoc.mjs',
   'app/js/giao-dien.mjs',
+  'app/js/gio-hoc.mjs',
+  'app/js/hoc.mjs',
   'app/js/ke-hoach.mjs',
-  'app/js/khoi-dong.mjs',
   'app/js/kho.mjs',
-  'app/js/noi-dung.mjs',
+  'app/js/khoi-dong.mjs',
+  'app/js/man/bai.mjs',
+  'app/js/man/chang.mjs',
   'app/js/man/chao-mung.mjs',
   'app/js/man/cho-xay.mjs',
   'app/js/man/diem-bat-dau.mjs',
+  'app/js/man/hoan-thanh.mjs',
+  'app/js/man/hoat-dong.mjs',
   'app/js/man/hom-nay.mjs',
   'app/js/man/ke-hoach.mjs',
+  'app/js/man/kiem-tra.mjs',
+  'app/js/man/lo-trinh.mjs',
   'app/js/man/muc-tieu.mjs',
+  'app/js/man/on-tap.mjs',
   'app/js/man/thanh-phan.mjs',
   'app/js/man/toi.mjs',
+  'app/js/noi-dung.mjs',
   'app/hinh/apple-touch-icon.png',
   'app/hinh/bieu-tuong-192.png',
   'app/hinh/bieu-tuong-512.png',
@@ -89,11 +101,24 @@ async function mangTruoc(yc) {
   return (await c.match(yc, { ignoreSearch: true })) || mang;
 }
 
+async function amThanh(yc) {
+  const c = await caches.open(KHO_AM_THANH);
+  const da = await c.match(yc);
+  if (da) return da;
+  const tl = await fetch(yc);
+  if (tl.ok) {
+    const duong = new URL(yc.url).pathname;
+    for (const k of await c.keys()) if (new URL(k.url).pathname === duong) await c.delete(k);
+    await c.put(yc, tl.clone());
+  }
+  return tl;
+}
+
 self.addEventListener('fetch', (e) => {
   const yc = e.request;
   const url = new URL(yc.url);
   if (yc.method !== 'GET' || url.origin !== location.origin) return;
-  if (/\/audio\/.+\.mp3$/.test(url.pathname)) e.respondWith(luuTruoc(yc, KHO_AM_THANH));
+  if (/\/audio\/.+\.mp3$/.test(url.pathname)) e.respondWith(amThanh(yc));
   else if (/\/vendor\/font\//.test(url.pathname) && url.pathname.endsWith('.woff2')) e.respondWith(luuTruoc(yc, BAN));
   else e.respondWith(mangTruoc(yc));
 });

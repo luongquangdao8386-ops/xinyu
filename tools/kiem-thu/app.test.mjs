@@ -6,10 +6,14 @@ import { dirname, join, relative } from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
+import { amThanhCauHoi, maAmTiet } from '../../app/js/am-thanh.mjs';
+import { baiSau, baiTiepTheo, chuDeCuaChang, danhSachBai, hoatDongCuaBai, hoatDongTiep, nhanBai, tachY, trangThaiChang, xaoDapAn } from '../../app/js/bai-hoc.mjs';
 import { BUOI_HOC, baiDenCap, cachNgay, capCoNoiDung, congNgay, uocTinh } from '../../app/js/ke-hoach.mjs';
+import { maAmTiet as maAmTietCongCu } from '../lib/am-thanh.mjs';
 
 const GOC = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
-const loTrinh = JSON.parse(readFileSync(join(GOC, 'content', 'lo-trinh.json'), 'utf8'));
+const docNoiDung = (ten) => JSON.parse(readFileSync(join(GOC, 'content', `${ten}.json`), 'utf8'));
+const loTrinh = docNoiDung('lo-trinh');
 const tepTrong = (thuMuc) =>
   readdirSync(join(GOC, thuMuc)).flatMap((t) => {
     const p = join(GOC, thuMuc, t);
@@ -70,4 +74,59 @@ test('Module của app đúng cú pháp và chỉ nhập tệp có thật', () =
   }
   const r = spawnSync(process.execPath, ['--check', join(GOC, 'sw.js')]);
   assert.equal(r.status, 0, String(r.stderr));
+});
+
+test('Lộ trình: danh sách bài, bài tiếp theo, trạng thái chặng và chủ đề', () => {
+  const baiNoiDung = docNoiDung('bai');
+  const ds = danhSachBai(loTrinh, baiNoiDung);
+  assert.equal(ds.length, 56);
+  assert.deepEqual([ds[0].ma, ds[0].soThu, ds[0].coNoiDung], ['PA01', 1, true]);
+  assert.deepEqual([ds[8].chang, ds[8].soThu, ds[8].coNoiDung], ['HSK 1', 1, baiNoiDung.some((b) => b.ma === ds[8].ma)]);
+  assert.equal(nhanBai(ds[9]), 'HSK 1 · Bài 02');
+  assert.equal(baiTiepTheo(ds, {}, 'PA01').ma, 'PA01');
+  assert.equal(baiTiepTheo(ds, { PA01: { xong: 'x' }, PA02: { batDau: 'x' } }, 'PA01').ma, 'PA02');
+  // Bắt đầu giữa lộ trình: học hết từ điểm bắt đầu rồi quay về các bài trước đó.
+  const xongSau = Object.fromEntries(ds.slice(50).map((b) => [b.ma, { xong: 'x' }]));
+  assert.equal(baiTiepTheo(ds, xongSau, ds[50].ma).ma, 'PA01');
+  assert.equal(baiTiepTheo(ds, Object.fromEntries(ds.map((b) => [b.ma, { xong: 'x' }])), 'PA01'), null);
+  assert.equal(baiSau(ds, 'PA08').chang, 'HSK 1');
+  assert.equal(baiSau(ds, ds.at(-1).ma), null);
+
+  const tienDo = Object.fromEntries(ds.slice(0, 8).map((b) => [b.ma, { xong: 'x' }]));
+  const tiep = baiTiepTheo(ds, tienDo, 'PA01');
+  const chang = trangThaiChang(ds, tienDo, tiep);
+  assert.deepEqual(chang.slice(0, 3).map((c) => c.trangThai), ['xong', 'dang', 'khoa']);
+  assert.equal(chang.length, 8);
+  const chuDe = chuDeCuaChang(ds, 'HSK 1', tienDo, tiep);
+  assert.equal(chuDe.reduce((s, c) => s + c.bai.length, 0), 48);
+  assert.deepEqual(chuDe.map((c) => c.trangThai), ['dang', 'chua', 'chua', 'chua', 'chua']);
+});
+
+test('Bài học: hoạt động theo nội dung, ý của tài liệu tham chiếu, xáo đáp án', () => {
+  const bai = Object.fromEntries(docNoiDung('bai').map((b) => [b.ma, b]));
+  const cauHoi = docNoiDung('cau-hoi');
+  const cua = (ma) => hoatDongCuaBai(bai[ma], cauHoi.filter((q) => q.bai === ma)).map((d) => d.khoa);
+  assert.deepEqual(cua('PA01'), ['phat-am', 'kiem-tra']);
+  assert.deepEqual(cua('PA06'), ['phat-am', 'cap-thanh', 'kiem-tra']);
+  assert.deepEqual(cua('PA08'), ['nghe-doc', 'tu-vung', 'mau-cau', 'noi', 'kiem-tra']);
+  for (const ma of Object.keys(bai)) assert.equal(cua(ma).at(-1), 'kiem-tra', `${ma} có kiểm tra mục tiêu bài`);
+  const ds = hoatDongCuaBai(bai.PA08, []);
+  assert.equal(hoatDongTiep(ds, { hoatDong: { 'nghe-doc': 'x' } }).khoa, 'tu-vung');
+  assert.deepEqual(tachY('nghe nhận ra thanh; đọc liền được.'), ['Nghe nhận ra thanh', 'Đọc liền được']);
+  for (const q of cauHoi) {
+    const d = xaoDapAn(q, 12345);
+    assert.deepEqual([...d].sort(), [q.dapAnDung, ...q.dapAnSai.map((s) => s.dapAn)].sort(), q.ma);
+    assert.deepEqual(d, xaoDapAn(q, 12345));
+  }
+});
+
+test('Âm thanh: tên tệp âm tiết giống công cụ, câu hỏi nghe có tệp', () => {
+  const danhSach = JSON.parse(readFileSync(join(GOC, 'audio', 'danh-sach.json'), 'utf8'));
+  const amTiet = [...new Set(docNoiDung('phat-am').flatMap((p) => p.amTiet || []))];
+  assert.ok(amTiet.length > 100);
+  for (const a of [...amTiet, 'lǜ', 'nǚ', 'ma', 'er']) assert.equal(maAmTiet(a), maAmTietCongCu(a), a);
+  for (const q of docNoiDung('cau-hoi').filter((c) => c.kyNang === 'nghe')) {
+    const a = amThanhCauHoi(q);
+    assert.ok(a?.ma && danhSach[a.loai][a.ma], `${q.ma}: chưa có âm thanh ${JSON.stringify(q.amThanh)}`);
+  }
 });

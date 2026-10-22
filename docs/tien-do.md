@@ -1,6 +1,6 @@
 # Tiến độ Xinyu
 
-**Cập nhật:** 22/10/2026. **Việc tiếp theo:** B1.2.
+**Cập nhật:** 22/10/2026. **Việc tiếp theo:** B1.3.
 
 **Thứ tự khuyến nghị:** A1 → A2 → A3 → A4 → A5 → B1.1 → B1.2 → B1.3, sau đó soạn các cụm A7 xen kẽ với B1.4–B1.8. Như vậy Nền phát âm chạy được trong app sớm, không phải đợi soạn xong toàn bộ HSK 1.
 
@@ -40,7 +40,11 @@ Mỗi việc dưới đây làm trong một phiên. “Cần” là thứ ngư�
   - Màn 01–04 làm đủ; tab Hôm nay hiện bài tiếp theo, tab Tôi xem và sửa hồ sơ, xin lưu trữ lâu dài, thiết lập lại; Lộ trình, Luyện tập, Thư viện ghi “đang xây” kèm việc sẽ làm.
   - Chạy thử bằng Chromium (khổ iPhone 13 và máy tính 1280 px): đi hết 01 → 05, tải lại vẫn giữ hồ sơ, mở được khi ngoại tuyến, không lỗi console, không cuộn ngang. 4 kiểm thử mới (kế hoạch, danh sách lưu sẵn của service worker, manifest, module).
   - **Người dùng cần làm:** bật GitHub Pages (Settings > Pages > Source: Deploy from a branch > `main`, thư mục `/ (root)` > Save), rồi mở `https://luongquangdao8386-ops.github.io/xinyu/` bằng Safari trên iPhone và Thêm vào MH chính. Môi trường cloud không mở được github.io nên chưa kiểm tra trên trang thật.
-- [ ] **B1.2 Lộ trình và bài học:** 05, 06, 07, 08, 39, 42, 34A.
+- [x] **B1.2 Lộ trình và bài học:** 05, 06, 07, 08, 39, 42, 34A theo bảng 02, 03, 12, 15; phát âm thanh; đặc tả 1.12 (mục 10.2, 12.1).
+  - 05 hiện bài tiếp theo theo tiến độ đã lưu và số phút đã học hôm nay; 06 các chặng (chặng chưa có bài bị khóa); 07 chủ đề và bài của Nền phát âm, HSK 1; 08 mục tiêu, hoạt động suy ra từ nội dung bài, tài liệu tham chiếu; 42 kiểm tra mục tiêu bài từ `content/cau-hoi.json` (nghe, nghe chậm, phản hồi ✓/✕ kèm lời giải, câu sai hỏi lại một lần); 39 tổng kết và sang bài tiếp; 34A trạng thái chưa có bài ôn (tab Luyện tập).
+  - Hoạt động chưa dựng (12, 47, 09, 09A, 09B, 10, 11, 13) mở màn chờ trong bài, ghi việc sẽ làm và cho sang phần sau; không đánh dấu đã làm. Bài xong khi làm xong kiểm tra.
+  - Dữ liệu học mới trong IndexedDB: `tienDo`, `nhatKy`, `lanLam` (`app/js/hoc.mjs`, `app/js/gio-hoc.mjs`); lô-gic lộ trình thuần trong `app/js/bai-hoc.mjs` có kiểm thử; âm thanh trong `app/js/am-thanh.mjs`.
+  - Sửa thêm: hai tranh mực cắt tạm dính viền khung điện thoại ở mép phải, đã cắt bỏ.
 - [ ] **B1.3 Hoạt động trong bài:** 09, 09A, 09B, 10, 11, 12, 35.
 - [ ] **B1.4 Luyện chữ:** 13, 13A–13D (Hanzi Writer).
 - [ ] **B1.5 Ôn tập:** 16 (FSRS), 17, 34B, chế độ 5 phút, ghi chú mẹo nhớ.
@@ -83,3 +87,4 @@ Mỗi việc dưới đây làm trong một phiên. “Cần” là thứ ngư�
 | 22/10/2026 | A5: công cụ tạo âm thanh, âm thanh Nền phát âm, trang nghe duyệt, đặc tả 1.9 | Ép cách đọc bằng SSML `<phoneme alphabet="pinyin" ph="huan2">还</phoneme>` (ü viết v, thanh nhẹ 5, âm cuốn lưỡi r5): Wavenet bỏ qua `customPronunciations`, chỉ nhận thẻ này; Chirp 3 HD nhận cả hai. Khi bị ép, giọng máy vẫn tự biến điệu 3-3 nhưng không tự biến điệu 一, 不, nên ép theo Pinyin hiển thị. Ép riêng một chữ giữa từ có thể làm hỏng ngữ điệu (不 trong 对不起), vì vậy công cụ thử ba cách đọc và giữ bản khớp nhất. Âm thanh cho A7 tạo bằng cùng lệnh sau mỗi lần xây nội dung; câu trên 4 âm tiết không tự kiểm thanh điệu, phải nghe. Quota Chirp 3 HD thấp (lỗi 429 khi gửi nhiều yêu cầu), Wavenet không vướng. B1 cần: phát chậm bằng `playbackRate` khoảng 0,75; làm mới bộ nhớ đệm âm thanh theo mã băm trong `audio/danh-sach.json` |
 | 22/10/2026 | B1.1: khung app, màn 01–04, IndexedDB, service worker, font cắt sẵn, biểu tượng; đặc tả 1.10 | Không có bảng ảnh trong `design/` nên giao diện dựng theo mục 8 (màu 8.1, font 8.4, bố cục 8.5). Màn 04 ước tính 45 phút mỗi bài (khung 12 tuần). Màn 02 chỉ cho chọn HSK 1; màn 03 chỉ cho chọn bài đã có trong `content/bai.json`, nên sau mỗi cụm A7 các bài mới tự mở. B1.2 làm màn 05 thật, 06, 07, 08, 39, 42, 34A và phát âm thanh (tốc độ chậm bằng `playbackRate`, làm mới bộ nhớ đệm theo mã băm). Chưa xác nhận GitHub Pages đã bật |
 | 22/10/2026 | A8 và sửa giao diện B1.1 theo bảng ảnh; đặc tả 1.11 | Người dùng gửi 15 bảng ảnh (bảng 04 gửi hai lần, giữ một) và xác nhận chỉ đổi tên Hán Lộ thành Xinyu, còn lại theo bảng. Trước đó repo chưa có bảng nên B1.1 dựng theo chữ mô tả và trông khác bảng. Nay 01–05, 28, thanh điều hướng và màn chờ dựng theo bảng: tiêu đề Noto Serif Display hẹp đậm màu tieu-de, tranh góc, hàng danh sách có biểu tượng tròn, nút chữ serif kèm mũi tên. Các màn sau dựng theo bảng tương ứng trong `design/` và danh sách chỗ khác bảng ở `design/README.md` |
+| 22/10/2026 | B1.2: màn 05, 06, 07, 08, 42, 39, 34A, phát âm thanh, dữ liệu học; đặc tả 1.12 | Chạy thử Chromium (iPhone 13, 1280 px): học hết bài PA01 qua kiểm tra, câu sai được hỏi lại, nghe được khi ngoại tuyến, không lỗi console, không cuộn ngang; 31 kiểm thử. B1.3 thay màn chờ `app/js/man/hoat-dong.mjs` bằng màn thật (09, 09A, 09B, 10, 11, 12, 35), mỗi màn gọi `xongHoatDong(ma, khoa)` khi làm xong; nút nghe dùng `nutNghe` trong `thanh-phan.mjs`. B1.5 tạo thẻ ôn từ các bài đã xong (kho `tienDo`) và sổ lỗi từ câu sai (kho `lanLam`), rồi thay màn 34A ở `on-tap.mjs`. Chưa thử trên iPhone thật: cần xem âm thanh phát được trong Safari khi cài ra Màn hình chính |

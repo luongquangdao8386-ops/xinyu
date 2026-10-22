@@ -3,7 +3,7 @@
 // không được thì dùng bản đã lưu; font và âm thanh dùng bản đã lưu trước.
 // Thêm tệp vào app/, vendor/font/ hoặc content/ thì thêm vào LUU_SAN (kiểm thử báo khi thiếu).
 
-const BAN = 'xinyu-1';
+const BAN = 'xinyu-2';
 const KHO_AM_THANH = 'xinyu-am-thanh';
 const LUU_SAN = [
   './',
@@ -27,6 +27,8 @@ const LUU_SAN = [
   'app/hinh/bieu-tuong-192.png',
   'app/hinh/bieu-tuong-512.png',
   'app/hinh/bieu-tuong-mask-512.png',
+  'app/hinh/tranh-goc.webp',
+  'app/hinh/tranh-nui.webp',
   'vendor/font/font.css',
   'vendor/font/noto-sans-400.woff2',
   'vendor/font/noto-sans-600.woff2',
@@ -34,7 +36,7 @@ const LUU_SAN = [
   'vendor/font/noto-sans-sc-400-2.woff2',
   'vendor/font/noto-sans-sc-600-1.woff2',
   'vendor/font/noto-sans-sc-600-2.woff2',
-  'vendor/font/noto-serif-600.woff2',
+  'vendor/font/noto-serif-display-700.woff2',
   'vendor/font/noto-serif-sc-600-1.woff2',
   'vendor/font/noto-serif-sc-600-2.woff2',
   'content/bai.json',

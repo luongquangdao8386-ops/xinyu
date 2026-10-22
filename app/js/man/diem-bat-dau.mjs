@@ -1,8 +1,9 @@
-// Màn 03 — Chọn điểm bắt đầu: từ Nền phát âm hoặc một bài bất kỳ đã có nội dung; không có kiểm tra đầu vào (mục 4.2).
+// Màn 03 — Chọn điểm bắt đầu (bảng 01, dùng lại bố cục “Kiểm tra đầu vào” nhưng bỏ bài kiểm tra, mục 4.2): bắt đầu
+// từ Nền phát âm hoặc chọn một bài đã có nội dung.
 import { h } from '../giao-dien.mjs';
 import { baiDenCap } from '../ke-hoach.mjs';
 import { napNoiDung } from '../noi-dung.mjs';
-import { buocThietLap, nutLui, oChon } from './thanh-phan.mjs';
+import { dauBuoc, nut, oChon, tranhGoc } from './thanh-phan.mjs';
 
 export default {
   tieuDe: 'Chọn điểm bắt đầu',
@@ -11,19 +12,25 @@ export default {
     const daSoan = new Set(baiDaSoan.map((b) => b.ma));
     const tatCa = baiDenCap(loTrinh, hoSo.capMucTieu ?? 1);
     const dau = tatCa[0];
-    let diem = hoSo.diemBatDau ?? dau.ma;
-    const nutTiep = h('button', { type: 'submit', class: 'nut nut-chinh nut-rong' }, sua ? 'Lưu' : 'Tiếp tục');
+    let diem = hoSo.diemBatDau && hoSo.diemBatDau !== dau.ma ? hoSo.diemBatDau : null;
+    const xong = async (ma) => {
+      await luuHoSo({ diemBatDau: ma });
+      di(sua ? 'toi' : 'ke-hoach');
+    };
 
-    const danhSach = h(
-      'div',
-      { class: 'nhom-bai', hidden: diem === dau.ma },
+    const nutChon = nut(diem ? `Bắt đầu từ ${diem}` : 'Chọn một bài ở trên', { chinh: true, mui: true, disabled: !diem, onclick: () => xong(diem) });
+    const khungChon = h(
+      'section',
+      { class: 'the nhom-bai', hidden: !diem },
+      h('h2', {}, 'Chọn bài bắt đầu'),
+      h('p', { class: 'phu nho' }, 'Chỉ chọn được bài đã soạn; bài khác mở dần khi có nội dung.'),
       loTrinh
         .filter((c) => tatCa.some((b) => b.cum === c.cum))
         .map((c) =>
           h(
             'details',
-            { open: c.bai.some((b) => b.ma === diem) },
-            h('summary', {}, `${c.cum} · ${c.bai.filter((b) => daSoan.has(b.ma)).length}/${c.bai.length} bài đã có`),
+            { open: c.bai.some((b) => b.ma === diem) || c === loTrinh[0] },
+            h('summary', {}, `${c.cum} · ${c.bai.filter((b) => daSoan.has(b.ma)).length}/${c.bai.length} bài`),
             h(
               'div',
               { class: 'lua-chon' },
@@ -35,42 +42,34 @@ export default {
                   moTa: daSoan.has(b.ma) ? b.mucTieu : 'Đang soạn',
                   chon: diem === b.ma,
                   khoa: !daSoan.has(b.ma),
-                  onchange: () => { diem = b.ma; },
+                  onchange: () => {
+                    diem = b.ma;
+                    nutChon.disabled = false;
+                    nutChon.firstChild.textContent = `Bắt đầu từ ${b.ma}`;
+                  },
                 }),
               ),
             ),
           ),
         ),
+      nutChon,
     );
-
-    const form = h(
-      'form',
-      {
-        class: 'dau-man',
-        onsubmit: async (e) => {
-          e.preventDefault();
-          await luuHoSo({ diemBatDau: diem });
-          di(sua ? 'toi' : 'ke-hoach');
-        },
-      },
+    return [
+      tranhGoc(),
+      dauBuoc(sua ? 0 : 2, () => di(sua ? 'toi' : 'muc-tieu'), sua ? 'Tôi' : 'Mục tiêu học'),
       h(
-        'fieldset',
-        { class: 'lua-chon' },
-        h('legend', {}, 'Bắt đầu từ đâu?'),
-        oChon({
-          ten: 'cach',
-          gt: 'dau',
-          chu: 'Từ Nền phát âm',
-          moTa: 'Pinyin, thanh điệu, cặp thanh và lời chào: 8 bài, khoảng 2 tuần. Nên chọn nếu mới bắt đầu.',
-          chon: diem === dau.ma,
-          onchange: () => { diem = dau.ma; danhSach.hidden = true; },
-        }),
-        oChon({ ten: 'cach', gt: 'chon', chu: 'Chọn một bài', moTa: 'Đã học một phần thì chọn bài muốn học tiếp.', chon: diem !== dau.ma, onchange: () => { danhSach.hidden = false; } }),
+        'div',
+        { class: 'mo-dau' },
+        h('h1', {}, 'Bắt đầu đúng', h('br'), 'trình độ.'),
+        h('p', {}, 'Mới học tiếng Trung? Bắt đầu từ Nền phát âm. Đã học một phần thì chọn bài muốn học tiếp.'),
       ),
-      danhSach,
-      h('p', { class: 'phu nho' }, 'Bản đầu không có bài kiểm tra đầu vào: bạn tự chọn theo trình độ của mình.'),
-      nutTiep,
-    );
-    return [sua ? nutLui('Tôi', () => di('toi')) : nutLui('Mục tiêu học', () => di('muc-tieu')), sua ? null : buocThietLap(2), h('h1', {}, 'Điểm bắt đầu'), form];
+      h(
+        'div',
+        { class: 'nhom-nut' },
+        nut('Bắt đầu từ Nền phát âm', { chinh: true, mui: true, onclick: () => xong(dau.ma) }),
+        nut('Chọn một bài', { onclick: () => { khungChon.hidden = false; khungChon.scrollIntoView({ behavior: 'smooth', block: 'start' }); } }),
+      ),
+      khungChon,
+    ];
   },
 };

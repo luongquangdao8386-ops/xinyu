@@ -1,6 +1,6 @@
 // Khởi động Xinyu: đăng ký service worker, đọc hồ sơ học, dựng thanh điều hướng 5 tab (mục 8.3) và chuyển màn
 // theo địa chỉ dạng #/ten-man hoặc #/ten-man/sua. Lần đầu mở app đi qua 01 → 02 → 03 → 04 → 05 (mục 10.1).
-import { bieuTuong, h, han } from './giao-dien.mjs';
+import { bieuTuong, h } from './giao-dien.mjs';
 import { doc, ghi, xoa } from './kho.mjs';
 import chaoMung from './man/chao-mung.mjs';
 import { choXay } from './man/cho-xay.mjs';
@@ -16,9 +16,10 @@ const MAN = {
   'diem-bat-dau': diemBatDau,
   'ke-hoach': keHoach,
   'hom-nay': homNay,
-  'lo-trinh': choXay('Lộ trình', 'Lộ trình HSK (màn 06): Nền phát âm, HSK 1–6 và HSK 7–9; tổng quan từng chặng và chi tiết bài học.', 'B1.2'),
-  'luyen-tap': choXay('Luyện tập', 'Luyện tập (màn 44): luyện chữ, ôn từ, sổ lỗi, luyện thanh điệu và luyện thi.', 'B1.4–B1.6'),
-  'thu-vien': choXay('Thư viện', 'Thư viện và tra từ (màn 18): tra trong kho từ của app, nghe, xem ví dụ, quản lý từ đã lưu.', 'B1.7'),
+  'lo-trinh': choXay({ tieuDe: 'Lộ trình', nhan: 'HSK 3.0', dong: ['Từng cấp độ,', 'một hành trình.'], noiDung: 'Lộ trình HSK (màn 06): Nền phát âm, HSK 1–6 và HSK 7–9; tổng quan từng chặng (07) và chi tiết bài học (08).', viec: 'B1.2' }),
+  'luyen-tap': choXay({ tieuDe: 'Luyện tập', dong: ['Luyện đều,', 'nhớ lâu.'], noiDung: 'Luyện tập (màn 44): luyện chữ Hán, ôn từ đến hạn, sổ lỗi, luyện thanh điệu và luyện thi.', viec: 'B1.4–B1.6' }),
+  'thu-vien': choXay({ tieuDe: 'Thư viện', dong: ['Thư viện'], noiDung: 'Tra từ, lưu lại và ôn tập mọi lúc (màn 18): tra trong kho từ của app, nghe, xem ví dụ, quản lý từ đã lưu.', viec: 'B1.7' }),
+  bai: choXay({ tieuDe: 'Chi tiết bài học', dong: ['Bài học'], noiDung: 'Chi tiết bài học (màn 08): mục tiêu, các hoạt động nghe đọc, từ vựng, mẫu câu, nói và viết.', viec: 'B1.2', lui: 'hom-nay' }),
   toi,
 };
 const THIET_LAP = ['chao-mung', 'muc-tieu', 'diem-bat-dau', 'ke-hoach'];
@@ -35,7 +36,7 @@ const dieuHuong = document.querySelector('.dieu-huong');
 let hoSo = { khoa: 'hoSo' };
 
 dieuHuong.append(
-  h('p', { class: 'thuong-hieu' }, han('新语', 'chu-han'), h('span', { class: 'ten' }, 'Xinyu')),
+  h('p', { class: 'thuong-hieu' }, h('span', { class: 'dau-son', lang: 'zh-CN', 'aria-hidden': 'true' }, '新'), h('span', { class: 'ten-app' }, 'Xinyu')),
   h('ul', {}, TAB.map(([ten, nhan]) => h('li', {}, h('a', { href: `#/${ten}`, 'data-man': ten }, bieuTuong(ten), h('span', {}, nhan))))),
 );
 

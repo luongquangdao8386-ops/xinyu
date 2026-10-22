@@ -1,6 +1,6 @@
 ---
 title: "Xinyu — Đặc tả ứng dụng học tiếng Trung và luyện thi HSK"
-version: "1.10"
+version: "1.11"
 brand_chinese: "新语"
 brand_pinyin: "Xīnyǔ"
 date: "2026-10-22"
@@ -503,6 +503,8 @@ Các trạng thái 13A–13D chưa nằm trong 41 màn đã vẽ.
 | nen-canh-bao | #F6ECD2 | Nền khối cảnh báo |
 | vien-o | #8F7C6C | Viền ô nhập, ô tập viết, nút phụ |
 | phan-cach | #E2D5C3 | Đường phân cách trang trí |
+| tieu-de | #4E120C | Tiêu đề lớn và tên mục (đỏ nâu như bảng ảnh); 13.79:1 trên nen-chinh |
+| nen-the | #FDFAF5 | Nền thẻ, ô chọn và danh sách đặt trên nền giấy |
 | Tranh | — | Mực đen, xám trung tính, vùng sương sáng |
 
 Đỏ son đổi từ #AD493C sang #AB483B để đạt 4.5:1 trên nền kem; mắt thường gần như không thấy khác biệt.
@@ -552,7 +554,7 @@ Màn bài học tập trung, kiểm tra và thi thử ẩn thanh điều hướn
 
 ### 8.4. Chữ và font
 
-- Tiêu đề: giữ font serif trong bảng ảnh nếu hiển thị đủ dấu tiếng Việt và Pinyin; nếu không, dùng Noto Serif.
+- Tiêu đề: giữ font serif trong bảng ảnh nếu hiển thị đủ dấu tiếng Việt và Pinyin; nếu không, dùng Noto Serif. Font của bảng không rõ tên nên dùng Noto Serif Display bản hẹp (độ rộng 80, đậm 700), gần với bảng và đủ dấu; nút cũng dùng font này như bảng.
 - Nội dung và điều khiển: Noto Sans.
 - Chữ Hán: Noto Sans SC cho nội dung, Noto Serif SC cho tiêu đề. Mọi đoạn chữ Hán gắn `lang="zh-CN"` để máy dùng đúng tự dạng giản thể.
 - Kiểm tra trước khi chốt font: hiển thị đủ ā á ǎ à, ē é ě è, ī í ǐ ì, ō ó ǒ ò, ū ú ǔ ù, ǖ ǘ ǚ ǜ ü; các chữ 直, 骨, 角 hiện đúng tự dạng giản thể.
@@ -641,7 +643,8 @@ Màn 37–38 là bản máy tính; các màn còn lại là điện thoại và 
 - Lưu bảng ảnh trong thư mục `design/` của repo.
 - Đặt tên tệp theo mẫu `bang-<số bảng>_man-<mã đầu>-<mã cuối>_v<phiên bản>.png`, ví dụ `bang-01_man-01-04_v2.png`.
 - Mỗi lần hiệu chỉnh tăng số phiên bản; bản có số lớn nhất là căn cứ.
-- Lập danh mục trong `design/README.md` gồm: số bảng, các màn trong bảng, phiên bản và ngày.
+- Lập danh mục trong `design/README.md` gồm: số bảng, các màn trong bảng, phiên bản và ngày. Danh mục ghi cả những chỗ app khác bảng do quyết định sau trong đặc tả (tên, tài khoản, kiểm tra đầu vào, thông báo).
+- 15 bảng (41 màn) đã đưa vào `design/` ngày 22/10/2026.
 
 ## 10. Những luồng chính
 
@@ -955,6 +958,11 @@ Các nguồn được tra cứu ngày 17/10/2026 và 21/10/2026. Khi xây nội 
 - Mã màn 31–33 giữ trong danh mục ở trạng thái “Bỏ” để đối chiếu bảng ảnh; không dùng lại các mã này cho màn mới.
 
 ## Phụ lục A — Lịch sử thay đổi
+
+### Bản 1.11 (22/10/2026)
+
+- Đưa 15 bảng ảnh vào `design/`, ghi chỗ app khác bảng (mục 9.3); giao diện B1.1 dựng lại theo bảng.
+- Thêm màu tieu-de và nen-the lấy từ bảng ảnh (mục 8.1); font tiêu đề Noto Serif Display hẹp (mục 8.4).
 
 ### Bản 1.10 (22/10/2026)
 

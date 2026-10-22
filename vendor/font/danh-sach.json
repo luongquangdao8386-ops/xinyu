@@ -1,9 +1,9 @@
 {
-  "noto-serif-600.woff2": {
-    "ho": "Noto Serif",
-    "dam": 600,
+  "noto-serif-display-700.woff2": {
+    "ho": "Noto Serif Display",
+    "dam": 700,
     "soChu": 281,
-    "bam": "aa1dc53112f5"
+    "bam": "6e09c9858ea5"
   },
   "noto-sans-400.woff2": {
     "ho": "Noto Sans",

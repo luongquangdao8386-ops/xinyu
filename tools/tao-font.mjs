@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-// Tải font của app (mục 8.4) về vendor/font/ để chạy được khi không có mạng: Noto Serif (tiêu đề), Noto Sans
+// Tải font của app (mục 8.4) về vendor/font/ để chạy được khi không có mạng: Noto Serif Display hẹp (tiêu đề,
+// gần font serif của bảng ảnh), Noto Sans
 // (nội dung, điều khiển), Noto Sans SC và Noto Serif SC (chữ Hán). Chữ Hán chỉ lấy những chữ có trong content/
 // và mã giao diện (app/, index.html), cắt bằng tham số text= của Google Fonts; chữ Latin lấy đủ tiếng Việt và
 // Pinyin. Chạy lại sau mỗi lần xây nội dung có chữ Hán mới; nhóm chữ không đổi thì không tải lại.
@@ -21,7 +22,7 @@ const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 const CHU_MOI_TEP = 300;
 
 const MAT = [
-  { ten: 'noto-serif-600', ho: 'Noto Serif', dam: 600, loai: 'latin' },
+  { ten: 'noto-serif-display-700', ho: 'Noto Serif Display', dam: 700, truc: 'wdth,wght@80,700', loai: 'latin' },
   { ten: 'noto-sans-400', ho: 'Noto Sans', dam: 400, loai: 'latin' },
   { ten: 'noto-sans-600', ho: 'Noto Sans', dam: 600, loai: 'latin' },
   { ten: 'noto-sans-sc-400', ho: 'Noto Sans SC', dam: 400, loai: 'han' },
@@ -67,7 +68,7 @@ const bam = (s) => createHash('sha256').update(s).digest('hex').slice(0, 12);
 const unicodeRange = (chu) => chu.map((c) => `U+${c.codePointAt(0).toString(16)}`).join(', ');
 
 async function taiMat(mat, van) {
-  const url = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(mat.ho)}:wght@${mat.dam}&text=${encodeURIComponent(van)}`;
+  const url = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(mat.ho)}:${mat.truc || `wght@${mat.dam}`}&text=${encodeURIComponent(van)}`;
   const css = await fetch(url, { headers: { 'User-Agent': UA } });
   if (!css.ok) throw new Error(`Google Fonts trả lỗi ${css.status} cho ${mat.ho} ${mat.dam}`);
   const nguon = (await css.text()).match(/url\((https:\/\/fonts\.gstatic\.com\/[^)]+)\)\s*format\('woff2'\)/);
@@ -93,7 +94,7 @@ for (const mat of MAT) {
   for (const [i, chu] of nhom.entries()) {
     const tep = `${mat.ten}${mat.loai === 'han' ? `-${i + 1}` : ''}.woff2`;
     const van = chu.join('');
-    const dau = bam(`${mat.ho}|${mat.dam}|${van}`);
+    const dau = bam(`${mat.ho}|${mat.truc || mat.dam}|${van}`);
     if (cu[tep]?.bam !== dau || !existsSync(join(RA, tep))) {
       writeFileSync(join(RA, tep), await taiMat(mat, van));
       taiMoi++;
